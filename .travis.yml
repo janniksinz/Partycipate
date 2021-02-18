@@ -1,0 +1,33 @@
+sudo: required
+
+language: java
+jdk: openjdk11
+
+install: /bin/true
+
+if: tag IS blank
+
+stages:
+  - name: "test"
+  - name: "build"
+  - name: "release"
+
+jobs:
+  include:
+    - stage: test
+      env: "comment=unit-tests"
+      before_script: skip
+      script: skip
+
+    - stage: build
+      env: "comment=gradle-build"
+      before_script: skip
+      script: skip
+
+    - stage: release
+      env: "comment=release"
+      before_script:
+        - nvm install lts/*
+        - npm install @octokit/rest @semantic-release/github @semantic-release/exec @semantic-release/changelog @semantic-release/release-notes-generator @tschulte/gradle-semantic-release @semantic-release/git conventional-changelog-conventionalcommits
+      script:
+        - npx semantic-release

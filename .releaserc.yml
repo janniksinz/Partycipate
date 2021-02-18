@@ -1,0 +1,92 @@
+{
+  "debug": true,
+  "tagFormat": "v${version}",
+  "branches": ["master"],
+  "plugins": [
+    #commit analyzer
+    ["@semantic-release/commit-analyzer",
+      {
+        "preset": "angular",
+        "releaseRules": [
+          { "type": "docs", "release": "patch" },
+          { "type": "feat", "release": "patch" },
+          { "type": "fix", "release": "patch" },
+          { "type": "style", "release": "patch" },
+          { "type": "refactor", "release": "patch" },
+          { "type": "chore", "release": "patch" },
+          { "type": "perf", "release": "patch" },
+          { "type": "build", "release": "patch" },
+          { "type": "ci", "release": "patch" }
+        ]
+      }
+    ],
+    #release notes generator
+    [ "@semantic-release/release-notes-generator", {
+      "preset": "conventionalcommits",
+      "presetConfig": {
+        "types": [
+          {
+            "type": "docs",
+            "section": ":memo: Docs",
+            "hidden": false
+          },
+          {
+            "type": "feat",
+            "section": ":sparkles: Features",
+            "hidden": false
+          },
+          {
+            "type": "fix",
+            "section": ":bug: Bug Fixes",
+            "hidden": false
+          },
+          {
+            "type": "style",
+            "section": ":barber: Style",
+            "hidden": false
+          },
+          {
+            "type": "refactor",
+            "section": ":zap: Refactor",
+            "hidden": false
+          },
+          {
+            "type": "chore",
+            "hidden": true
+          },
+          {
+            "type": "perf",
+            "section": ":fast_forward: Performance",
+            "hidden": false
+          },
+          {
+            "type": "build",
+            "section": "Build",
+            "hidden": false
+          },
+          {
+            "type": "ci",
+            "section": ":repeat: CI",
+            "hidden": false
+          }
+        ]
+      },
+      "writerOpts": {
+        "commitsSort": [ "subject", "scope" ]
+      }
+    }
+    ],
+    #changelog
+    ["@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+
+    #github
+    ["@semantic-release/github",{
+      "githubUrl": "https://github.com",
+      "githubApiPathPrefix": "/api/v3"
+    }]
+  ]
+}
