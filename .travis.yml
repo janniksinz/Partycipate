@@ -29,6 +29,6 @@ jobs:
       env: "comment=release"
       before_script:
         - nvm install lts/*
-        - npm install @octokit/rest @semantic-release/github @semantic-release/exec @semantic-release/changelog @semantic-release/release-notes-generator @tschulte/gradle-semantic-release @semantic-release/git conventional-changelog-conventionalcommits
+        - npm install @octokit/rest @semantic-release/github @semantic-release/exec @semantic-release/changelog @semantic-release/release-notes-generator @tschulte/gradle-semantic-release-plugin @semantic-release/git conventional-changelog-conventionalcommits
       script:
         - npx semantic-release
