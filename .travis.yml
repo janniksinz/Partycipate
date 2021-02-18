@@ -1,6 +1,9 @@
 language: java
 jdk: openjdk11
 
+dist: xenial
+os: linux
+
 install: /bin/true
 
 if: tag IS blank
