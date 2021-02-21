@@ -1,4 +1,6 @@
-package com.example;
+package com.example.services;
+
+import com.example.models.User;
 
 import javax.inject.Singleton;
 

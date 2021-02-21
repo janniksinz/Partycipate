@@ -16,3 +16,6 @@ public class Application {
         Micronaut.run(Application.class, args);
     }
 }
+
+// ToDo create .gitignore
+// ToDo configure Project Version in IntelliJ

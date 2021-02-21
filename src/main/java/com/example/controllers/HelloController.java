@@ -1,5 +1,6 @@
-package com.example;
+package com.example.controllers;
 
+import com.example.services.HelloService;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -22,7 +23,7 @@ public class HelloController {
     }
 
     @Get(value = "/", produces = MediaType.TEXT_PLAIN)
-    public String Welcome(){
+    public String welcome(){
         return "Welcome to Partycipate";
     }
 
