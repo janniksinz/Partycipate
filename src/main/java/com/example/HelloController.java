@@ -21,4 +21,9 @@ public class HelloController {
         return helloService.sayHi(name);
     }
 
+    @Get(value = "/", produces = MediaType.TEXT_PLAIN)
+    public String Welcome(){
+        return "Welcome to Partycipate";
+    }
+
 }

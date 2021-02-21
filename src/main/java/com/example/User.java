@@ -1,10 +1,14 @@
 package com.example;
 
 public class User {
+    private int id;
     private String name;
+    private String email;
 
-    public User(String name) {
+    public User(String name, int id, String email) {
         this.name = name;
+        this.id = id;
+        this.email = email;
     }
 
     public String getName() {

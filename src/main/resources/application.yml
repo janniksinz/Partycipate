@@ -7,3 +7,8 @@ datasources:
     driverClassName: com.mysql.cj.jdbc.Driver
     username: partycipate
     password: '99GRcY40mIzYRZkc'
+endpoints:
+  all:
+    enabled: true
+  health:
+    details-visible: anonymous
