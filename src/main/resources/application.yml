@@ -1,0 +1,9 @@
+micronaut:
+  application:
+    name: partycipate
+datasources:
+  default:
+    url: jdbc:mysql://pma.tutorialfactory.org
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: partycipate
+    password: '99GRcY40mIzYRZkc'
