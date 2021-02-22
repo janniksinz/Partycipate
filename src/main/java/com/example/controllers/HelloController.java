@@ -24,7 +24,7 @@ public class HelloController {
 
     @Get(value = "/", produces = MediaType.TEXT_PLAIN)
     public String welcome(){
-        return "Welcome to Partycipate";
+        return "Welcome to Partycipate. The Frontend is coming soon";
     }
 
 }
