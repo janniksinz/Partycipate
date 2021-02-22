@@ -3,6 +3,7 @@ micronaut:
     name: partycipate
 datasources:
   default:
+    connectionFactoryClassName: oracle.jdbc.pool.OracleDataSource
     url: jdbc:mysql://pma.tutorialfactory.org
     driverClassName: com.mysql.cj.jdbc.Driver
     username: partycipate
