@@ -1,6 +1,6 @@
 applicationType: default
-defaultPackage: com.example
-testFramework: junit
+defaultPackage: com.partycipate
+testFramework: spock
 sourceLanguage: java
 buildTool: gradle
-features: [annotation-api, app-name, gradle, http-client, java, java-application, jdbc-hikari, jib, junit, kubernetes, logback, management, mysql, netty-server, openapi, readme, shade, testcontainers, yaml]
+features: [annotation-api, app-name, gradle, http-client, java, java-application, logback, netty-server, readme, shade, spock, yaml]
