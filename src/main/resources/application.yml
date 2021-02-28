@@ -6,11 +6,7 @@ micronaut:
     redirect:
       login-success: /
       login-failure: /login/authFailed
-    oauth2:
-      clients:
-        default:
-          client-id: user
-          client-secret: password
+
   server:
     port: 8088
 datasources:

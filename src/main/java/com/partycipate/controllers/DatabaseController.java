@@ -4,5 +4,7 @@ import javax.inject.Inject;
 
 public class DatabaseController {
 
+    @Inject
+    DatabaseController databaseController;
 
 }

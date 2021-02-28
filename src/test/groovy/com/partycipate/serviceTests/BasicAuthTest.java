@@ -1,6 +1,7 @@
 package com.partycipate.serviceTests;
 
 import com.partycipate.AppClient;
+import com.partycipate.models.Survey;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
@@ -14,6 +15,7 @@ import spock.lang.Specification;
 
 import javax.inject.Inject;
 import java.util.Base64;
+import java.util.HashMap;
 
 
 @MicronautTest
