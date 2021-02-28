@@ -3,14 +3,20 @@ micronaut:
     name: partycipate
   security:
     authentication: session
+    redirect:
+      login-success: /
+      login-failure: /login/authFailed
     oauth2:
       clients:
         default:
-          client-id: ${OAUTH_CLIENT_ID}
-          client-secret: ${OAUTH_CLIENT_SECRET}
+          client-id: user
+          client-secret: password
 datasources:
   default:
     url: jdbc:mysql://pma.tutorialfactory.org/partycipate
     driverClassName: com.mysql.cj.jdbc.Driver
     username: partycipate
     password: '99GRcY40mIzYRZkc'
+endpoints:
+  health:
+    details-visible: anonymous

@@ -34,6 +34,7 @@ dependencies {
     implementation("io.micronaut.security:micronaut-security")
     implementation("io.micronaut.security:micronaut-security-session")
     implementation("io.micronaut.security:micronaut-security-oauth2")
+    implementation("io.micronaut.views:micronaut-views-velocity")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("mysql:mysql-connector-java")
     testImplementation("org.testcontainers:testcontainers")
