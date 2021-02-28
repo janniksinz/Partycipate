@@ -1,7 +1,8 @@
 package com.partycipate.controllers;
 
-public class DatabaseController {
+import javax.inject.Inject;
 
+public class DatabaseController {
 
 
 }

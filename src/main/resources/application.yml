@@ -11,6 +11,8 @@ micronaut:
         default:
           client-id: user
           client-secret: password
+  server:
+    port: 8088
 datasources:
   default:
     url: jdbc:mysql://pma.tutorialfactory.org/partycipate
