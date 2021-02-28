@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/login")
 public class LoginAuthController {
