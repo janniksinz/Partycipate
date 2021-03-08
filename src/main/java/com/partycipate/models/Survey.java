@@ -1,7 +1,13 @@
 package com.partycipate.models;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Survey {
 
+    @Id
     private int id;
     private String name;
 
