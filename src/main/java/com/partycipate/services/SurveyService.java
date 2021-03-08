@@ -1,7 +1,6 @@
 package com.partycipate.services;
 
 import com.partycipate.models.Survey;
-
 import javax.inject.Singleton;
 
 @Singleton

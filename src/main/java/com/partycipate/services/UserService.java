@@ -1,8 +1,9 @@
 package com.partycipate.services;
 
-import com.partycipate.models.Survey;
 import com.partycipate.models.User;
+import javax.inject.Singleton;
 
+@Singleton
 public class UserService {
 
     public static User createUser(String name, String email, String password){
