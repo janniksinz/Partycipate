@@ -1,15 +1,12 @@
 package com.partycipate.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class Survey {
+public class MultipleChoiceAnswer {
 
-    private int id;
-    private String name;
-    private ArrayList<SurveyElement> content;
+    private int[] values;
 
-    private Survey(Builder builder){
+    private MultipleChoiceAnswer(Builder builder){
         this.id = builder.id;
         this.name = builder.name;
     }
@@ -18,18 +15,28 @@ public class Survey {
     public static class Builder{
 
         private int id = 0;
-        private String name = "Survey";
+        private int survey_id = 0;
+        private int position = 0;
+        private String type = "multiple-choice";
 
         public Builder id(int id){
             this.id=id;
             return this;
         }
-        public Builder name(String name){
-            this.name=name;
+        public Builder survey_id(int survey_id){
+            this.survey_id=survey_id;
             return this;
         }
-        public Survey build(){
-            return new Survey(this);
+        public Builder position(int position){
+            this.position=position;
+            return this;
+        }
+        public Builder type(String type){
+            this.type=type;
+            return this;
+        }
+        public MultipleChoiceAnswer build(){
+            return new MultipleChoiceAnswer(this);
         }
     }
 

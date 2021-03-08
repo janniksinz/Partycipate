@@ -9,6 +9,8 @@ import io.micronaut.security.rules.SecurityRule;
 
 import com.partycipate.services.SurveyService;
 
+import java.util.ArrayList;
+
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/survey")
@@ -17,18 +19,37 @@ public class SurveyController {
     @Get("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    //@Header
+    //@Header  Cookie, Auth_token
     //@Body
-    public Survey getSurvey(int id){
+    public Survey getSurvey(Auth auth_token, int id){
+        // {Survey}
         return SurveyService.getSurvey(id);
+    }
+
+    @Get("/{auth_token}")
+    public ArrayList<Survey> getAllSurveys(Auth auth_token){
+        UserService.getUserByAuth(auth_token);
+        SurveyService.getAllSurveys();
+        return; // {surveys[survey, surveyElement[]]}
     }
 
     @Get("/create")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Survey createSurvey(String name){
+    public Survey createSurvey(Auth auth_token, String title, String[] elements){
         //create survey with service here
-        return SurveyService.createSurvey(name);
+       // return SurveyService.createSurvey(name);
+        UserService.getUserByAuth(auth_token);
+        SurveyService.createSurvey();
+        //return {survey, surveyElements[]}
+
+        return;
+    }
+
+    @Get
+    public Survey updateSurvey(){
+        return Survey a = new Survey.Builder().build();
+        return a;
     }
 
 }
