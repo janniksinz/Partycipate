@@ -14,19 +14,19 @@ public class PublicAnalyticsController {
     @Get ("/{id}")
     public String getSurvey(int id){
 
-        return;
+        return "";
     }
-
+    /*
     @Post("/{id}")
     @Header
     public boolean saveSurvey(){
 
         return true;
-    }
+    }*/
 
     @Get("/results/{id}")
     public String getResults(int id){
-
+        return "";
     }
 
 }

@@ -21,34 +21,33 @@ public class SurveyController {
     @Consumes(MediaType.APPLICATION_JSON)
     //@Header  Cookie, Auth_token
     //@Body
-    public Survey getSurvey(Auth auth_token, int id){
+    public Survey getSurvey(/*Auth auth_token,*/ int id){
         // {Survey}
         return SurveyService.getSurvey(id);
     }
-
+    /*
     @Get("/{auth_token}")
     public ArrayList<Survey> getAllSurveys(Auth auth_token){
-        UserService.getUserByAuth(auth_token);
-        SurveyService.getAllSurveys();
-        return; // {surveys[survey, surveyElement[]]}
-    }
+        ////SurveyService.getAllSurveys();
+        return new ArrayList<Survey>(); // {surveys[survey, surveyElement[]]}
+    }*/
 
     @Get("/create")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Survey createSurvey(Auth auth_token, String title, String[] elements){
+    public Survey createSurvey(/*Auth auth_token,*/ String title, String[] elements){
         //create survey with service here
-       // return SurveyService.createSurvey(name);
-        UserService.getUserByAuth(auth_token);
-        SurveyService.createSurvey();
+        // return SurveyService.createSurvey(name);
+        //UserService.getUserByAuth(auth_token);
+        Survey survey = SurveyService.createSurvey(title);
         //return {survey, surveyElements[]}
 
-        return;
+        return survey;
     }
 
     @Get
     public Survey updateSurvey(){
-        return Survey a = new Survey.Builder().build();
+        Survey a = new Survey.Builder().build();
         return a;
     }
 

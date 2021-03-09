@@ -11,7 +11,7 @@ public class AnalyticsController {
 
     @Get
     public String getAnalytics(){
-
+        return "";
     }
 
 }

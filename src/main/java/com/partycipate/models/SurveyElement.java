@@ -1,6 +1,8 @@
 package com.partycipate.models;
 
 import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 public class SurveyElement {
 
@@ -12,9 +14,10 @@ public class SurveyElement {
     private String content;
     private Answer answer;
 
+
     private SurveyElement(Builder builder){
         this.id = builder.id;
-        this.name = builder.name;
+
     }
 
     //custom constructor for optional parameters
@@ -47,9 +50,7 @@ public class SurveyElement {
     }
 
 
-    public String getName() {
-        return name;
-    }
+
 
     public int getId() {
         return id;
@@ -59,9 +60,7 @@ public class SurveyElement {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+
 
 
 }
