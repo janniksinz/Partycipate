@@ -1,8 +1,10 @@
 package com.partycipate.models;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 
-public class MultipleChoiceAnswer {
+@Entity
+public class MultipleChoiceAnswer extends Answer{
 
     private int[] values;
 
