@@ -12,9 +12,6 @@ public class SurveyElement {
     private String type;
     private String question;
     private boolean may_skip;
-    private
-
-
 
 
     private SurveyElement(Builder builder){

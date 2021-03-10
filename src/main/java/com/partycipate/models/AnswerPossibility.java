@@ -20,11 +20,19 @@ public class AnswerPossibility{
     public static class Builder{
 
         private int id = 0;
-        private int qestion_id = 0;
+        private int question_id = 0;
         private String answer = "";
 
-        public Builder values(int [] values){
-            this.values = values;
+        public Builder id(int id){
+            this.id = id;
+            return this;
+        }
+        public Builder question_id(int question_id){
+            this.question_id=question_id;
+            return this;
+        }
+        public Builder answer(String answer){
+            this.answer=answer;
             return this;
         }
 
