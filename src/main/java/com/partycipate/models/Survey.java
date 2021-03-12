@@ -19,6 +19,7 @@ public class Survey {
 
         private int id = 0;
         private String name = "Survey";
+        private ArrayList<SurveyElement> content = null;
 
         public Builder id(int id){
             this.id=id;
@@ -26,6 +27,10 @@ public class Survey {
         }
         public Builder name(String name){
             this.name=name;
+            return this;
+        }
+        public Builder content(ArrayList<SurveyElement> content){
+            this.content=content;
             return this;
         }
         public Survey build(){
@@ -50,5 +55,10 @@ public class Survey {
         this.name = name;
     }
 
-
+    public ArrayList<SurveyElement> getContent() {
+        return content;
+    }
+    public void setContent(ArrayList<SurveyElement> content) {
+        this.content = content;
+    }
 }
