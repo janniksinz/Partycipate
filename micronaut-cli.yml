@@ -1,6 +1,0 @@
-applicationType: default
-defaultPackage: com.partycipate
-testFramework: spock
-sourceLanguage: java
-buildTool: gradle
-features: [annotation-api, app-name, gradle, http-client, java, java-application, jdbc-hikari, jib, kubernetes, logback, management, mysql, netty-server, openapi, readme, security, security-annotations, security-oauth2, security-session, shade, spock, testcontainers, yaml]
