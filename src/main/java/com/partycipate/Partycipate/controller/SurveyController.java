@@ -5,18 +5,41 @@ import com.partycipate.Partycipate.model.Survey;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @RestController
+@RequestMapping("/survey")
 public class SurveyController {
+    /*
+    *  This is the endpoint for surveys
+    *
+    *  - get all surveys (GET/survey)
+    *  - get survey by id (GET/survey/{id})
+    *  - create survey (POST/survey/{id})
+    *  - delete Survey (DELETE/survey/{id})
+    *  - delete all (DELETE/survey)
+    *
+    */
+
+    @GetMapping()
+    public Set<Object> getAllSurveys(){
+        Set<Object> surveys = new HashSet<>();
+        surveys.add(new Survey.Builder().build());
+        surveys.add(new Survey.Builder().build());
+        return surveys;
+    }
 
     @GetMapping("/survey/{id}")
     //@Header  Cookie, Auth_token
     //@Body
     public Survey getSurvey(@PathVariable("id") int id){
-        // {Survey}
-        return SurveyService.getSurvey(id);
+        return SurveyService.getRandomSurvey(id);
     }
     /*
     @Get("/{auth_token}")
