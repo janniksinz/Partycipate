@@ -1,14 +1,11 @@
-package com.partycipate.services;
+package com.partycipate.Partycipate.service;
 
-import com.partycipate.models.Survey;
+import com.partycipate.Partycipate.model.Survey;
 
-import javax.inject.Singleton;
-
-@Singleton
 public class SurveyService {
 
-    public static Survey createSurvey(String name){
-        Survey survey = new Survey.Builder().name(name).build();
+    public static Survey createSurvey(String title){
+        Survey survey = new Survey.Builder().title(title).build();
         //insert the data in the db with methods from the db_service
         return survey;
     }
@@ -18,7 +15,8 @@ public class SurveyService {
         //obviously id and name need to be inserted from db.
         // data needs to be fetched with the db_service
         // like Survey.Builder().id(data.id).name(data.name).build();
-        Survey survey = new Survey.Builder().id(id).name("Name from Database").build();
+        Survey survey = new Survey.Builder().id(id).title("Name from Database").build();
+
         return survey;
     }
 
