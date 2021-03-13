@@ -3,6 +3,7 @@ package com.partycipate.Partycipate.model;
 import com.partycipate.Partycipate.model.SurveyElement;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "Survey")
@@ -29,7 +30,8 @@ public class Survey {
     private String creation_date;
     private String title;
     private String cookie;
-    private ArrayList<SurveyElement> content;
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
+    private Set<SurveyElement> content = new HashSet<>() ;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Survey_Participant",joinColumns = @JoinColumn(name="survey_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name="participant_id", referencedColumnName = "id"))
@@ -43,7 +45,7 @@ public class Survey {
         this.creation_date = builder.creation_date;
         this.title = builder.title;
         this.cookie = builder.cookie;
-        this.content = builder.content;
+
 
     }
 
@@ -98,9 +100,6 @@ public class Survey {
         this.title = title;
     }
 
-    public void setContent(ArrayList<SurveyElement> content) {
-        this.content = content;
-    }
 
     public void setClient_id(int client_id) {
         this.client_id = client_id;
@@ -134,8 +133,12 @@ public class Survey {
         return creation_date;
     }
 
-    public ArrayList<SurveyElement> getContent() {
+    public Set<SurveyElement> getContent() {
         return content;
+    }
+
+    public void setContent(Set<SurveyElement> content) {
+        this.content = content;
     }
 
     @Override
