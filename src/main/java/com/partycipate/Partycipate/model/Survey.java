@@ -3,6 +3,7 @@ package com.partycipate.Partycipate.model;
 import com.partycipate.Partycipate.model.SurveyElement;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 @Entity(name = "Survey")
 public class Survey {
@@ -30,6 +31,10 @@ public class Survey {
     private String cookie;
     private ArrayList<SurveyElement> content;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "Survey_Participant",joinColumns = @JoinColumn(name="survey_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name="participant_id", referencedColumnName = "id"))
+    private Set<Participant> participantSet;
+
     public Survey(){}
 
     private Survey(Builder builder) {
@@ -39,7 +44,9 @@ public class Survey {
         this.title = builder.title;
         this.cookie = builder.cookie;
         this.content = builder.content;
+
     }
+
 
 
 
@@ -141,5 +148,12 @@ public class Survey {
                 ", cookie='" + cookie + '\'' +
                 ", content=" + content +
                 '}';
+    }
+    public void setParticipantSet(Set<Participant> participantSet) {
+        this.participantSet = participantSet;
+    }
+
+    public Set<Participant> getParticipantSet() {
+        return participantSet;
     }
 }

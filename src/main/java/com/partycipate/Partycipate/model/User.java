@@ -1,11 +1,23 @@
-package com.partycipate.models;
+package com.partycipate.Partycipate.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
     @Id
+    @SequenceGenerator(
+            name = "user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "user_sequence"
+    )
+    @Column(
+            name = "id",
+            updatable = false
+    )
     private int id;
     private String username;
     private String email;
@@ -20,6 +32,8 @@ public class User {
         this.password= builder.password;
 
     }
+
+    public User() {}
 
     public static class Builder {
 
