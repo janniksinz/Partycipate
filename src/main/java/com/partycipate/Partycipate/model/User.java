@@ -1,6 +1,8 @@
 package com.partycipate.Partycipate.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -18,15 +20,16 @@ public class User {
             name = "id",
             updatable = false
     )
-    private int id;
+    private int user_id;
     private String username;
     private String email;
     private String password;
 
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Survey> surveys = new HashSet<>() ;
 
     private User(Builder builder) {
-        this.id = builder.id;
+        this.user_id = builder.id;
         this.username = builder.username;
         this.email = builder.email;
         this.password= builder.password;
@@ -66,8 +69,16 @@ public class User {
         }
     }
 
-    public int getId() {
-        return id;
+    public Set<Survey> getSurveys() {
+        return surveys;
+    }
+
+    public void setSurveys(Set<Survey> surveys) {
+        this.surveys = surveys;
+    }
+
+    public int getUser_id() {
+        return user_id;
     }
 
     public String getEmail() {
@@ -86,8 +97,8 @@ public class User {
         this.email = email;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUser_idd(int id) {
+        this.user_id = id;
     }
 
     public void setPassword(String password) {
