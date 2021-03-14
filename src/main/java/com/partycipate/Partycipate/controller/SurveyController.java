@@ -2,6 +2,7 @@ package com.partycipate.Partycipate.controller;
 
 import com.partycipate.Partycipate.service.SurveyService;
 import com.partycipate.Partycipate.model.Survey;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,8 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/survey")
 public class SurveyController {
+    @Autowired
+    SurveyService surveyService;
     /*
     *  This is the endpoint for surveys
     *
@@ -37,7 +40,9 @@ public class SurveyController {
     //@Header  Cookie, Auth_token
     //@Body
     public Survey getSurvey(@PathVariable("id") int id){
-        return SurveyService.getRandomSurvey(id);
+
+
+        return surveyService.getSurvey(id);
     }
     /*
     @Get("/{auth_token}")
