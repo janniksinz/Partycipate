@@ -1,8 +1,10 @@
 package com.partycipate.Partycipate.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.partycipate.Partycipate.model.SurveyElement;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @Entity(name = "Survey")
 public class Survey {
@@ -29,6 +31,14 @@ public class Survey {
     private ArrayList<SurveyElement> content;
 
     public Survey(){}
+    public Survey(@JsonProperty("id") int id,
+                  @JsonProperty("creation_date") String creation_date,
+                  @JsonProperty("title") String title,
+                  @JsonProperty("cookie") String cookie,
+                  @JsonProperty("content") ArrayList<SurveyElement> content){
+        this.id=id; this.creation_date=creation_date; this.title=title;
+        this.cookie=cookie;
+    }
 
     private Survey(Builder builder) {
         this.id = builder.id;

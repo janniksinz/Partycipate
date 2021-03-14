@@ -1,42 +1,30 @@
 package com.partycipate.Partycipate.service;
 
+import com.partycipate.Partycipate.dao.SurveyDao;
 import com.partycipate.Partycipate.model.Survey;
-import com.partycipate.Partycipate.model.SurveyRepositoryGio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class SurveyService implements ISurveyService{
 
+    private final SurveyDao surveyDao;
+
     @Autowired
-    private SurveyRepositoryGio surveyRepository;
-
-    public List<Survey> findAll(){
-        return (List<Survey>) surveyRepository.findAll();
+    public SurveyService(@Qualifier("fakeDao") SurveyDao surveyDao) {
+        this.surveyDao = surveyDao;
     }
-    public static Survey createSurvey(String title){
-        Survey survey = new Survey.Builder().title(title).build();
-        //insert the data in the db with methods from the db_service
-        return survey;
+
+    public Survey addSurvey(Survey survey){
+        return surveyDao.insertSurvey(survey);
     }
 
 
-    public Optional<Survey> getSurvey(Long id){
-        //get survey from db with id
-        //obviously id and name need to be inserted from db.
-        // data needs to be fetched with the db_service
-        // like Survey.Builder().id(data.id).name(data.name).build();
 
-        Optional<Survey> survey = surveyRepository.findById(id);
-
-        return survey;
-    }
 
     public static Survey getRandomSurvey(int id) {
         //ToDo create content for the dummy survey
@@ -44,5 +32,13 @@ public class SurveyService implements ISurveyService{
     }
 
 
+    @Override
+    public List<Survey> findAll() {
+        return null;
+    }
 
+    @Override
+    public Optional<Survey> getSurvey(Long id) {
+        return Optional.empty();
+    }
 }
