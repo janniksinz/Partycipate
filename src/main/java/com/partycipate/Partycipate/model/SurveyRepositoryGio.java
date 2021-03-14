@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SurveyRepositoryGio extends CrudRepository<Survey, Long> {
+public interface SurveyRepositoryGio extends CrudRepository<Survey, Integer> {
 
     //@Query(value = "select * from survey Where id = 1", nativeQuery = true)
     //Survey findSurveyById(int id);

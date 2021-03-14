@@ -1,5 +1,6 @@
 package com.partycipate.Partycipate.controller;
 
+import com.partycipate.Partycipate.model.SurveyRepositoryGio;
 import com.partycipate.Partycipate.service.ISurveyService;
 import com.partycipate.Partycipate.service.SurveyService;
 import com.partycipate.Partycipate.model.Survey;
@@ -20,8 +21,10 @@ import java.util.*;
 @RequestMapping("/api/survey")
 public class SurveyController {
 
-    private final SurveyService surveyService;
+    @Autowired
+    private SurveyRepositoryGio surveyRepositoryGio;
 
+    private final SurveyService surveyService;
     @Autowired
     public SurveyController(SurveyService surveyService){
         this.surveyService=surveyService;
@@ -33,8 +36,8 @@ public class SurveyController {
     }
 
     @GetMapping("")
-    public List<Survey> getAllSurveys(){
-        return surveyService.getAllSurveys();
+    public @ResponseBody Iterable<Survey> getAllSurveys(){
+        return surveyRepositoryGio.findAll();
     }
 
 }
