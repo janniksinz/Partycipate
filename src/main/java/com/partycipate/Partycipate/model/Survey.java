@@ -23,8 +23,6 @@ public class Survey {
             updatable = false
     )
     private int id;
-
-
     private String creation_date;
     private String title;
     private String cookie;
