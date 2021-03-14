@@ -1,7 +1,7 @@
 package com.partycipate.Partycipate.security;
 
 public enum ApplicationUserPermission {
-    // Permissions
+    /*// Permissions
     SURVEY_READ("admin:read"),
     SURVEY_WRITE("admin:write"),
 
@@ -23,5 +23,5 @@ public enum ApplicationUserPermission {
 
     public String getPermission() {
         return permission;
-    }
+    }*/
 }

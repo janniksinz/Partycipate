@@ -28,8 +28,9 @@ public class UserService {
     }
 
 
-    public void addUser(String email, String password, String username){
+    public User addUser(String email, String password, String username){
         User user = new User.Builder().email(email).password(password).username(username).build();
         userRepository.save(user);
+        return user;
     }
 }

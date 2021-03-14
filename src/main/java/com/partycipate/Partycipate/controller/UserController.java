@@ -8,15 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping("")
-    public void addUser(@RequestBody User user){
-        userService.addUser(user.getEmail(),user.getPassword(), user.getUsername());
+    public User addUser(@RequestBody User user){
+        return userService.addUser(user.getEmail(),user.getPassword(), user.getUsername());
     }
 
 }
