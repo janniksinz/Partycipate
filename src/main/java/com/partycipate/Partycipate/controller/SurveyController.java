@@ -3,11 +3,9 @@ package com.partycipate.Partycipate.controller;
 import com.partycipate.Partycipate.service.SurveyService;
 import com.partycipate.Partycipate.model.Survey;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.PostUpdate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,7 +46,7 @@ public class SurveyController {
         return new ArrayList<Survey>(); // {surveys[survey, surveyElement[]]}
     }*/
 
-    @GetMapping("/survey/create")
+    @GetMapping("/create")
     public Survey createSurvey(/*Auth auth_token,*/ String title, String[] elements){
         //create survey with service here
         // return SurveyService.createSurvey(name);
@@ -59,7 +57,7 @@ public class SurveyController {
         return survey;
     }
 
-    @GetMapping("/survey/update/{id}")
+    @PostMapping("/update/{id}")
     public Survey updateSurvey(@PathVariable("id") int id){
         Survey a = new Survey.Builder().build();
         return a;
