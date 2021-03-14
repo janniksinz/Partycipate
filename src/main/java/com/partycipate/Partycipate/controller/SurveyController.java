@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/survey")
@@ -33,4 +35,8 @@ public class SurveyController {
         return surveyService.getAllSurveys();
     }
 
+    @GetMapping("/{id}")
+    public @ResponseBody Survey getSurvey(@PathVariable("id") int id){
+        return surveyService.getSurvey(id);
+    }
 }

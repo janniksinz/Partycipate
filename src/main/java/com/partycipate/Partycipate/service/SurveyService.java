@@ -46,7 +46,7 @@ public class SurveyService {
     }
 
 
-    public Optional<Survey> getSurvey(Long id) {
-        return Optional.empty();
+    public Survey getSurvey(int id) {
+        return surveyRepository.findById(id);
     }
 }
