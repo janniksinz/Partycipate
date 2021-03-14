@@ -23,13 +23,9 @@ public class AnswerService {
     }
 
     //getAnswersByElementId
-    public HashMap<Set<Answer>, Integer> getAnswersByElementId(int id){
+    public Set<Answer> getAnswersByElementId(int id){
         Set<Answer> answers = answerRepository.getAnswersByElementId(id);
-        //int surveyId = SurveyElementService.getSurveyIdByElementId(id);
-        int surveyId = 1;
-        HashMap<Set<Answer>, Integer> answer = new HashMap(){};
-        answer.put(answers,surveyId);
-        return answer;
+        return answers;
     }
 
     

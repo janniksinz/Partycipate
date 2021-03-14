@@ -23,7 +23,6 @@ public class Answer {
             updatable = false
     )
     private int id;
-
     private HashMap<Integer, Integer> content;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -36,7 +35,7 @@ public class Answer {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Participant participant;
 
-    //end of variables
+    //end of variables--------------------------------
 
     private Answer(Builder builder){
         this.id=builder.id;
@@ -44,6 +43,13 @@ public class Answer {
         this.content= builder.content;
     }
     public Answer(){}
+    public Answer(int id, Object content, SurveyElement surveyElement, Participant participant){
+        this.id=id; this.surveyElement=surveyElement; this.participant=participant;
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        this.content=hashMap;
+        //ToDo parse content(Object??) into the Hashmap here
+        //Todo can you even store HashMaps in DB?
+    }
 
     public static class Builder{
         private int id = 0;
