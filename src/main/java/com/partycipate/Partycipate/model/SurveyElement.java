@@ -1,6 +1,11 @@
 package com.partycipate.Partycipate.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class SurveyElement {
@@ -19,16 +24,25 @@ public class SurveyElement {
             updatable = false
     )
     private int id;
-    private int survey_id;
+
     private int position;
     private String type;
     private String question;
     private boolean may_skip;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="survey_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Survey survey;
 
+    @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
+    private Set<AnswerPossibility> answerPossibilities= new HashSet<>();
+
+    @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
+    private Set<Answer> answers = new HashSet<>();
 
     private SurveyElement(Builder builder){
         this.id = builder.id;
-        this.survey_id= builder.survey_id;
+
         this.position= builder.position;
         this.type= builder.type;
         this.question= builder.question;
@@ -41,7 +55,7 @@ public class SurveyElement {
     public static class Builder{
 
         private int id = 0;
-        private int survey_id = 0;
+
         private int position = 0;
         private String type = "";
         private String question = "";
@@ -51,10 +65,8 @@ public class SurveyElement {
             this.id=id;
             return this;
         }
-        public Builder survey_id(int survey_id){
-            this.survey_id=survey_id;
-            return this;
-        }
+
+
         public Builder position(int position){
             this.position=position;
             return this;
@@ -74,6 +86,30 @@ public class SurveyElement {
         public SurveyElement build(){
             return new SurveyElement(this);
         }
+    }
+
+    public Set<AnswerPossibility> getAnswerPossibilities() {
+        return answerPossibilities;
+    }
+
+    public void setAnswerPossibilities(Set<AnswerPossibility> answerPossibilities) {
+        this.answerPossibilities = answerPossibilities;
+    }
+
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+    }
+
+    public Survey getSurvey() {
+        return survey;
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
     }
 
     public int getPosition() {
@@ -108,13 +144,7 @@ public class SurveyElement {
         this.may_skip = may_skip;
     }
 
-    public int getSurvey_id() {
-        return survey_id;
-    }
 
-    public void setSurvey_id(int survey_id) {
-        this.survey_id = survey_id;
-    }
 
     public int getId() {
         return id;
@@ -129,11 +159,13 @@ public class SurveyElement {
     public String toString() {
         return "SurveyElement{" +
                 "id=" + id +
-                ", survey_id=" + survey_id +
                 ", position=" + position +
                 ", type='" + type + '\'' +
                 ", question='" + question + '\'' +
                 ", may_skip=" + may_skip +
+                ", survey=" + survey +
+                ", answerPossibilities=" + answerPossibilities +
+                ", answers=" + answers +
                 '}';
     }
 }

@@ -1,5 +1,7 @@
 package com.partycipate.Partycipate.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,12 +21,16 @@ public class AnswerPossibility {
             updatable = false
     )
     private int id;
-    private int surveyElement_id;
     private String answer;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="surveyElement_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private SurveyElement surveyElement;
 
     private AnswerPossibility(Builder builder){
         this.id=builder.id;
-        this.surveyElement_id= builder.surveyElement_id;
+
         this.answer= builder.answer;
     }
 
@@ -32,17 +38,14 @@ public class AnswerPossibility {
 
     public static class Builder{
         private int id = 0;
-        private int surveyElement_id = 0;
+
         private String answer = "";
 
         public Builder id(int id){
             this.id=id;
             return this;
         }
-        public Builder surveyElement_id(int surveyElement_id){
-            this.surveyElement_id=surveyElement_id;
-            return this;
-        }
+
         public Builder answer(String answer){
             this.answer=answer;
             return this;
@@ -55,8 +58,32 @@ public class AnswerPossibility {
     public String toString() {
         return "AnswerPossibility{" +
                 "id=" + id +
-                ", surveyElement_id=" + surveyElement_id +
                 ", answer='" + answer + '\'' +
+                ", surveyElement=" + surveyElement +
                 '}';
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public SurveyElement getSurveyElement() {
+        return surveyElement;
+    }
+
+    public void setSurveyElement(SurveyElement surveyElement) {
+        this.surveyElement = surveyElement;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
