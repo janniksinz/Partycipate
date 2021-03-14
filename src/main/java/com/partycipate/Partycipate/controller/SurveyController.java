@@ -32,5 +32,9 @@ public class SurveyController {
         surveyService.addSurvey(survey);
     }
 
+    @GetMapping("")
+    public List<Survey> getAllSurveys(){
+        return surveyService.getAllSurveys();
+    }
 
 }

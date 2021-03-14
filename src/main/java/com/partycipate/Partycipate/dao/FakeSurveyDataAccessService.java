@@ -13,9 +13,15 @@ public class FakeSurveyDataAccessService implements SurveyDao{
 
     private static List<Survey> DB = new ArrayList<>();
 
+
     @Override
     public Survey insertSurvey(UUID id, Survey survey) {
         DB.add(new Survey.Builder().build());
         return survey;
+    }
+
+    @Override
+    public List<Survey> selectAllSurveys() {
+        return DB;
     }
 }

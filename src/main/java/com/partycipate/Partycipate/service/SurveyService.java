@@ -5,6 +5,7 @@ import com.partycipate.Partycipate.model.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +24,15 @@ public class SurveyService implements ISurveyService{
         return surveyDao.insertSurvey(survey);
     }
 
-
+    @GetMapping()
+    public List<Survey> getAllSurveys(){
+        return surveyDao.selectAllSurveys();
+    }
 
 
     public static Survey getRandomSurvey(int id) {
         //ToDo create content for the dummy survey
-        return new Survey.Builder().id(0).creation_date("2021-02-28T18:25:43.511Z").cookie("11111222222333333").build();
+        return new Survey.Builder().id(0).creation_date("2021-02-28T18:25:43.511Z").cookie("11111222222333333").title("some Survey").build();
     }
 
 
