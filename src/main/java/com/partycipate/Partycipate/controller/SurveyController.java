@@ -14,7 +14,7 @@ import java.util.Set;
 
 
 @RestController
-@RequestMapping("/survey")
+@RequestMapping("/api/survey")
 public class SurveyController {
     /*
     *  This is the endpoint for surveys
