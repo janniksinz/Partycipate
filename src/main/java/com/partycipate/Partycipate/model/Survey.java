@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.partycipate.Partycipate.model.SurveyElement;
 import javax.persistence.*;
 import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,8 +26,6 @@ public class Survey {
     )
     private int id;
 
-
-
     private String creation_date;
     private String title;
     private String cookie;
@@ -44,6 +43,14 @@ public class Survey {
     private User user;
 
     public Survey(){}
+    public Survey(@JsonProperty("id") int id,
+                  @JsonProperty("creation_date") String creation_date,
+                  @JsonProperty("title") String title,
+                  @JsonProperty("cookie") String cookie,
+                  @JsonProperty("content") ArrayList<SurveyElement> content){
+        this.id=id; this.creation_date=creation_date; this.title=title;
+        this.cookie=cookie;
+    }
 
     private Survey(Builder builder) {
         this.id = builder.id;
