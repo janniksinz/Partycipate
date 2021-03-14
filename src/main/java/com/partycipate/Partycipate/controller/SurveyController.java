@@ -37,7 +37,7 @@ public class SurveyController {
 
     @GetMapping("")
     public @ResponseBody Iterable<Survey> getAllSurveys(){
-        return surveyRepositoryGio.findAll();
+        return surveyService.getAllSurveys();
     }
 
 }
