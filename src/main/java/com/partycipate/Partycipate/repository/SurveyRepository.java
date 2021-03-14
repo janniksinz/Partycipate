@@ -1,6 +1,7 @@
-package com.partycipate.Partycipate.model;
+package com.partycipate.Partycipate.repository;
 
 
+import com.partycipate.Partycipate.model.Survey;
 import org.springframework.data.repository.CrudRepository;
 
 import org.springframework.stereotype.Repository;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SurveyRepositoryGio extends CrudRepository<Survey, Integer> {
+public interface SurveyRepository extends CrudRepository<Survey, Integer> {
 
     //@Query(value = "select * from survey Where id = 1", nativeQuery = true)
     //Survey findSurveyById(int id);

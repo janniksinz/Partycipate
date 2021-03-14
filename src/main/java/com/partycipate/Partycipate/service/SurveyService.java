@@ -2,7 +2,7 @@ package com.partycipate.Partycipate.service;
 
 import com.partycipate.Partycipate.dao.SurveyDao;
 import com.partycipate.Partycipate.model.Survey;
-import com.partycipate.Partycipate.model.SurveyRepositoryGio;
+import com.partycipate.Partycipate.repository.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class SurveyService implements ISurveyService{
 
     private final SurveyDao surveyDao;
     @Autowired
-    private SurveyRepositoryGio surveyRepositoryGio;
+    private SurveyRepository surveyRepository;
 
     @Autowired
     public SurveyService(@Qualifier("fakeDao") SurveyDao surveyDao) {
@@ -30,7 +30,7 @@ public class SurveyService implements ISurveyService{
 
     @GetMapping()
     public @ResponseBody Iterable<Survey> getAllSurveys(){
-        return surveyRepositoryGio.findAll();
+        return surveyRepository.findAll();
     }
 
 
