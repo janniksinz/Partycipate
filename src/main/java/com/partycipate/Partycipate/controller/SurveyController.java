@@ -35,7 +35,7 @@ public class SurveyController {
         return surveys;
     }
 
-    @GetMapping("/survey/{id}")
+    @GetMapping("/{id}")
     //@Header  Cookie, Auth_token
     //@Body
     public Survey getSurvey(@PathVariable("id") int id){

@@ -1,8 +1,8 @@
 package com.partycipate.Partycipate.security;
 
 public enum ApplicationUserPermission {
-    ADMIN_READ("admin:read"),
-    ADMIN_WRITE("admin:write");
+    SURVEY_READ("admin:read"),
+    SURVEY_WRITE("admin:write");
 
     private final String permission;
 
