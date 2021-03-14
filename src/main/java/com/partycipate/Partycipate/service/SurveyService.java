@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SurveyService implements ISurveyService{
+public class SurveyService {
 
     private final SurveyDao surveyDao;
     @Autowired
@@ -40,12 +40,12 @@ public class SurveyService implements ISurveyService{
     }
 
 
-    @Override
+
     public List<Survey> findAll() {
         return null;
     }
 
-    @Override
+
     public Optional<Survey> getSurvey(Long id) {
         return Optional.empty();
     }
