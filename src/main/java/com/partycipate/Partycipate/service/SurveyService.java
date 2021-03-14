@@ -49,4 +49,7 @@ public class SurveyService {
     public Survey getSurvey(int id) {
         return surveyRepository.findById(id);
     }
+    /*public Iterable<Survey> getUserSurveys(int id){
+        return (Iterable<Survey>) surveyRepository.findAllByUser_id(id);
+    }*/
 }

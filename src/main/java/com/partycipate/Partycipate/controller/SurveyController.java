@@ -39,4 +39,8 @@ public class SurveyController {
     public @ResponseBody Survey getSurvey(@PathVariable("id") int id){
         return surveyService.getSurvey(id);
     }
+    /*@GetMapping("/user/{id}")
+    public @ResponseBody Iterable<Survey> getUserSurveys(@PathVariable("id") int id){
+        return surveyService.getUserSurveys(id);
+    }*/
 }
