@@ -1,37 +1,48 @@
 package com.partycipate.Partycipate.service;
 
-import com.partycipate.Partycipate.dao.SurveyDao;
 import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.repository.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class SurveyService {
 
-    private final SurveyDao surveyDao;
     @Autowired
     private SurveyRepository surveyRepository;
 
     @Autowired
-    public SurveyService(@Qualifier("fakeDao") SurveyDao surveyDao) {
-        this.surveyDao = surveyDao;
+    public SurveyService(SurveyRepository surveyRepository) {
+        this.surveyRepository = surveyRepository;
     }
 
     public Survey addSurvey(Survey survey){
-        return surveyDao.insertSurvey(survey);
+        return surveyRepository.save(survey);
     }
 
-    @GetMapping()
     public @ResponseBody Iterable<Survey> getAllSurveys(){
         return surveyRepository.findAll();
     }
+
+    //getSurveyByUserId
+    public @ResponseBody
+    Set<Survey> getSurveyByUserId(int user_id){
+        return surveyRepository.getSurveyByUser(user_id);
+    }
+    /*kann Optional keine oder viele zurückgeben???*/
+
+
+
+
+
 
 
     public static Survey getRandomSurvey(int id) {

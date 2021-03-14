@@ -3,6 +3,8 @@ package com.partycipate.Partycipate.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 public class Answer {
@@ -22,12 +24,19 @@ public class Answer {
     )
     private int id;
 
-    private int content;
+    private HashMap<Integer, Integer> content;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="surveyElement_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private SurveyElement surveyElement;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "participant_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Participant participant;
+
+    //end of variables
 
     private Answer(Builder builder){
         this.id=builder.id;
@@ -39,7 +48,7 @@ public class Answer {
     public static class Builder{
         private int id = 0;
 
-        private int content = 0;
+        private HashMap<Integer, Integer> content = null;
 
         public Builder id(int id){
             this.id=id;
@@ -47,7 +56,7 @@ public class Answer {
         }
 
 
-        public Builder content(int content){
+        public Builder content(HashMap<Integer,Integer> content){
             this.content=content;
             return this;
         }
@@ -71,14 +80,20 @@ public class Answer {
         this.id = id;
     }
 
-
-
-    public int getContent() {
+    public HashMap<Integer, Integer> getContent() {
         return content;
     }
 
-    public void setContent(int content) {
+    public void setContent(HashMap<Integer, Integer> content) {
         this.content = content;
+    }
+
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    public void setParticipant(Participant participant) {
+        this.participant = participant;
     }
 
     @Override

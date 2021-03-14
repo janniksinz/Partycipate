@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.Set;
 
 
 @RestController
 @RequestMapping("/api/survey")
 public class SurveyController {
-
-    @Autowired
-    private SurveyRepository surveyRepository;
 
     private final SurveyService surveyService;
     @Autowired
@@ -39,8 +37,11 @@ public class SurveyController {
     public @ResponseBody Survey getSurvey(@PathVariable("id") int id){
         return surveyService.getSurvey(id);
     }
-    /*@GetMapping("/user/{id}")
-    public @ResponseBody Iterable<Survey> getUserSurveys(@PathVariable("id") int id){
-        return surveyService.getUserSurveys(id);
-    }*/
+
+    //getSurveyByUserId
+    @GetMapping("/user/{id}")
+    public @ResponseBody
+    Set<Survey> getSurveyByUserId(@PathVariable("id") int id){
+        return surveyService.getSurveyByUserId(id);
+    }
 }

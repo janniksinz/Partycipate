@@ -30,8 +30,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 // allow access to pattern Endpoints for Roles
-                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/api/**").hasRole(ADMIN.name())
+                .antMatchers("/", "index.html", "/css/*", "/js/*").permitAll()
+                //.antMatchers("/api/**").hasRole(ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()

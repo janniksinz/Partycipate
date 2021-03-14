@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends CrudRepository<Survey, Integer> {
+    //getUserByAuthToken -> TokenRepository
 
+    //save (register)
+
+    //findById (login)
+
+    //delete
 }
 
