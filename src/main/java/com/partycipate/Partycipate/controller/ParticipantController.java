@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/participant")
-
 public class ParticipantController {
 
     @Autowired
@@ -25,13 +24,18 @@ public class ParticipantController {
     //getSurveyById
     @GetMapping("/{id}")
     public String getSurvey(int id){
-
-        return "";
+        //ToDo implement surveyService where you get the surveyById
+        return "ntn";
     }
+
+    //getBasicResultsForWholeSurvey
+    //{},{},{}
 
     //getBasicResults
     @GetMapping("/results/{element_id}")
     public Result getBasicResults(@PathVariable ("element_id")int element_id){
+        //ToDo fix internal Server error
+        System.out.println(answerService.results(element_id));
         return answerService.results(element_id);
     }
 

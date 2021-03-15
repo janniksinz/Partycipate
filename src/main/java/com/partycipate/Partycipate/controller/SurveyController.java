@@ -24,6 +24,7 @@ public class SurveyController {
 
     @PostMapping("")
     public void addSurvey(@RequestBody Survey survey){
+        //ToDo fix internal Server Error
         surveyService.addSurvey(survey);
     }
 
@@ -43,13 +44,16 @@ public class SurveyController {
     @GetMapping("/user/{id}")
     public @ResponseBody
     Set<Survey> getSurveyByUserId(@PathVariable("id") int id){
+        //ToDo evaluate reason for existence
         return surveyService.getSurveysByUserId(id);
     }
 
     //deleteById
-    @DeleteMapping("/user/{id}")
-    public void deleteSurveybyId(@PathVariable("id") int id){
+    @DeleteMapping("/{id}")
+    public int deleteSurveybyId(@PathVariable("id") int id){
+        //ToDo send Exception in Case of already deleted
         surveyService.deleteSurveybyId(id);
+        return id;
     }
 
 
