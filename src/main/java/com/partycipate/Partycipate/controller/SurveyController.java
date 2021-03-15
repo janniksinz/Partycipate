@@ -40,13 +40,7 @@ public class SurveyController {
         return surveyService.getSurvey(id);
     }
 
-    //getSurveyByUserId
-    @GetMapping("/user/{id}")
-    public @ResponseBody
-    Set<Survey> getSurveyByUserId(@PathVariable("id") int id){
-        //ToDo evaluate reason for existence
-        return surveyService.getSurveysByUserId(id);
-    }
+
 
     //deleteById
     @DeleteMapping("/{id}")

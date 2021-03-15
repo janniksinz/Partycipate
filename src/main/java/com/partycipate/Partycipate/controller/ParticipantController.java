@@ -2,6 +2,7 @@ package com.partycipate.Partycipate.controller;
 
 import com.partycipate.Partycipate.model.Answer;
 import com.partycipate.Partycipate.dto.Result;
+import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.service.AnswerService;
 import com.partycipate.Partycipate.service.ParticipantService;
 import com.partycipate.Partycipate.service.SurveyService;
@@ -23,9 +24,9 @@ public class ParticipantController {
 
     //getSurveyById
     @GetMapping("/{id}")
-    public String getSurvey(int id){
+    public Survey getSurvey(int survey_id){
         //ToDo implement surveyService where you get the surveyById
-        return "ntn";
+        return surveyService.getSurveyBySurveyId(survey_id);
     }
 
     //getBasicResultsForWholeSurvey

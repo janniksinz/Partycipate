@@ -32,19 +32,14 @@ public class SurveyService {
         return surveyRepository.findAll();
     }
 
-    //getSurveysByUserId
-    public @ResponseBody
-    Set<Survey> getSurveysByUserId(int user_id){
-        return surveyRepository.getSurveyByUser(user_id);
-    }
+    //getSurveyBySurveyId
+    public Survey getSurveyBySurveyId(int survey_id){ return surveyRepository.findById(survey_id); }
+
+
 
     public void deleteSurveybyId(int id){
         surveyRepository.deleteById(id);
     }
-
-
-
-
 
 
 
