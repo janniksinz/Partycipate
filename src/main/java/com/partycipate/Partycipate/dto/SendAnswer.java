@@ -1,4 +1,6 @@
-package com.partycipate.Partycipate.model;
+package com.partycipate.Partycipate.dto;
+
+import com.partycipate.Partycipate.model.Answer;
 
 public class SendAnswer {
     int id;

@@ -32,9 +32,9 @@ public class SurveyService {
         return surveyRepository.findAll();
     }
 
-    //getSurveyByUserId
+    //getSurveysByUserId
     public @ResponseBody
-    Set<Survey> getSurveyByUserId(int user_id){
+    Set<Survey> getSurveysByUserId(int user_id){
         return surveyRepository.getSurveyByUser(user_id);
     }
 

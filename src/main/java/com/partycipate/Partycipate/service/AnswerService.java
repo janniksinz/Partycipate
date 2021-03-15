@@ -1,13 +1,17 @@
 package com.partycipate.Partycipate.service;
 
 import com.partycipate.Partycipate.model.Answer;
+import com.partycipate.Partycipate.dto.Result;
 import com.partycipate.Partycipate.model.MCAnswerContent;
-import com.partycipate.Partycipate.model.Result;
 import com.partycipate.Partycipate.repository.AnswerRepository;
+import com.partycipate.Partycipate.repository.SurveyElementRepository;
+import com.partycipate.Partycipate.repository.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -39,7 +43,7 @@ public class AnswerService {
         //brauche Set von Answers; ArrayList initialisen mit Laenge count; Iterator durchgehen und ArrayList hochzaehlen;
         // ArrayList in Result setzen (setResult)
         Set<Answer> answers = answerRepository.getAnswersByElementId(element_id);
-        ArrayList<Integer>counting_results = new ArrayList<>(count);
+        ArrayList<Integer> counting_results = new ArrayList<>(count);
         Iterator<Answer> iterator = answers.iterator();
         while (iterator.hasNext()){
             Answer a = iterator.next();
@@ -58,7 +62,4 @@ public class AnswerService {
         return  result;
         // Anmerkung
     }
-
-
-    
 }

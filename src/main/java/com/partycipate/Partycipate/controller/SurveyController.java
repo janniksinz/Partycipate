@@ -27,11 +27,13 @@ public class SurveyController {
         surveyService.addSurvey(survey);
     }
 
+    //getAll
     @GetMapping("")
     public @ResponseBody Iterable<Survey> getAllSurveys(){
         return surveyService.getAllSurveys();
     }
 
+    //getById
     @GetMapping("/{id}")
     public @ResponseBody Survey getSurvey(@PathVariable("id") int id){
         return surveyService.getSurvey(id);
@@ -41,9 +43,10 @@ public class SurveyController {
     @GetMapping("/user/{id}")
     public @ResponseBody
     Set<Survey> getSurveyByUserId(@PathVariable("id") int id){
-        return surveyService.getSurveyByUserId(id);
+        return surveyService.getSurveysByUserId(id);
     }
 
+    //deleteById
     @DeleteMapping("/user/{id}")
     public void deleteSurveybyId(@PathVariable("id") int id){
         surveyService.deleteSurveybyId(id);
