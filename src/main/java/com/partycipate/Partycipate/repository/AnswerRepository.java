@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 @Repository
-public interface AnswerRepository extends CrudRepository<Survey, Integer> {
+public interface AnswerRepository extends CrudRepository<Answer, Integer> {
     //getAnswerBySurveyId -> ElementId
     @Query(value = "SELECT * FROM answer WHERE survey_element_id = :element_id", nativeQuery = true)
     public Set<Answer> getAnswersByElementId(@Param("element_id")int element_id);
