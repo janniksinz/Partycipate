@@ -38,6 +38,9 @@ public class SurveyService {
         return surveyRepository.getSurveyByUser(user_id);
     }
 
+    public void deleteSurveybyId(int id){
+        surveyRepository.deleteById(id);
+    }
 
 
 
