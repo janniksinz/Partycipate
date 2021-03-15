@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.PostUpdate;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -22,6 +24,11 @@ public class UserController {
     @GetMapping("/{id}")
     public User getUser(@PathVariable ("id") int id){
         return userService.getUser(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable ("id") int id){
+        userService.deleteUser(id);
     }
 
 }
