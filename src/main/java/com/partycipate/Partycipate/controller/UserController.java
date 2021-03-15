@@ -19,4 +19,9 @@ public class UserController {
         return userService.addUser(user.getEmail(),user.getPassword(), user.getUsername());
     }
 
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable ("id") int id){
+        return userService.getUser(id);
+    }
+
 }
