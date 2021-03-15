@@ -56,7 +56,7 @@ public class AnswerService {
         Result result = new Result();
         result.setResults(counting_results);
         return  result;
-
+        // Anmerkung
     }
 
 
