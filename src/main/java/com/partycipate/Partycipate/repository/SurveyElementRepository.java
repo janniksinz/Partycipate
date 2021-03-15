@@ -16,6 +16,5 @@ public interface SurveyElementRepository extends CrudRepository<Survey, Integer>
     @Query(value = "SELECT survey_id FROM survey_element WHERE :element_id = id LIMIT 1",nativeQuery = true)
     public Set<SurveyElement> getSurveyElementByElementId(@Param("element_id") int id);
 
-
 }
 

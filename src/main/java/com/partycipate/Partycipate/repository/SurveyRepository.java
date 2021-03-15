@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 @Repository
 public interface SurveyRepository extends CrudRepository<Survey, Integer> {
     Survey findById(int id);
