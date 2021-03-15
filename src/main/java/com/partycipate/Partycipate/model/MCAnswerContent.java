@@ -21,30 +21,35 @@ public class MCAnswerContent {
             updatable = false
     )
     private int id;
-    private int position;
-    private int content;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="answerPossibility_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private AnswerPossibility answerPossibility;
+
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "answer_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Answer answer;
-
+    
     public MCAnswerContent (){}
-    public MCAnswerContent(int id, int content, int position, Answer answer) {
+    public MCAnswerContent(int id,  Answer answer) {
         this.id = id;
-        this.content = content;
-        this.position = position;
+
+
         this.answer = answer;
     }
     private MCAnswerContent(Builder builder){
         this.id=builder.id;
-        this.content=builder.content;
+
         this.answer=builder.answer;
     }
 
     public static class Builder{
         private int id = 0;
-        private int content = 0;
+
         private int position = 0;
         private Answer answer = null;
 
@@ -52,10 +57,7 @@ public class MCAnswerContent {
             this.id=id;
             return this;
         }
-        public Builder content(int content){
-            this.content=content;
-            return this;
-        }
+
         public Builder position(int position){
             this.position=position;
             return this;
@@ -76,20 +78,16 @@ public class MCAnswerContent {
         this.id = id;
     }
 
-    public int getContent() {
-        return content;
+
+
+
+
+    public AnswerPossibility getAnswerPossibility() {
+        return answerPossibility;
     }
 
-    public void setContent(int content) {
-        this.content = content;
-    }
-
-    public int getPosition(){
-        return position;
-    }
-
-    public void setPosition(int position){
-        this.position = position;
+    public void setAnswerPossibility(AnswerPossibility answerPossibility) {
+        this.answerPossibility = answerPossibility;
     }
 
     public Answer getAnswer() {

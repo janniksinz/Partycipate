@@ -3,6 +3,7 @@ package com.partycipate.Partycipate.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class AnswerPossibility {
@@ -24,6 +25,8 @@ public class AnswerPossibility {
     private int position;
     private String answer;
 
+
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "surveyElement_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -34,6 +37,8 @@ public class AnswerPossibility {
 
         this.answer = builder.answer;
     }
+    @OneToMany(mappedBy = "answerPossibility",cascade = CascadeType.ALL)
+    Set<MCAnswerContent> mcAnswerContent;
 
     public AnswerPossibility() {
     }
@@ -103,5 +108,14 @@ public class AnswerPossibility {
 
     public void setPosition(int position){
         this.position = position;
+    }
+
+
+    public Set<MCAnswerContent> getMcAnswerContent() {
+        return mcAnswerContent;
+    }
+
+    public void setMcAnswerContent(Set<MCAnswerContent> mcAnswerContent) {
+        this.mcAnswerContent = mcAnswerContent;
     }
 }

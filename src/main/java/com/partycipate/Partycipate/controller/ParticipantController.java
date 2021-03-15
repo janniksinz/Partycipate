@@ -9,6 +9,8 @@ import com.partycipate.Partycipate.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/api/participant")
 public class ParticipantController {
@@ -33,9 +35,7 @@ public class ParticipantController {
 
     //getBasicResults
     @GetMapping("/results/{element_id}")
-    public Result getBasicResults(@PathVariable ("element_id")int element_id){
-        //ToDo fix internal Server error
-        System.out.println(answerService.results(element_id));
+    public ArrayList<Integer> getBasicResults(@PathVariable ("element_id")int element_id){
         return answerService.results(element_id);
     }
 

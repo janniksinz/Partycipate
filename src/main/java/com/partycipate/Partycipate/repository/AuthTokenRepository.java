@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AuthTokenRepository extends CrudRepository<Survey, Integer> {
+public interface AuthTokenRepository extends CrudRepository<AuthToken, Integer> {
 
     @Query(value= "Select * From user Where user_id = (Select user_id From auth_token Where token = :authToken)", nativeQuery = true )
     User getUserByAuthToken(AuthToken authToken);
