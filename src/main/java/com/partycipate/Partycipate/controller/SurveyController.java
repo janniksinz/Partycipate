@@ -1,6 +1,6 @@
 package com.partycipate.Partycipate.controller;
 
-import com.partycipate.Partycipate.repository.SurveyRepository;
+
 import com.partycipate.Partycipate.service.SurveyService;
 import com.partycipate.Partycipate.model.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.Set;
 
 
 @RestController
 @RequestMapping("/api/survey")
 public class SurveyController {
-
-    @Autowired
-    private SurveyRepository surveyRepository;
 
     private final SurveyService surveyService;
     @Autowired
@@ -39,8 +36,18 @@ public class SurveyController {
     public @ResponseBody Survey getSurvey(@PathVariable("id") int id){
         return surveyService.getSurvey(id);
     }
-    /*@GetMapping("/user/{id}")
-    public @ResponseBody Iterable<Survey> getUserSurveys(@PathVariable("id") int id){
-        return surveyService.getUserSurveys(id);
-    }*/
+
+    //getSurveyByUserId
+    @GetMapping("/user/{id}")
+    public @ResponseBody
+    Set<Survey> getSurveyByUserId(@PathVariable("id") int id){
+        return surveyService.getSurveyByUserId(id);
+    }
+
+    @DeleteMapping("/user/{id}")
+    public void deleteSurveybyId(@PathVariable("id") int id){
+        surveyService.deleteSurveybyId(id);
+    }
+
+
 }

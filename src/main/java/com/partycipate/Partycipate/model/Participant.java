@@ -3,6 +3,7 @@ package com.partycipate.Partycipate.model;
 
 import javax.persistence.*;
 import javax.servlet.http.Part;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -32,6 +33,9 @@ public class Participant {
 
     @ManyToMany(mappedBy = "participantSet")
     private Set<Survey> surveySet;
+
+    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL)
+    private Set<Answer> answerSet = new HashSet<>();
 
     private Participant(Builder builder) {
         this.age=builder.age;
@@ -66,6 +70,14 @@ public class Participant {
         public Participant build() {
             return new Participant(this);
         }
+    }
+
+    public Set<Answer> getAnswerSet() {
+        return answerSet;
+    }
+
+    public void setAnswerSet(Set<Answer> answerSet) {
+        this.answerSet = answerSet;
     }
 
     public void setEmail(String email) {

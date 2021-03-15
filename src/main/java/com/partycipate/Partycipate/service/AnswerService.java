@@ -1,21 +1,31 @@
 package com.partycipate.Partycipate.service;
 
-import com.partycipate.Partycipate.dao.SurveyDao;
+import com.partycipate.Partycipate.model.Answer;
+import com.partycipate.Partycipate.repository.AnswerRepository;
+import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.repository.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Set;
+
 @Service
 public class AnswerService {
 
-    private final SurveyDao surveyDao;
     @Autowired
-    private SurveyRepository surveyRepository;
+    private AnswerRepository answerRepository;
 
     @Autowired
-    public AnswerService(@Qualifier("fakeDao") SurveyDao surveyDao) {
-        this.surveyDao = surveyDao;
+    public AnswerService(AnswerRepository answerRepository) {
+        this.answerRepository = answerRepository;
+    }
+
+    //getAnswersByElementId
+    public Set<Answer> getAnswersByElementId(int id){
+        Set<Answer> answers = answerRepository.getAnswersByElementId(id);
+        return answers;
     }
 
     
