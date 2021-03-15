@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/api/participant")
 
 public class ParticipantController {
@@ -30,5 +30,6 @@ public class ParticipantController {
     public void addAnswer(@RequestBody Answer answer){
         participantService.addAnswer(answer);
     }
+
 
 }
