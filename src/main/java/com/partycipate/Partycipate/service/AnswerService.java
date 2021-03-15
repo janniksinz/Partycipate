@@ -29,8 +29,11 @@ public class AnswerService {
         return answers;
     }
 
+    public
+
     public Result results(Set<Answer> answerSet){
         //calculate all the answers to one Result to send back to the Frontend
+        answerSet.iterator()
         return new Result();
     }
 

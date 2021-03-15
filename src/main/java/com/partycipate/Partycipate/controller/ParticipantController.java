@@ -4,6 +4,7 @@ import com.partycipate.Partycipate.model.Answer;
 import com.partycipate.Partycipate.model.Result;
 import com.partycipate.Partycipate.model.SendAnswer;
 import com.partycipate.Partycipate.model.Survey;
+import com.partycipate.Partycipate.service.AnswerService;
 import com.partycipate.Partycipate.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ public class ParticipantController {
     @Autowired
     private ParticipantService participantService;
 
+    @Autowired
+    private AnswerService answerService;
+
     //getSurveyById
     @GetMapping("/{id}")
     public String getSurvey(int id){
@@ -28,8 +32,8 @@ public class ParticipantController {
 
     //getBasicResults
     @GetMapping("/results")
-    public ArrayList<Result> getBasicResults(){
-        return "";
+    public Result getBasicResults(){
+        return answerService.results();
     }
 
     //sendAnswer
