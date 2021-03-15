@@ -34,7 +34,7 @@ public class ParticipantService {
         else{
             Participant participant = new Participant.Builder().id(id).build();
         }
-
+    return answer;
     }
     public Participant addParticipant(Participant participant){
         participantRepository.save(participant);
