@@ -1,17 +1,13 @@
 package com.partycipate.Partycipate.service;
 
-import com.partycipate.Partycipate.model.Answer;
 import com.partycipate.Partycipate.dto.Result;
+import com.partycipate.Partycipate.model.Answer;
 import com.partycipate.Partycipate.model.MCAnswerContent;
 import com.partycipate.Partycipate.repository.AnswerRepository;
-import com.partycipate.Partycipate.repository.SurveyElementRepository;
-import com.partycipate.Partycipate.repository.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -51,7 +47,7 @@ public class AnswerService {
             Iterator<MCAnswerContent> mcacIterator = mcac.iterator();
             while(mcacIterator.hasNext()){
                 MCAnswerContent content = mcacIterator.next();
-                int position = content.getId();
+                int position = content.getPosition();
                 int value = content.getContent();
                 value += counting_results.get(position);
                 counting_results.add(position, value);

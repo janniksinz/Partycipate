@@ -21,6 +21,7 @@ public class MCAnswerContent {
             updatable = false
     )
     private int id;
+    private int position;
     private int content;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -29,9 +30,10 @@ public class MCAnswerContent {
     private Answer answer;
 
     public MCAnswerContent (){}
-    public MCAnswerContent(int id, int content, Answer answer) {
+    public MCAnswerContent(int id, int content, int position, Answer answer) {
         this.id = id;
         this.content = content;
+        this.position = position;
         this.answer = answer;
     }
     private MCAnswerContent(Builder builder){
@@ -43,6 +45,7 @@ public class MCAnswerContent {
     public static class Builder{
         private int id = 0;
         private int content = 0;
+        private int position = 0;
         private Answer answer = null;
 
         public Builder id(int id){
@@ -51,6 +54,10 @@ public class MCAnswerContent {
         }
         public Builder content(int content){
             this.content=content;
+            return this;
+        }
+        public Builder position(int position){
+            this.position=position;
             return this;
         }
         public Builder answer(Answer answer){
@@ -75,6 +82,14 @@ public class MCAnswerContent {
 
     public void setContent(int content) {
         this.content = content;
+    }
+
+    public int getPosition(){
+        return position;
+    }
+
+    public void setPosition(int position){
+        this.position = position;
     }
 
     public Answer getAnswer() {
