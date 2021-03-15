@@ -25,7 +25,6 @@ public class ParticipantController {
     //getSurveyById
     @GetMapping("/{id}")
     public Survey getSurvey(int survey_id){
-        //ToDo implement surveyService where you get the surveyById
         return surveyService.getSurveyBySurveyId(survey_id);
     }
 
