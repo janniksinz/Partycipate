@@ -27,20 +27,22 @@ public class Answer {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="surveyElement_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private SurveyElement surveyElement;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "participant_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Participant participant;
+
 
     //end of variables--------------------------------
 
     private Answer(Builder builder){
         this.id=builder.id;
-
         this.content= builder.content;
+        this.participant=builder.participant;
+        this.surveyElement=builder.surveyElement;
     }
     public Answer(){}
     public Answer(int id, Object content, SurveyElement surveyElement, Participant participant){
@@ -53,17 +55,24 @@ public class Answer {
 
     public static class Builder{
         private int id = 0;
-
         private HashMap<Integer, Integer> content = null;
+        private SurveyElement surveyElement = null;
+        private Participant participant = null;
 
         public Builder id(int id){
             this.id=id;
             return this;
         }
-
-
         public Builder content(HashMap<Integer,Integer> content){
             this.content=content;
+            return this;
+        }
+        public Builder surveyElement(SurveyElement surveyElement){
+            this.surveyElement=surveyElement;
+            return this;
+        }
+        public Builder participant(Participant participant){
+            this.participant=participant;
             return this;
         }
 

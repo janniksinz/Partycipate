@@ -16,6 +16,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("")
+    public @ResponseBody Iterable<User> getAllUser(){
+        return userService.getAllUsers();
+    }
+
     @PostMapping("")
     public User addUser(@RequestBody User user){
         return userService.addUser(user.getEmail(),user.getPassword(), user.getUsername());

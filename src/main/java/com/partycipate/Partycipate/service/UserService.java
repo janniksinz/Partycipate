@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -27,6 +28,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    //getAllUsers
+    public Iterable<User> getAllUsers(){
+        return userRepository.findAll();
+    }
 
     public User addUser(String email, String password, String username){
         User user = new User.Builder().email(email).password(password).username(username).build();
