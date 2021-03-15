@@ -23,16 +23,16 @@ public class Answer {
             updatable = false
     )
     private int id;
-    private HashMap<Integer, Integer> content;
+    private HashMap<String, String> content; // <1,0> <2,1>
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="surveyElement_id")
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private SurveyElement surveyElement;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "participant_id")
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Participant participant;
 
 
@@ -47,7 +47,7 @@ public class Answer {
     public Answer(){}
     public Answer(int id, Object content, SurveyElement surveyElement, Participant participant){
         this.id=id; this.surveyElement=surveyElement; this.participant=participant;
-        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        HashMap<String , String> hashMap = new HashMap<>();
         this.content=hashMap;
         //ToDo parse content(Object??) into the Hashmap here
         //Todo can you even store HashMaps in DB?
@@ -55,7 +55,7 @@ public class Answer {
 
     public static class Builder{
         private int id = 0;
-        private HashMap<Integer, Integer> content = null;
+        private HashMap<String , String > content = null;
         private SurveyElement surveyElement = null;
         private Participant participant = null;
 
@@ -63,7 +63,7 @@ public class Answer {
             this.id=id;
             return this;
         }
-        public Builder content(HashMap<Integer,Integer> content){
+        public Builder content(HashMap<String ,String > content){
             this.content=content;
             return this;
         }
@@ -95,11 +95,11 @@ public class Answer {
         this.id = id;
     }
 
-    public HashMap<Integer, Integer> getContent() {
+    public HashMap<String , String > getContent() {
         return content;
     }
 
-    public void setContent(HashMap<Integer, Integer> content) {
+    public void setContent(HashMap<String , String > content) {
         this.content = content;
     }
 
