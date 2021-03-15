@@ -37,7 +37,7 @@ public class SurveyService {
     Set<Survey> getSurveyByUserId(int user_id){
         return surveyRepository.getSurveyByUser(user_id);
     }
-    /*kann Optional keine oder viele zurückgeben???*/
+
 
 
 
