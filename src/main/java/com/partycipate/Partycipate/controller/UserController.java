@@ -23,7 +23,6 @@ public class UserController {
 
     @PostMapping("")
     public User addUser(@RequestBody User user){
-        //ToDo investigate 500 internal server error
         return userService.addUser(user.getEmail(),user.getPassword(), user.getUsername());
     }
 

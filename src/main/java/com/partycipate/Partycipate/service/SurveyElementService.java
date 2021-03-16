@@ -15,14 +15,16 @@ public class SurveyElementService {
 
     @Autowired
     private SurveyElementRepository surveyElementRepository;
+    @Autowired
+    private SurveyService surveyService;
 
     @Autowired
     public SurveyElementService(SurveyElementRepository surveyElementRepository) {
         this.surveyElementRepository = surveyElementRepository;
     }
     public int addSurveyElement(SendElement sE){
-        SurveyElement surveyElement = new SurveyElement.Builder().may_skip(sE.getMay_skip()).position(sE.getPosition()).question(sE.getQuestion()).type(sE.getType()).build();
-        surveyElement.setSurvey(sE.getSurvey());
+        SurveyElement surveyElement = new SurveyElement.Builder().may_skip(sE.isMay_skip()).position(sE.getPosition()).question(sE.getQuestion()).type(sE.getType()).build();
+        surveyElement.setSurvey(surveyService.getSurvey(sE.getSurvey_id()));
         return surveyElementRepository.save(surveyElement).getId();
     }
 

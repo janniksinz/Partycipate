@@ -1,7 +1,9 @@
 package com.partycipate.Partycipate.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.partycipate.Partycipate.model.SurveyElement;
+import com.partycipate.Partycipate.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 
@@ -47,10 +49,13 @@ public class Survey {
                   @JsonProperty("creation_date") String creation_date,
                   @JsonProperty("title") String title,
                   @JsonProperty("cookie") String cookie,
-                  @JsonProperty("content") ArrayList<SurveyElement> content){
+                  @JsonProperty("user") User user
+                  ){
         this.id=id; this.creation_date=creation_date; this.title=title;
-        this.cookie=cookie;
+        this.cookie=cookie; this.user=user;
     }
+    /*start of Methods*/
+
 
     private Survey(Builder builder) {
         this.id = builder.id;
