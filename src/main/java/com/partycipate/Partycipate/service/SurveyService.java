@@ -3,7 +3,11 @@ package com.partycipate.Partycipate.service;
 import com.partycipate.Partycipate.dto.SendAnswerPossibility;
 import com.partycipate.Partycipate.dto.SendElement;
 import com.partycipate.Partycipate.dto.SendSurvey;
+import com.partycipate.Partycipate.model.AnswerPossibility;
 import com.partycipate.Partycipate.model.Survey;
+import com.partycipate.Partycipate.model.SurveyElement;
+import com.partycipate.Partycipate.repository.AnswerPossibilityRepository;
+import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.repository.SurveyRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
