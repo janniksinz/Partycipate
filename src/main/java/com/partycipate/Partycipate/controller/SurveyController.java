@@ -1,7 +1,9 @@
 package com.partycipate.Partycipate.controller;
 
 
+import com.partycipate.Partycipate.dto.SendElement;
 import com.partycipate.Partycipate.dto.SendSurvey;
+import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
 import com.partycipate.Partycipate.model.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,15 @@ import java.util.Set;
 @RequestMapping("/api/survey")
 public class SurveyController {
 
+    private final SurveyElementService surveyElement;
     private final SurveyService surveyService;
     @Autowired
-    public SurveyController(SurveyService surveyService){
+    public SurveyController(SurveyService surveyService, SurveyElementService surveyElement){
         this.surveyService=surveyService;
+        this.surveyElement = surveyElement;
     }
+
+
 
     @PostMapping("")
     public int addSurvey(@RequestBody SendSurvey survey){
@@ -39,7 +45,6 @@ public class SurveyController {
     public @ResponseBody Survey getSurvey(@PathVariable("id") int id){
         return surveyService.getSurvey(id);
     }
-
 
 
     //deleteById
