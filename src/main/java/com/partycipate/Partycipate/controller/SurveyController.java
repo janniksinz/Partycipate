@@ -47,6 +47,7 @@ public class SurveyController {
         return ResponseEntity.ok()
                 .headers(responesHeaders)
                 .body(surveyService.getSurvey(id));
+        //return new ResponseEntity<>(surveyService.getSurvey(id), HttpStatus.OK);
     }
 
 
