@@ -44,6 +44,7 @@ public class SurveyController {
     }
 
 
+
     //deleteById
     @DeleteMapping("/{id}")
     public int deleteSurveybyId(@PathVariable("id") int id){
@@ -55,6 +56,9 @@ public class SurveyController {
     //addSurveyElement
     @PostMapping("/element")
     public int addSurveyElement(@RequestBody SendElement sendElement){
+        System.out.println(sendElement.getAnswerPossibilitySet().stream().findFirst());
+        System.out.println(sendElement.getAnswerPossibilitySet().stream().count());
+
         return surveyElementService.addSurveyElement(sendElement);
     }
 

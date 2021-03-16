@@ -26,6 +26,14 @@ public class SendElement {
         this.answerPossibilitySet=answerPossibilitySet;
     }
 
+    public Set<AnswerPossibility> getAnswerPossibilitySet() {
+        return answerPossibilitySet;
+    }
+
+    public void setAnswerPossibilitySet(Set<AnswerPossibility> answerPossibilitySet) {
+        this.answerPossibilitySet = answerPossibilitySet;
+    }
+
     public boolean isMay_skip() {
         return may_skip;
     }

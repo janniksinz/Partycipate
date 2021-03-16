@@ -22,7 +22,8 @@ public class SurveyElementService {
         SurveyElement surveyElement = new SurveyElement.Builder().may_skip(sE.isMay_skip()).position(sE.getPosition()).question(sE.getQuestion()).type(sE.getType()).build();
         surveyElement.setSurvey(surveyService.getSurvey(sE.getSurvey_id()));
         //ToDo create manual implementation of save to only save surveyElement and not the Survey, too.
-        return surveyElementRepository.save(surveyElement).getId();
+        surveyElementRepository.saveSurveyElement(surveyElementRepository.getLastId()+1,surveyElement.isMay_skip(),surveyElement.getPosition(),surveyElement.getQuestion(),surveyElement.getType(), sE.getSurvey_id());
+        return surveyElement.getId();
     }
 
     /*public int getSurveyIdByElementId(int id){
