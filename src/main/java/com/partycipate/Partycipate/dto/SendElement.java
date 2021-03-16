@@ -1,14 +1,29 @@
 package com.partycipate.Partycipate.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.partycipate.Partycipate.model.AnswerPossibility;
+
+import java.util.Set;
+
 public class SendElement {
     private boolean may_skip;
     private int position;
     private String question;
     private String type;
     private int survey_id;
+    private Set<AnswerPossibility> answerPossibilitySet;
 
-    public SendElement(){
 
+    public SendElement(@JsonProperty("may_skip") boolean may_skip,
+                       @JsonProperty("position") int position,
+                       @JsonProperty("question") String question,
+                       @JsonProperty("type") String type,
+                       @JsonProperty("survey_id") int survey_id,
+                       @JsonProperty("answerPossibility") Set<AnswerPossibility> answerPossibilitySet
+                       ){
+        this.may_skip=may_skip; this.position=position; this.question=question;
+        this.type=type; this.survey_id=survey_id;
+        this.answerPossibilitySet=answerPossibilitySet;
     }
 
     public boolean isMay_skip() {
