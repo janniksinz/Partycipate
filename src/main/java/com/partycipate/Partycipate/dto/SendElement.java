@@ -10,28 +10,30 @@ public class SendElement {
     private int position;
     private String question;
     private String type;
-    private int survey_id;
-    private Set<AnswerPossibility> answerPossibilitySet;
+
+    private Set<SendAnswerPossibility> answer_possibilities;
 
 
     public SendElement(@JsonProperty("may_skip") boolean may_skip,
                        @JsonProperty("position") int position,
                        @JsonProperty("question") String question,
                        @JsonProperty("type") String type,
-                       @JsonProperty("survey_id") int survey_id,
-                       @JsonProperty("answerPossibility") Set<AnswerPossibility> answerPossibilitySet
-                       ){
-        this.may_skip=may_skip; this.position=position; this.question=question;
-        this.type=type; this.survey_id=survey_id;
-        this.answerPossibilitySet=answerPossibilitySet;
+                       @JsonProperty("answer_possibilities") Set<SendAnswerPossibility> answer_possibilities
+                       ) {
+        this.may_skip = may_skip;
+        this.position = position;
+        this.question = question;
+        this.type = type;
+
+        this.answer_possibilities=answer_possibilities;
     }
 
-    public Set<AnswerPossibility> getAnswerPossibilitySet() {
-        return answerPossibilitySet;
+    public Set<SendAnswerPossibility> getAnswer_possibilities() {
+        return answer_possibilities;
     }
 
-    public void setAnswerPossibilitySet(Set<AnswerPossibility> answerPossibilitySet) {
-        this.answerPossibilitySet = answerPossibilitySet;
+    public void setAnswer_possibilities(Set<SendAnswerPossibility> answer_possibilities) {
+        this.answer_possibilities = answer_possibilities;
     }
 
     public boolean isMay_skip() {
@@ -66,11 +68,4 @@ public class SendElement {
         this.type = type;
     }
 
-    public int getSurvey_id() {
-        return survey_id;
-    }
-
-    public void setSurvey_id(int survey_id) {
-        this.survey_id = survey_id;
-    }
 }

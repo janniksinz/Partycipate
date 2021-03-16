@@ -1,5 +1,7 @@
 package com.partycipate.Partycipate.service;
 
+import com.partycipate.Partycipate.dto.SendAnswerPossibility;
+import com.partycipate.Partycipate.dto.SendElement;
 import com.partycipate.Partycipate.dto.SendSurvey;
 import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.repository.SurveyRepository;
@@ -11,14 +13,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import javax.transaction.Transactional;
+import java.util.*;
 import java.util.logging.Logger;
 
 
 @Service
 public class SurveyService {
+
+    @Autowired
+    private AnswerPossibilityRepository answerPossibilityRepository;
+
+    @Autowired
+    private SurveyElementRepository surveyElementRepository;
 
     @Autowired
     private SurveyRepository surveyRepository;
@@ -31,10 +38,67 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
     }
 
-    public int addSurvey(SendSurvey surveyS){
+    @Transactional
+    public Survey addSurvey(SendSurvey surveyS){
+        //create Iterator
+        Set<SendElement> sendElements = surveyS.getElements();
+        Iterator<SendElement> sendElementIterator= sendElements.iterator();
+        //create surveyElementsSet
+        Set<SurveyElement> surveyElements = new HashSet<>();
+        //add SurveyElements to set
+        int i=1;
+        int lastApId= answerPossibilityRepository.getLastId()+1;
+        int lastEId= surveyElementRepository.getLastId()+1;
+        while (sendElementIterator.hasNext()){
+            SendElement sendE= sendElementIterator.next();
+            //create Iterator
+            Set<SendAnswerPossibility> sAp= sendE.getAnswer_possibilities();
+            Iterator<SendAnswerPossibility> sApIterator= sAp.iterator();
+            //Create answerPossibilitySet
+
+            Set<AnswerPossibility> aP= new HashSet<>();
+            //add Answerpossibility to AnswerPossibilitySet
+
+            while (sApIterator.hasNext()){
+                SendAnswerPossibility sendAp= sApIterator.next();
+                AnswerPossibility answerPossibility = new AnswerPossibility.Builder().id(lastApId).answer(sendAp.getAnswer()).position(sendAp.getPosition()).build();
+                aP.add(answerPossibility);
+                System.out.println("AnswerPossibilityId "+ answerPossibility.getId());
+                lastApId++;
+            }
+            //create SurveyElemenr
+
+            SurveyElement sE= new SurveyElement.Builder().id(lastEId).position(sendE.getPosition()).type(sendE.getType()).question(sendE.getQuestion()).may_skip(sendE.isMay_skip()).build();
+            //Add AnswerPossibilitySet to SurveyElement
+
+            sE.setAnswerPossibilities(aP);
+            //Add SurveyElement to Set
+
+            sE.setAnswers(null);
+            surveyElements.add(sE);
+            System.out.println("SurveyElementsId "+ sE.getId());
+            lastEId++;
+        }
+        //create Set<Answerpossibility> from Set<SendAnswerPossibilities>
+        //create Set<SurveyElements> from Set<SendSurveyElements>
         Survey survey = new Survey.Builder().creation_date(surveyS.getCreation_date()).title(surveyS.getTitle()).build();
+        //Add SurveyElementsSet to Survey
+        System.out.println(survey.getTitle());
+        System.out.println(survey.getId());
+
+        survey.setElements(surveyElements);
+        //setUser to Survey
         survey.setUser(userService.getUser(surveyS.getUser_id()));
-        return surveyRepository.save(survey).getId();
+        //save Survey
+        System.out.println(survey.getId()); //setIDs
+        System.out.println("FirstElement: "+ survey.getElements().stream().findFirst());
+        System.out.println(survey.getTitle());
+        survey.setParticipantSet(null);
+        Survey test = new Survey(4,"test","a","c",userService.getUser(1));
+
+        surveyRepository.save(survey);
+        System.out.println("test");
+        return survey;
     }
 
     public @ResponseBody Iterable<Survey> getAllSurveys(){

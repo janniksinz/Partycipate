@@ -10,16 +10,18 @@ public class SendSurvey {
     String creation_date;
     String title;
     int user_id;
-    Set<SurveyElement> surveyElements;
+    Set<SendElement> elements;
 
     public SendSurvey(@JsonProperty("cookie") String cookie,
                       @JsonProperty("creation_date")String creation_date,
                       @JsonProperty ("title") String title,
-                      @JsonProperty ("user_id") int user_id){
+                      @JsonProperty ("user_id") int user_id,
+                      @JsonProperty ("elements") Set<SendElement> elements){
         this.cookie=cookie;
         this.creation_date=creation_date;
         this.title=title;
         this.user_id=user_id;
+        this.elements=elements;
     }
 
     public String getCookie() {
@@ -52,5 +54,13 @@ public class SendSurvey {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public Set<SendElement> getElements() {
+        return elements;
+    }
+
+    public void setElements(Set<SendElement> elements) {
+        this.elements = elements;
     }
 }

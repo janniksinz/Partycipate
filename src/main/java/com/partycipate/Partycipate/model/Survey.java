@@ -34,7 +34,7 @@ public class Survey {
     private String cookie;
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
-    private Set<SurveyElement> content = new HashSet<>() ;
+    private Set<SurveyElement> elements = new HashSet<>() ;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Survey_Participant",joinColumns = @JoinColumn(name="survey_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name="participant_id", referencedColumnName = "id"))
@@ -75,12 +75,12 @@ public class Survey {
     //custom constructor for optional parameters
     public static class Builder{
 
-        private int id = 0;
+        private int id ;
 
         private String creation_date = "";
         private String title = "Survey";
         private String cookie = "";
-        private ArrayList<SurveyElement> content = null;
+        private ArrayList<SurveyElement> elements = null;
 
         public Builder id(int id){
             this.id=id;
@@ -99,8 +99,8 @@ public class Survey {
             this.cookie=cookie;
             return this;
         }
-        public Builder content(ArrayList<SurveyElement> content){
-            this.content=content;
+        public Builder elements(ArrayList<SurveyElement> elements){
+            this.elements=elements;
             return this;
         }
         public Survey build(){
@@ -153,12 +153,20 @@ public class Survey {
         return creation_date;
     }
 
-    public Set<SurveyElement> getContent() {
-        return content;
+    public Set<SurveyElement> getElements() {
+        return elements;
     }
 
-    public void setContent(Set<SurveyElement> content) {
-        this.content = content;
+    public void setElements(Set<SurveyElement> elements) {
+        this.elements = elements;
+    }
+
+    public void setParticipantSet(Set<Participant> participantSet) {
+        this.participantSet = participantSet;
+    }
+
+    public Set<Participant> getParticipantSet() {
+        return participantSet;
     }
 
     @Override
@@ -168,17 +176,9 @@ public class Survey {
                 ", creation_date='" + creation_date + '\'' +
                 ", title='" + title + '\'' +
                 ", cookie='" + cookie + '\'' +
-                ", content=" + content +
+                ", elements=" + elements +
                 ", participantSet=" + participantSet +
                 ", user=" + user +
                 '}';
-    }
-
-    public void setParticipantSet(Set<Participant> participantSet) {
-        this.participantSet = participantSet;
-    }
-
-    public Set<Participant> getParticipantSet() {
-        return participantSet;
     }
 }

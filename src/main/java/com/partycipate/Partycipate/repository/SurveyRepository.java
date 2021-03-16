@@ -26,6 +26,10 @@ public interface SurveyRepository extends CrudRepository<Survey, Integer> {
     @Query(value = "DELETE FROM `survey` WHERE `id` = :id", nativeQuery = true)
     void deleteSurveyById(int id);
 
+    @Query(value = "SELECT id FROM survey Order By id DESC LIMIT 1",nativeQuery = true)
+    public int getLastId();
+
+
 
 }
 

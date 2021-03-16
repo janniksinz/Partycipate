@@ -56,7 +56,7 @@ public class SurveyElement {
     //custom constructor for optional parameters
     public static class Builder{
 
-        private int id = 0;
+        private int id ;
 
         private int position = 0;
         private String type = "";

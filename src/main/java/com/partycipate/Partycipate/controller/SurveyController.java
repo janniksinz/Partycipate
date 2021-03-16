@@ -30,7 +30,9 @@ public class SurveyController {
 
     @PostMapping("")
     public int addSurvey(@RequestBody SendSurvey survey){
-        return surveyService.addSurvey(survey);
+        Survey survey1 =surveyService.addSurvey(survey);
+        System.out.println(survey1.getId());
+        return 1;
     }
 
     
@@ -49,6 +51,7 @@ public class SurveyController {
                 .headers(responesHeaders)
                 .body(surveyService.getSurvey(id));
         //return new ResponseEntity<>(surveyService.getSurvey(id), HttpStatus.OK);
+        //TODO fix
     }
 
 
@@ -64,10 +67,7 @@ public class SurveyController {
     //addSurveyElement
     @PostMapping("/element")
     public int addSurveyElement(@RequestBody SendElement sendElement){
-        System.out.println(sendElement.getAnswerPossibilitySet().stream().findFirst());
-        System.out.println(sendElement.getAnswerPossibilitySet().stream().count());
-
-        return surveyElementService.addSurveyElement(sendElement);
+       return 0;
     }
 
 
