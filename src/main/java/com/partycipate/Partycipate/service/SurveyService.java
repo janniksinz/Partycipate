@@ -1,7 +1,9 @@
 package com.partycipate.Partycipate.service;
 
+import com.partycipate.Partycipate.dto.SendSurvey;
 import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.repository.SurveyRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
+
 
 @Service
 public class SurveyService {
@@ -20,12 +24,17 @@ public class SurveyService {
     private SurveyRepository surveyRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     public SurveyService(SurveyRepository surveyRepository) {
         this.surveyRepository = surveyRepository;
     }
 
-    public Survey addSurvey(Survey survey){
-        return surveyRepository.save(survey);
+    public int addSurvey(SendSurvey surveyS){
+        Survey survey = new Survey.Builder().creation_date(surveyS.getCreation_date()).title(surveyS.getTitle()).build();
+        survey.setUser(userService.getUser(surveyS.getUser_id()));
+        return surveyRepository.save(survey).getId();
     }
 
     public @ResponseBody Iterable<Survey> getAllSurveys(){

@@ -1,6 +1,7 @@
 package com.partycipate.Partycipate.controller;
 
 
+import com.partycipate.Partycipate.dto.SendSurvey;
 import com.partycipate.Partycipate.service.SurveyService;
 import com.partycipate.Partycipate.model.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,8 @@ public class SurveyController {
     }
 
     @PostMapping("")
-    public void addSurvey(@RequestBody Survey survey){
-        //ToDo fix internal Server Error
-        surveyService.addSurvey(survey);
+    public int addSurvey(@RequestBody SendSurvey survey){
+        return surveyService.addSurvey(survey);
     }
 
     //getAll

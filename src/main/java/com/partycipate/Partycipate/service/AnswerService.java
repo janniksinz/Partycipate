@@ -37,7 +37,7 @@ public class AnswerService {
     }
 
 
-    public ArrayList<Integer> results(int element_id){
+    public Result results(int element_id){
         //calculate all the answers to one Result to send back to the Frontend
         int count = answerPossibilityService.getCountOfAnswersPossibilities(element_id);
 
@@ -78,9 +78,9 @@ public class AnswerService {
             }
         }
 
-        //Result result = new Result();
-        //result.setResults(counting_results);
-        return  counting_results;
+        Result result = new Result();
+        result.setResults(counting_results);
+        return  result;
         // Anmerkung
     }
 
