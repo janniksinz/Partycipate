@@ -15,8 +15,8 @@ import java.util.Set;
 @Repository
 public interface SurveyElementRepository extends CrudRepository<SurveyElement, Integer> {
 
-    @Query(value = "SELECT survey_id FROM survey_element WHERE :element_id = id LIMIT 1",nativeQuery = true)
-    public Set<SurveyElement> getSurveyElementByElementId(@Param("element_id") int id);
+    @Query(value=" Select * from survey_element Where survey_id =:survey_id", nativeQuery = true)
+    public Set<SurveyElement> findAllBySurveyId(@Param("survey_id") int survey_id);
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
