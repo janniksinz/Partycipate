@@ -7,6 +7,8 @@ import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -39,8 +41,12 @@ public class SurveyController {
 
     //getById
     @GetMapping("/{id}")
-    public @ResponseBody Survey getSurvey(@PathVariable("id") int id){
-        return surveyService.getSurvey(id);
+    public ResponseEntity<Survey> getSurvey(@PathVariable("id") int id){
+        HttpHeaders responesHeaders = new HttpHeaders();
+        responesHeaders.set("Access-Control-Allow-Origin", "*");
+        return ResponseEntity.ok()
+                .headers(responesHeaders)
+                .body(surveyService.getSurvey(id));
     }
 
 
