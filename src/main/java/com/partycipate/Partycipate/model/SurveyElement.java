@@ -1,5 +1,6 @@
 package com.partycipate.Partycipate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -38,6 +39,7 @@ public class SurveyElement {
     private Set<AnswerPossibility> answerPossibilities= new HashSet<>();
 
     @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Answer> answers = new HashSet<>();
 
     private SurveyElement(Builder builder){

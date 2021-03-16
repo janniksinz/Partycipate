@@ -33,6 +33,7 @@ public class SurveyController {
         return surveyService.addSurvey(survey);
     }
 
+    
     //getAll
     @GetMapping("")
     public @ResponseBody Iterable<Survey> getAllSurveys(){
@@ -54,7 +55,7 @@ public class SurveyController {
     //deleteById
     @DeleteMapping("/{id}")
     public int deleteSurveybyId(@PathVariable("id") int id){
-        //ToDo send Exception in Case of already deleted
+
         surveyService.deleteSurveybyId(id);
         return id;
     }

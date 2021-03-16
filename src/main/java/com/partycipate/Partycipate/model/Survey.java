@@ -1,5 +1,6 @@
 package com.partycipate.Partycipate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.partycipate.Partycipate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class Survey {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Survey_Participant",joinColumns = @JoinColumn(name="survey_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name="participant_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Set<Participant> participantSet;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

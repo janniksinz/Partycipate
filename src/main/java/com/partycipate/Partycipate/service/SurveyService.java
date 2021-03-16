@@ -46,8 +46,14 @@ public class SurveyService {
 
 
 
-    public void deleteSurveybyId(int id){
-        surveyRepository.deleteById(id);
+    public void deleteSurveybyId(int id)  {
+        try {
+            surveyRepository.deleteById(id);
+        }
+        catch (Exception e){
+            System.err.println("Id not found");
+            e.printStackTrace();
+        }
     }
 
 
