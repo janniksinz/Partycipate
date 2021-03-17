@@ -8,7 +8,6 @@ import com.partycipate.Partycipate.model.SurveyElement;
 import com.partycipate.Partycipate.repository.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,6 +49,7 @@ public class AnswerService {
         while(sEI.hasNext()){
             int value = sEI.next().getId();
             System.out.println(value);
+            // add Results from Element to Set<Results>
             results.add(answerService.results(value));
         }
 
@@ -66,34 +66,36 @@ public class AnswerService {
         // ArrayList in Result setzen (setResult)
         Set<Answer> answers = answerRepository.getAnswersByElementId(element_id);
         Result result = new Result();
+        // count participants
         int value1 = answerRepository.getCountParticipants(element_id);
         if (value1 != 0) {
             result.setCount_participants(value1);
         }
         ArrayList<Integer> counting_results = new ArrayList<>(count);
-
+        // initialize arrayList with default values 0
         for (int i =0; i<count;i++){
             counting_results.add(i, 0);
         }
 
 
         Iterator<Answer> iterator = answers.iterator();
-
+        // go through every answer for ElementId
         while (iterator.hasNext()){
             Answer a = iterator.next();
-
+            // get all MCAnswerContents for Answer a
             Iterable<MCAnswerContent> mcac =  mcAnswerContentService.getAllMcAnswerContentByAnswerId(a.getId());
 
             Iterator<MCAnswerContent> mcacIterator = mcac.iterator();
+            // go through every MCAnswerContent content
 
             while(mcacIterator.hasNext()){
 
                 MCAnswerContent content = mcacIterator.next();
-
+                // get AP for MCAnswerContent
                 AnswerPossibility answerPossibility = content.getAnswerPossibility();
-
+                // reference the id
+                int APid = answerPossibility.getId();
                 int position = answerPossibility.getPosition(); //content.getPosition();
-
                 int value = counting_results.get(position-1);
 
                 value += 1;
