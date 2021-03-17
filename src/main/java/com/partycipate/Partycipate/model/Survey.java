@@ -60,7 +60,6 @@ public class Survey {
 
     private Survey(Builder builder) {
 
-
         this.creation_date = builder.creation_date;
         this.title = builder.title;
         this.cookie = builder.cookie;
