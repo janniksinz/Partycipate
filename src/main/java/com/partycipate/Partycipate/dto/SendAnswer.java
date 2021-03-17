@@ -1,17 +1,53 @@
 package com.partycipate.Partycipate.dto;
 
-import com.partycipate.Partycipate.model.Answer;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Set;
 
 public class SendAnswer {
-    int id;
-    String content;
-    int participant_id;
-    int surveyElement_id;
+    private int id;
+    private int participant_id;
+    private int surveyElement_id;
+    private Set<SendMCAnswer> sendMCAnswers;
 
     //constructor
-    public SendAnswer(Answer answer){
-        this.id=answer.getId();
-        this.participant_id=answer.getParticipant().getId();
-        this.surveyElement_id=answer.getSurveyElement().getId();
+    public SendAnswer(@JsonProperty("participant_id") int participant_id,
+                      @JsonProperty("survey_element_id") int surveyElement_id,
+                      @JsonProperty ("answer") Set<SendMCAnswer> sendMCAnswers){
+        this.participant_id=participant_id;
+        this.surveyElement_id=surveyElement_id;
+        this.sendMCAnswers=sendMCAnswers;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getParticipant_id() {
+        return participant_id;
+    }
+
+    public void setParticipant_id(int participant_id) {
+        this.participant_id = participant_id;
+    }
+
+    public int getSurveyElement_id() {
+        return surveyElement_id;
+    }
+
+    public void setSurveyElement_id(int surveyElement_id) {
+        this.surveyElement_id = surveyElement_id;
+    }
+
+    public Set<SendMCAnswer> getSendMCAnswers() {
+        return sendMCAnswers;
+    }
+
+    public void setSendMCAnswers(Set<SendMCAnswer> sendMCAnswers) {
+        this.sendMCAnswers = sendMCAnswers;
     }
 }

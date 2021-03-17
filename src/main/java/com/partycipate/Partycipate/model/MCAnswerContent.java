@@ -50,7 +50,7 @@ public class MCAnswerContent {
     public static class Builder{
         private int id = 0;
 
-        private int position = 0;
+        private AnswerPossibility answerPossibility = null;
         private Answer answer = null;
 
         public Builder id(int id){
@@ -58,8 +58,8 @@ public class MCAnswerContent {
             return this;
         }
 
-        public Builder position(int position){
-            this.position=position;
+        public Builder answerPossibility(AnswerPossibility answerPossibility){
+            this.answerPossibility=answerPossibility;
             return this;
         }
         public Builder answer(Answer answer){

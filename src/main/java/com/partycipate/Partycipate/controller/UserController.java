@@ -25,7 +25,6 @@ public class UserController {
     public User addUser(@RequestBody User user){
         return userService.addUser(user.getEmail(),user.getPassword(), user.getUsername());
     }
-
     @GetMapping("/{id}")
     public @ResponseBody User getUser(@PathVariable ("id") int id){
         return userService.getUser(id);

@@ -40,11 +40,14 @@ public class AnswerPossibility {
     @OneToMany(mappedBy = "answerPossibility",cascade = CascadeType.ALL)
     Set<MCAnswerContent> mcAnswerContent;
 
-    public AnswerPossibility() {
+    public AnswerPossibility() {}
+    public AnswerPossibility(String answer, int position) {
+        this.answer=answer;
+        this.position=position;
     }
 
     public static class Builder {
-        private int id = 0;
+        private int id ;
         private int position = 0;
 
         private String answer = "";

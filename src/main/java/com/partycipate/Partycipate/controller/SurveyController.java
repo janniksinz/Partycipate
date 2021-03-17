@@ -7,8 +7,11 @@ import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/survey")
@@ -25,12 +28,14 @@ public class SurveyController {
     }
 
 
-
     @PostMapping("")
     public int addSurvey(@RequestBody SendSurvey survey){
-        return surveyService.addSurvey(survey);
+        int id = surveyService.addSurvey(survey).getId();
+        System.out.println("id: " + id);
+        return id;
     }
 
+    
     //getAll
     @GetMapping("")
     public @ResponseBody Iterable<Survey> getAllSurveys(){
@@ -39,7 +44,8 @@ public class SurveyController {
 
     //getById
     @GetMapping("/{id}")
-    public @ResponseBody Survey getSurvey(@PathVariable("id") int id){
+    @CrossOrigin(origins = "*")
+    public Survey getSurvey(@PathVariable("id") int id){
         return surveyService.getSurvey(id);
     }
 
@@ -48,7 +54,7 @@ public class SurveyController {
     //deleteById
     @DeleteMapping("/{id}")
     public int deleteSurveybyId(@PathVariable("id") int id){
-        //ToDo send Exception in Case of already deleted
+
         surveyService.deleteSurveybyId(id);
         return id;
     }
@@ -56,11 +62,7 @@ public class SurveyController {
     //addSurveyElement
     @PostMapping("/element")
     public int addSurveyElement(@RequestBody SendElement sendElement){
-        System.out.println(sendElement.getAnswerPossibilitySet().stream().findFirst());
-        System.out.println(sendElement.getAnswerPossibilitySet().stream().count());
-
-        return surveyElementService.addSurveyElement(sendElement);
+       return 0;
     }
-
 
 }
