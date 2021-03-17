@@ -63,7 +63,7 @@ public class SurveyService {
 
             while (sApIterator.hasNext()){
                 SendAnswerPossibility sendAp= sApIterator.next();
-                AnswerPossibility answerPossibility = new AnswerPossibility.Builder().answer(sendAp.getAnswer()).position(sendAp.getPosition()).build();
+                AnswerPossibility answerPossibility = new AnswerPossibility(sendAp.getAnswer(), sendAp.getPosition());
                 answerPossibility.setSurveyElement(sE);
 
                 answerPossibilityRepository.save(answerPossibility);
