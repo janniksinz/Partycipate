@@ -1,7 +1,6 @@
 package com.partycipate.Partycipate.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.partycipate.Partycipate.model.MCAnswerContent;
 
 import java.util.Set;
 
@@ -9,15 +8,15 @@ public class SendAnswer {
     private int id;
     private int participant_id;
     private int surveyElement_id;
-    private Set<MCAnswerContent> answers;
+    private Set<SendMCAnswer> sendMCAnswers;
 
     //constructor
     public SendAnswer(@JsonProperty("participant_id") int participant_id,
                       @JsonProperty("survey_element_id") int surveyElement_id,
-                      @JsonProperty ("answer") Set<MCAnswerContent> answers){
+                      @JsonProperty ("answer") Set<SendMCAnswer> sendMCAnswers){
         this.participant_id=participant_id;
         this.surveyElement_id=surveyElement_id;
-        this.answers=answers;
+        this.sendMCAnswers=sendMCAnswers;
     }
 
     public int getId() {
@@ -44,11 +43,11 @@ public class SendAnswer {
         this.surveyElement_id = surveyElement_id;
     }
 
-    public Set<MCAnswerContent> getAnswers() {
-        return answers;
+    public Set<SendMCAnswer> getSendMCAnswers() {
+        return sendMCAnswers;
     }
 
-    public void setAnswers(Set<MCAnswerContent> answers) {
-        this.answers = answers;
+    public void setSendMCAnswers(Set<SendMCAnswer> sendMCAnswers) {
+        this.sendMCAnswers = sendMCAnswers;
     }
 }

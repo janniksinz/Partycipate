@@ -49,8 +49,8 @@ public class ParticipantController {
 
     //sendAnswer
     @PostMapping("/answer")
-    public void addAnswer(@RequestBody SendAnswer sendAnswer){
-        participantService.addAnswer(sendAnswer);
+    public int addAnswer(@RequestBody SendAnswer sendAnswer){
+        return participantService.addAnswer(sendAnswer).getId();
     }
 
 
