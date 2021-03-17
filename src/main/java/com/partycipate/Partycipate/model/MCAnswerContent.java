@@ -97,6 +97,4 @@ public class MCAnswerContent {
     public void setAnswer(Answer answer) {
         this.answer = answer;
     }
-
-
 }
