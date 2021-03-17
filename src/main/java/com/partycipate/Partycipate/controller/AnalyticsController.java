@@ -22,6 +22,7 @@ public class AnalyticsController {
     @Autowired
     AnswerService answerService;
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/answers/{element_id}")
     public @ResponseBody Set<Answer> getAnswersByElementId(@PathVariable("element_id") int element_id){
         return answerService.getAnswersByElementId(element_id);

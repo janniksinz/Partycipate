@@ -27,7 +27,7 @@ public class SurveyController {
     }
 
 
-
+    @CrossOrigin(origins = "*")
     @PostMapping("")
     public int addSurvey(@RequestBody SendSurvey survey){
         return surveyService.addSurvey(survey).getId();
@@ -35,12 +35,14 @@ public class SurveyController {
 
     
     //getAll
+    @CrossOrigin(origins = "*")
     @GetMapping("")
     public @ResponseBody Iterable<Survey> getAllSurveys(){
         return surveyService.getAllSurveys();
     }
 
     //getById
+    @CrossOrigin(origins = "*")
     @GetMapping("/{id}")
     public ResponseEntity<Survey> getSurvey(@PathVariable("id") int id){
         HttpHeaders responesHeaders = new HttpHeaders();
@@ -55,6 +57,7 @@ public class SurveyController {
 
 
     //deleteById
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/{id}")
     public int deleteSurveybyId(@PathVariable("id") int id){
 
@@ -63,6 +66,7 @@ public class SurveyController {
     }
 
     //addSurveyElement
+    @CrossOrigin(origins = "*")
     @PostMapping("/element")
     public int addSurveyElement(@RequestBody SendElement sendElement){
        return 0;

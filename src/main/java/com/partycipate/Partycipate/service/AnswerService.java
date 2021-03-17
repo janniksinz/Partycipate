@@ -56,7 +56,7 @@ public class AnswerService {
         return results;
     }
 
-    //TODO neue Methode: getListofElementIds by SurveyID; results x-mal aufgerufen
+    //TODO Results are not sorted
     public Result results(int element_id){
         //calculate all the answers to one Result to send back to the Frontend
         System.out.println("Start results ");
