@@ -30,9 +30,7 @@ public class SurveyController {
 
     @PostMapping("")
     public int addSurvey(@RequestBody SendSurvey survey){
-        Survey survey1 =surveyService.addSurvey(survey);
-        System.out.println(survey1.getId());
-        return 1;
+        return surveyService.addSurvey(survey).getId();
     }
 
     

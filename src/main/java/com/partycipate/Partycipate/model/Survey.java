@@ -47,20 +47,19 @@ public class Survey {
     private User user;
 
     public Survey(){}
-    public Survey(@JsonProperty("id") int id,
-                  @JsonProperty("creation_date") String creation_date,
+    public Survey(@JsonProperty("creation_date") String creation_date,
                   @JsonProperty("title") String title,
                   @JsonProperty("cookie") String cookie,
                   @JsonProperty("user") User user
                   ){
-        this.id=id; this.creation_date=creation_date; this.title=title;
+         this.creation_date=creation_date; this.title=title;
         this.cookie=cookie; this.user=user;
     }
     /*start of Methods*/
 
 
     private Survey(Builder builder) {
-        this.id = builder.id;
+
 
         this.creation_date = builder.creation_date;
         this.title = builder.title;
@@ -124,6 +123,12 @@ public class Survey {
         this.title = title;
     }
 
+    public void addElement(SurveyElement element){
+        if(elements.contains(element))
+            return;
+        elements.add(element);
+
+    }
 
 
     public void setCookie(String cookie) {

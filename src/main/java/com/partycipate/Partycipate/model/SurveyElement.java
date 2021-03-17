@@ -44,7 +44,6 @@ public class SurveyElement {
 
     private SurveyElement(Builder builder){
         this.id = builder.id;
-
         this.position= builder.position;
         this.type= builder.type;
         this.question= builder.question;
