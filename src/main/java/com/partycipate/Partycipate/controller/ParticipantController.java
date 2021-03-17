@@ -43,12 +43,14 @@ public class ParticipantController {
 
     //getBasicResults
     @GetMapping("/results/{survey_id}")
+    @CrossOrigin(origins = "*")
     public Set<Result> getBasicResults(@PathVariable ("survey_id")int survey_id){
         return answerService.getAllResultsForSurvey(survey_id);
     }
 
     //sendAnswer
     @PostMapping("/answer")
+    @CrossOrigin(origins = "*")
     public int addAnswer(@RequestBody SendAnswer sendAnswer){
         return participantService.addAnswer(sendAnswer).getId();
     }
