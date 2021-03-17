@@ -1,9 +1,8 @@
 package com.partycipate.Partycipate.controller;
 
-import com.partycipate.Partycipate.model.Answer;
 import com.partycipate.Partycipate.dto.Result;
+import com.partycipate.Partycipate.dto.SendAnswer;
 import com.partycipate.Partycipate.model.Survey;
-import com.partycipate.Partycipate.model.SurveyElement;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.service.AnswerService;
 import com.partycipate.Partycipate.service.ParticipantService;
@@ -12,7 +11,6 @@ import com.partycipate.Partycipate.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 @RestController
@@ -51,8 +49,8 @@ public class ParticipantController {
 
     //sendAnswer
     @PostMapping("/answer")
-    public void addAnswer(@RequestBody Answer answer){
-        participantService.addAnswer(answer);
+    public void addAnswer(@RequestBody SendAnswer sendAnswer){
+        participantService.addAnswer(sendAnswer);
     }
 
 
