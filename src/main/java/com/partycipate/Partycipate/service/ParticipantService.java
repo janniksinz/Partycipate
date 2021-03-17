@@ -55,22 +55,23 @@ public class ParticipantService {
         answer.setParticipant(p);
         answer.setSurveyElement(sE);
         // save answer
+        System.out.println("saving answer with null in mcAnswerContent");
         answer = answerRepository.save(answer);
         int answerId = answer.getId();
+        System.out.println(answerId);
 
         // save MC Answers
         Set<SendMCAnswer> mcacS = sendAnswer.getSendMCAnswers();
         Iterator<SendMCAnswer> mcacSI= mcacS.iterator();
         while(mcacSI.hasNext()){
             SendMCAnswer value = mcacSI.next();
-            // get first Answer that matches Id
-            Optional<Answer> dummyAnswerSet = answerRepository.findById(answerId).stream().findFirst();
-            Answer dummyAnswer = dummyAnswerSet.stream().iterator().next();
             // get first AnswerPossibility that matches Id
             Optional<AnswerPossibility> dummyAnswerPSet = answerPossibilityRepository.findById(value.getAnswerPossibility_id()).stream().findFirst();
             AnswerPossibility dummyAnswerP = dummyAnswerPSet.stream().iterator().next();
             // set AP and Answer
-            MCAnswerContent mcAnswer = new MCAnswerContent.Builder().answer(dummyAnswer).answerPossibility(dummyAnswerP).build();
+            MCAnswerContent mcAnswer = new MCAnswerContent.Builder().build();
+            mcAnswer.setAnswer(answer);
+            mcAnswer.setAnswerPossibility(dummyAnswerP);
             // save mcAnswer
             mcAnswerContentRepository.save(mcAnswer);
         }
