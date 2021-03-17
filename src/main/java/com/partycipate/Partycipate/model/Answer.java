@@ -50,6 +50,7 @@ public class Answer {
     public Answer(int id, Set<MCAnswerContent> mcAnswerContent, SurveyElement surveyElement, Participant participant){
         this.id=id; this.surveyElement=surveyElement; this.participant=participant;
         this.mcAnswerContentSet=mcAnswerContent;
+
     }
 
     public static class Builder{

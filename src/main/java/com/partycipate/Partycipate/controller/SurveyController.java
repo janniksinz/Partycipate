@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
+
 @RestController
 @RequestMapping("/api/survey")
 public class SurveyController {
@@ -64,5 +65,6 @@ public class SurveyController {
     public int addSurveyElement(@RequestBody SendElement sendElement){
        return 0;
     }
+
 
 }

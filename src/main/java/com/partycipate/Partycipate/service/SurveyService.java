@@ -9,17 +9,15 @@ import com.partycipate.Partycipate.model.SurveyElement;
 import com.partycipate.Partycipate.repository.AnswerPossibilityRepository;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.repository.SurveyRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.transaction.Transactional;
-import java.util.*;
-import java.util.logging.Logger;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -70,9 +68,7 @@ public class SurveyService {
             }
         }
 
-    public static Survey getRandomSurvey(int id) {
-        //ToDo create content for the dummy survey
-        return new Survey.Builder().id(0).creation_date("2021-02-28T18:25:43.511Z").cookie("11111222222333333").title("some Survey").build();
+        return survey;
     }
 
     public @ResponseBody Iterable<Survey> getAllSurveys(){
