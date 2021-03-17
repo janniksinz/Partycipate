@@ -1,22 +1,22 @@
 package com.partycipate.Partycipate.service;
 
-import com.partycipate.Partycipate.dao.SurveyDao;
-import com.partycipate.Partycipate.repository.SurveyRepository;
+import com.partycipate.Partycipate.repository.AnswerPossibilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AnswerPossibilityService {
 
-    private final SurveyDao surveyDao;
     @Autowired
-    private SurveyRepository surveyRepository;
+    private AnswerPossibilityRepository answerPossibilityRepository;
 
     @Autowired
-    public AnswerPossibilityService(@Qualifier("fakeDao") SurveyDao surveyDao) {
-        this.surveyDao = surveyDao;
+    public AnswerPossibilityService(AnswerPossibilityRepository answerPossibilityRepository) {
+        this.answerPossibilityRepository = answerPossibilityRepository;
     }
 
-    
+    public int getCountOfAnswersPossibilities(int element_id){
+        return answerPossibilityRepository.count_answer_possibilities(element_id);
+
+    }
 }

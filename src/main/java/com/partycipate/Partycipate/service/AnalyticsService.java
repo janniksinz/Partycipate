@@ -1,6 +1,8 @@
 package com.partycipate.Partycipate.service;
 
+import org.springframework.stereotype.Service;
 
+@Service
 public class AnalyticsService {
 
     /*public MultipleChoiceAnswer getMultipleChoiceAnswer(){

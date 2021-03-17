@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity(name = "User")
 public class User {
     @Id
     @SequenceGenerator(
@@ -27,6 +27,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Survey> surveys = new HashSet<>() ;
+
+    @OneToOne(mappedBy = "user")
+    private AuthToken authToken;
 
     private User(Builder builder) {
         this.user_id = builder.id;
@@ -77,6 +80,18 @@ public class User {
         this.surveys = surveys;
     }
 
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public AuthToken getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(AuthToken authToken) {
+        this.authToken = authToken;
+    }
+
     public int getUser_id() {
         return user_id;
     }
@@ -108,5 +123,6 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
 
 }

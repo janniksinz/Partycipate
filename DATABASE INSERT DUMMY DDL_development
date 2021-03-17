@@ -1,0 +1,37 @@
+INSERT INTO user (id,email, password, username) VALUES (1, 'cipate@gmail.com', '940mIzYc', 'TheChosenOne1');
+INSERT INTO user (id,email, password, username) VALUES (2, 'bruno@gmail.com', 'IzYc940m', 'Sunny2');
+INSERT INTO user (id,email, password, username) VALUES (3, 'luna@gmail.com', 'Ic940zYm', 'Moon3');
+
+INSERT INTO participant (id, age, cookie, email, gender, ip_address, region) VALUES (1, '69', 'kEk5', 'party@gmail.com', 'female', '111.22.333.1', 'NAM');
+INSERT INTO participant (id, age, cookie, email, gender, ip_address, region) VALUES (2, '63', 'kEk5', 'brunhilde@gmail.com', 'none', '111.22.333.2', 'EUW');
+INSERT INTO participant (id, age, cookie, email, gender, ip_address, region) VALUES (3, '42', 'kEk5', 'solaris@gmail.com', 'female', '111.22.333.3', 'APC');
+
+INSERT INTO survey (id, cookie, creation_date, title, user_id) VALUES (1, 'kEkS', '2021-03-11', 'Ice Cream', 1);
+INSERT INTO survey (id, cookie, creation_date, title, user_id) VALUES (2, 'kEkS', '2021-03-12', 'Car brand', 2);
+
+INSERT INTO survey_element (id, may_skip, position, question, type, survey_id) VALUES (1, true, 1, 'What is your favourite ice cream?', 'singlechoice', 1);
+INSERT INTO survey_element (id, may_skip, position, question, type, survey_id) VALUES (2, false, 1, 'What is your favourite car brand?', 'singlechoice', 1);
+INSERT INTO survey_element (id, may_skip, position, question, type, survey_id) VALUES (3, true, 1, 'What is your shoes size?', 'singlechoice', 2);
+
+INSERT INTO answer_possibility (id, answer, position, survey_element_id) VALUES (1, 'Strawberry', 1, 1);
+INSERT INTO answer_possibility (id, answer, position, survey_element_id) VALUES (2, 'Chocolate',2, 1);
+INSERT INTO answer_possibility (id, answer, position, survey_element_id) VALUES (3, 'VW', 1, 2);
+INSERT INTO answer_possibility (id, answer, position, survey_element_id) VALUES (4, 'BMW',2, 2);
+INSERT INTO answer_possibility (id, answer, position, survey_element_id) VALUES (5, '42',1, 3);
+INSERT INTO answer_possibility (id, answer, position, survey_element_id) VALUES (6, '43',2, 3);
+
+INSERT INTO answer (id, participant_id, survey_element_id) VALUES (1, 1, 1);
+INSERT INTO answer (id, participant_id, survey_element_id) VALUES (2, 1, 2);
+INSERT INTO answer (id, participant_id, survey_element_id) VALUES (3, 2, 1);
+INSERT INTO answer (id, participant_id, survey_element_id) VALUES (4, 2, 2);
+INSERT INTO answer (id, participant_id, survey_element_id) VALUES (5, 3, 1);
+
+INSERT INTO mcanswer_content (id, answer_id, answer_possibility_id) VALUES (1, 1, 1);
+INSERT INTO mcanswer_content (id, answer_id, answer_possibility_id) VALUES (2, 2, 3);
+INSERT INTO mcanswer_content (id, answer_id, answer_possibility_id) VALUES (3, 3, 1);
+INSERT INTO mcanswer_content (id, answer_id, answer_possibility_id) VALUES (4, 4, 4);
+INSERT INTO mcanswer_content (id, answer_id, answer_possibility_id) VALUES (5, 5, 2);
+
+
+
+#INSERT INTO auth_token (token, user_id) VALUES ('t0kEn', 1);

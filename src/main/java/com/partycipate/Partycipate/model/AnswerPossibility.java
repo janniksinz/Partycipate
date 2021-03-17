@@ -3,6 +3,7 @@ package com.partycipate.Partycipate.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class AnswerPossibility {
@@ -21,37 +22,54 @@ public class AnswerPossibility {
             updatable = false
     )
     private int id;
+    private int position;
     private String answer;
 
+
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="surveyElement_id")
+    @JoinColumn(name = "surveyElement_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private SurveyElement surveyElement;
 
-    private AnswerPossibility(Builder builder){
-        this.id=builder.id;
+    private AnswerPossibility(Builder builder) {
+        this.id = builder.id;
 
-        this.answer= builder.answer;
+        this.answer = builder.answer;
     }
+    @OneToMany(mappedBy = "answerPossibility",cascade = CascadeType.ALL)
+    Set<MCAnswerContent> mcAnswerContent;
 
     public AnswerPossibility() {}
+    public AnswerPossibility(String answer, int position) {
+        this.answer=answer;
+        this.position=position;
+    }
 
-    public static class Builder{
-        private int id = 0;
+    public static class Builder {
+        private int id ;
+        private int position = 0;
 
         private String answer = "";
 
-        public Builder id(int id){
-            this.id=id;
+        public Builder id(int id) {
+            this.id = id;
             return this;
         }
 
-        public Builder answer(String answer){
-            this.answer=answer;
+        public Builder position(int position) {
+            this.position = position;
             return this;
         }
 
-        public AnswerPossibility build() {return new AnswerPossibility(this);}
+        public Builder answer(String answer) {
+            this.answer = answer;
+            return this;
+        }
+
+        public AnswerPossibility build() {
+            return new AnswerPossibility(this);
+        }
     }
 
     @Override
@@ -85,5 +103,22 @@ public class AnswerPossibility {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position){
+        this.position = position;
+    }
+
+
+    public Set<MCAnswerContent> getMcAnswerContent() {
+        return mcAnswerContent;
+    }
+
+    public void setMcAnswerContent(Set<MCAnswerContent> mcAnswerContent) {
+        this.mcAnswerContent = mcAnswerContent;
     }
 }
