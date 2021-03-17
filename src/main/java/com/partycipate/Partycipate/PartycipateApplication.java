@@ -21,16 +21,16 @@ public class PartycipateApplication{
 		SpringApplication.run(PartycipateApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/*").allowedOrigins("*").allowedHeaders("*")
+				registry.addMapping("/*").allowCredentials(true).allowedMethods("*").allowedOriginPatterns("*").allowedOrigins("http://localhost:1234/").allowedHeaders("*")
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.maxAge(3600L);
 			}
 		};
-	}
+	}*/
 
 }

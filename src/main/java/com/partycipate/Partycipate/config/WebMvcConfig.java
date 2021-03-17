@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-@Configuration
+/*@Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     /*@Override
@@ -19,7 +19,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .maxAge(3600L);
         // @formatter:on
-    }*/
+    }
 
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -32,4 +32,4 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         };
     }
 
-}
+}*/

@@ -17,6 +17,7 @@ public class SendSurvey {
                       @JsonProperty ("title") String title,
                       @JsonProperty ("user_id") int user_id,
                       @JsonProperty ("elements") Set<SendElement> elements){
+        System.out.println("Title: " + title);
         this.cookie=cookie;
         this.creation_date=creation_date;
         this.title=title;

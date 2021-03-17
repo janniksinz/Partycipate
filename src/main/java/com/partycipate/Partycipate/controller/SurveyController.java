@@ -11,9 +11,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/api/survey")
 public class SurveyController {
 
@@ -28,22 +29,21 @@ public class SurveyController {
     }
 
 
-    @CrossOrigin(origins = "*")
     @PostMapping("")
     public int addSurvey(@RequestBody SendSurvey survey){
-        return surveyService.addSurvey(survey).getId();
+        int id = surveyService.addSurvey(survey).getId();
+        System.out.println("id: " + id);
+        return id;
     }
 
     
     //getAll
-    @CrossOrigin(origins = "*")
     @GetMapping("")
     public @ResponseBody Iterable<Survey> getAllSurveys(){
         return surveyService.getAllSurveys();
     }
 
     //getById
-    @CrossOrigin(origins = "*")
     @GetMapping("/{id}")
     public ResponseEntity<Survey> getSurvey(@PathVariable("id") int id){
         HttpHeaders responesHeaders = new HttpHeaders();
@@ -58,7 +58,6 @@ public class SurveyController {
 
 
     //deleteById
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/{id}")
     public int deleteSurveybyId(@PathVariable("id") int id){
 
@@ -67,7 +66,6 @@ public class SurveyController {
     }
 
     //addSurveyElement
-    @CrossOrigin(origins = "*")
     @PostMapping("/element")
     public int addSurveyElement(@RequestBody SendElement sendElement){
        return 0;
