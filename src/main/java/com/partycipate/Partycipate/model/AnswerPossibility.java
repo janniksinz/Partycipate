@@ -40,6 +40,7 @@ public class AnswerPossibility {
     @OneToMany(mappedBy = "answerPossibility",cascade = CascadeType.ALL)
     Set<MCAnswerContent> mcAnswerContent;
 
+    public AnswerPossibility() {}
     public AnswerPossibility(String answer, int position) {
         this.answer=answer;
         this.position=position;

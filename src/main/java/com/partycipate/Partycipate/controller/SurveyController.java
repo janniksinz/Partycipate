@@ -45,14 +45,9 @@ public class SurveyController {
 
     //getById
     @GetMapping("/{id}")
-    public ResponseEntity<Survey> getSurvey(@PathVariable("id") int id){
-        HttpHeaders responesHeaders = new HttpHeaders();
-        responesHeaders.set("Access-Control-Allow-Origin", "*");
-        return ResponseEntity.ok()
-                .headers(responesHeaders)
-                .body(surveyService.getSurvey(id));
-        //return new ResponseEntity<>(surveyService.getSurvey(id), HttpStatus.OK);
-        //TODO fix
+    @CrossOrigin(origins = "*")
+    public Survey getSurvey(@PathVariable("id") int id){
+        return surveyService.getSurvey(id);
     }
 
 

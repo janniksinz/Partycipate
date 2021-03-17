@@ -9,10 +9,7 @@ import com.partycipate.Partycipate.repository.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AnswerService {
@@ -67,10 +64,8 @@ public class AnswerService {
         Set<Answer> answers = answerRepository.getAnswersByElementId(element_id);
         Result result = new Result();
         // count participants
-        int value1 = answerRepository.getCountParticipants(element_id);
-        if (value1 != 0) {
-            result.setCount_participants(value1);
-        }
+        Optional<Integer> value1 = answerRepository.getCountParticipants(element_id);
+        result.setCount_participants(value1.isPresent() ? value1.stream().iterator().next() : 0);
         ArrayList<Integer> counting_results = new ArrayList<>(count);
         // initialize arrayList with default values 0
         for (int i =0; i<count;i++){
