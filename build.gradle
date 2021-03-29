@@ -47,7 +47,9 @@ dependencies {
 
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//test
 	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'junit:junit'
 
 	compile "com.google.guava:guava:28.1-jre"
 
