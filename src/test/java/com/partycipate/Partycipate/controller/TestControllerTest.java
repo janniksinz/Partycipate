@@ -55,5 +55,14 @@ class TestControllerTest {
 
     @Test
     void getUser() {
+//        Given
+        HttpUriRequest request = new HttpGet("http://localhost:8088/api/test/admin");
+        request.setHeader(HttpHeaders.AUTHORIZATION, user_token);
+//        When
+        HttpResponse response = HttpClientBuilder.create().build().execute(request);
+//        Then
+        assert(response.getStatusLine().getStatusCode()== HttpStatus.SC_OK);
+
+
     }
 }
