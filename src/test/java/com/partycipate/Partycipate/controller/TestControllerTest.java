@@ -20,6 +20,7 @@ class TestControllerTest {
 
     @BeforeAll
     static void getAuth(){
+        //ToDo add 4 requests to get temporary valid auth_tokens with admin, user credentials
         HttpUriRequest admin_request = new HttpPut("http://localhost:8088/api/auth/signup");
 
     }
