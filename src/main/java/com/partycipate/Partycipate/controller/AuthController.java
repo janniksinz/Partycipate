@@ -27,7 +27,7 @@ import java.util.Set;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
-public class HomeController {
+public class AuthController {
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -39,11 +39,6 @@ public class HomeController {
     PasswordEncoder encoder;
     @Autowired
     JwtProvider jwtProvider;
-
-    @GetMapping("/error")
-    public String getError(){
-        return "Return to homepage";
-    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginForm loginRequest){
