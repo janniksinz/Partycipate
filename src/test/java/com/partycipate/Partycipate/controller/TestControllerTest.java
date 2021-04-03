@@ -54,7 +54,7 @@ class TestControllerTest {
     }
 
     @Test
-    void getUser() {
+    void getUser() throws IOException {
 //        Given
         HttpUriRequest request = new HttpGet("http://localhost:8088/api/test/admin");
         request.setHeader(HttpHeaders.AUTHORIZATION, user_token);
