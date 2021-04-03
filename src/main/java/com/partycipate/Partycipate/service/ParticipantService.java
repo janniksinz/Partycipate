@@ -44,10 +44,12 @@ public class ParticipantService {
 
         //get first Participant that matches Id
         Optional<Participant> participant = participantRepository.findById(Pid).stream().findFirst();
+        //ToDo don't use iterator use participant.get() instead
         Iterator<Participant> Piter = participant.stream().iterator();
         Participant p = Piter.next();
         //get first Element that matches Id
         Optional<SurveyElement> surveyElement = surveyElementRepository.findById(Eid).stream().findFirst();
+        //ToDo don't use iterator
         Iterator<SurveyElement> Eiter = surveyElement.stream().iterator();
         SurveyElement sE = Eiter.next();
         // save in new Answer with MCAnswerContent = null
@@ -67,7 +69,7 @@ public class ParticipantService {
             SendMCAnswer value = mcacSI.next();
             // get first AnswerPossibility that matches Id
             Optional<AnswerPossibility> dummyAnswerPSet = answerPossibilityRepository.findById(value.getAnswerPossibility_id()).stream().findFirst();
-            AnswerPossibility dummyAnswerP = dummyAnswerPSet.stream().iterator().next();
+            AnswerPossibility dummyAnswerP = dummyAnswerPSet.get();
             // set AP and Answer
             MCAnswerContent mcAnswer = new MCAnswerContent.Builder().build();
             mcAnswer.setAnswer(answer);
