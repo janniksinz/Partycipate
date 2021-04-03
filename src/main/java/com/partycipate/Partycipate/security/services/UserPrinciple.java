@@ -67,6 +67,7 @@ public class UserPrinciple implements UserDetails {
         return username;
     }
 
+    //ToDo overhaul these checks for authorized access (maybe add values to user to check that?)
     @Override
     public boolean isAccountNonExpired() {
         return true;
