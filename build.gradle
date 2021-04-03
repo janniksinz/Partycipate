@@ -43,11 +43,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.apache.httpcomponents:httpclient'
+	// Actuator (Mapping and Health)
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 	runtimeOnly 'mysql:mysql-connector-java'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	//test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.apache.httpcomponents:httpclient'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'junit:junit'
 

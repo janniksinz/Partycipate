@@ -1,5 +1,7 @@
 package com.partycipate.Partycipate.model;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 
 @Entity
@@ -22,6 +24,7 @@ public class Role {
     )
     private int id;
     @Enumerated(EnumType.STRING)
+    @NaturalId
     @Column(length = 60)
     private RoleName name;
 
