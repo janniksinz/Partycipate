@@ -34,6 +34,7 @@ public class UserPrinciple implements UserDetails {
     public static UserPrinciple build(User user){
         List<GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
+
         return new UserPrinciple(user.getUser_id(),
                 user.getName(),
                 user.getEmail(),
@@ -68,22 +69,22 @@ public class UserPrinciple implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     public void setUsername(String username) {
