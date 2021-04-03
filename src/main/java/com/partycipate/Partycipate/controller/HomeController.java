@@ -59,17 +59,14 @@ public class HomeController {
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
-    @PostMapping("/signup")
+    @PutMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpForm signUpRequest){
-        if (userRepository.existsByUsername(signUpRequest.getUsername())){
-            return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"), HttpStatus.BAD_REQUEST);
-        }
         if (userRepository.existsByEmail(signUpRequest.getEmail())){
             return new ResponseEntity<>(new ResponseMessage("Fail -> Email is aleady in use!"), HttpStatus.BAD_REQUEST);
         }
 
         //creating user account
-        User user = new User(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()));
+        User user = new User.Builder().name(signUpRequest.getName()).email(signUpRequest.getEmail()).password(encoder.encode(signUpRequest.getPassword())).build();
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 

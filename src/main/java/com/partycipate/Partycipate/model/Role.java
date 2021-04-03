@@ -22,8 +22,10 @@ public class Role {
     )
     private int id;
     @Enumerated(EnumType.STRING)
+    @Column(length = 60)
     private RoleName name;
 
+    //ToDo Replace with Builder
     public Role(){}
     public Role(RoleName name){
         this.name=name;

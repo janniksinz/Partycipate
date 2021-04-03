@@ -7,7 +7,7 @@ import java.util.Set;
 @Entity(name = "User")
 @Table(name = "User", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
-                "username"
+                "name"
         }),
         @UniqueConstraint(columnNames = {
                 "email"
@@ -31,52 +31,48 @@ public class User {
     )
     private int user_id;
     private String name;
-    private String username;
     private String email;
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Survey> surveys = new HashSet<>() ;
 
-    @OneToOne(mappedBy = "user")
-    private AuthToken authToken;
-
-    private User(Builder builder) {
-        this.user_id = builder.id;
-        this.username = builder.username;
-        this.email = builder.email;
-        this.password= builder.password;
-
-    }
-
+//    Constructor
     public User() {}
 
-    public User(String name, String username, String email, String encode) {
-        this.name=name;
-        this.username=username;
-        this.email=email;
-        this.password=encode;
+    private User(Builder builder) {
+        //ToDo fix user to implement SignupForm
+        this.user_id=builder.id;
+        this.name=builder.name;
+        this.email =builder.email;
+        this.password=builder.password;
+        this.roles=builder.roles;
+        this.surveys=builder.surveys;
     }
-
+//    Builder
     public static class Builder {
 
+
         private int id = 0;
-        private String username = "User";
+        private String name = "name";
         private String email = "user@email.de";
         private String password = "password";
-
+        private Set<Role> roles = null;
+        private Set<Survey> surveys = null;
 
         public User.Builder id(int id) {
             this.id = id;
             return this;
         }
 
-        public User.Builder username(String username) {
-            this.username = username;
+        public User.Builder name(String name) {
+            this.name = name;
             return this;
         }
 
@@ -88,14 +84,15 @@ public class User {
             this.password = password;
             return this;
         }
+        public void roles(Set<Role> roles) {
+            this.roles = roles;
+        }
+
         public User build() {
             return new User(this);
         }
     }
-
-    public Set<Survey> getSurveys() {
-        return surveys;
-    }
+//      Getter & Setter
 
     public int getUser_id() {
         return user_id;
@@ -111,14 +108,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {
@@ -145,15 +134,11 @@ public class User {
         this.roles = roles;
     }
 
+    public Set<Survey> getSurveys() {
+        return surveys;
+    }
+
     public void setSurveys(Set<Survey> surveys) {
         this.surveys = surveys;
-    }
-
-    public AuthToken getAuthToken() {
-        return authToken;
-    }
-
-    public void setAuthToken(AuthToken authToken) {
-        this.authToken = authToken;
     }
 }

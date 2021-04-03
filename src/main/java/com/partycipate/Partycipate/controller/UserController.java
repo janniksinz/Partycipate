@@ -1,13 +1,9 @@
 package com.partycipate.Partycipate.controller;
 
-import com.partycipate.Partycipate.model.AuthToken;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.PostUpdate;
 
 @RestController
 @RequestMapping("/api/user")
@@ -23,7 +19,7 @@ public class UserController {
 
     @PostMapping("")
     public User addUser(@RequestBody User user){
-        return userService.addUser(user.getEmail(),user.getPassword(), user.getUsername());
+        return userService.addUser(user.getEmail(),user.getPassword());
     }
     @GetMapping("/{id}")
     public @ResponseBody User getUser(@PathVariable ("id") int id){

@@ -21,8 +21,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User addUser(String email, String password, String username){
-        User user = new User.Builder().email(email).password(password).username(username).build();
+    public User addUser(String email, String password){
+        User user = new User.Builder().email(email).password(password).build();
         userRepository.save(user);
         return user;
     }
