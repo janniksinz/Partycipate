@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserPrinciple implements UserDetails {
@@ -116,5 +117,13 @@ public class UserPrinciple implements UserDetails {
 
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return  true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserPrinciple user = (UserPrinciple) o;
+        return Objects.equals(id, user.id);
     }
 }
