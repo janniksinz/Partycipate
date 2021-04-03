@@ -24,9 +24,10 @@ public class UserPrinciple implements UserDetails {
 
 
     //ToDo replace with Builder
-    public UserPrinciple(int id, String name, String email, String password, Collection<? extends GrantedAuthority> authorities){
+    public UserPrinciple(int id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities){
         this.id=id;
-        this.name=name;
+        this.name=username;
+        this.username=username;
         this.email=email;
         this.password=password;
         this.authorities=authorities;
@@ -37,7 +38,7 @@ public class UserPrinciple implements UserDetails {
                 .collect(Collectors.toList());
 
         return new UserPrinciple(user.getUser_id(),
-                user.getName(),
+                user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
                 authorities);

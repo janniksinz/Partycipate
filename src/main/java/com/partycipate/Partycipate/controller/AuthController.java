@@ -52,17 +52,17 @@ public class AuthController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         //ToDo (optional) extend authenication or principal to SetName into response
-        return ResponseEntity.ok(new JwtResponse(jwt, "coming soon", userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
     @PutMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpForm signUpRequest){
-        if (userRepository.existsByEmail(signUpRequest.getEmail())){
+        if (Boolean.TRUE.equals(userRepository.existsByEmail(signUpRequest.getEmail()))){
             return new ResponseEntity<>(new ResponseMessage("Fail -> Email is aleady in use!"), HttpStatus.BAD_REQUEST);
         }
 
         //creating user account
-        User user = new User.Builder().name(signUpRequest.getName()).email(signUpRequest.getEmail()).password(encoder.encode(signUpRequest.getPassword())).build();
+        User user = new User.Builder().username(signUpRequest.getName()).email(signUpRequest.getEmail()).password(encoder.encode(signUpRequest.getPassword())).build();
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 

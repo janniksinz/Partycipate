@@ -7,7 +7,7 @@ import java.util.Set;
 @Entity(name = "User")
 @Table(name = "User", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
-                "name"
+                "username"
         }),
         @UniqueConstraint(columnNames = {
                 "email"
@@ -30,7 +30,7 @@ public class User {
             updatable = false
     )
     private int user_id;
-    private String name;
+    private String username;
     private String email;
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
@@ -49,7 +49,7 @@ public class User {
     private User(Builder builder) {
         //ToDo fix user to implement SignupForm
         this.user_id=builder.id;
-        this.name=builder.name;
+        this.username=builder.username;
         this.email =builder.email;
         this.password=builder.password;
         this.roles=builder.roles;
@@ -60,7 +60,7 @@ public class User {
 
 
         private int id = 0;
-        private String name = "name";
+        private String username = "username";
         private String email = "user@email.de";
         private String password = "password";
         private Set<Role> roles = null;
@@ -71,8 +71,8 @@ public class User {
             return this;
         }
 
-        public User.Builder name(String name) {
-            this.name = name;
+        public User.Builder username(String username) {
+            this.username = username;
             return this;
         }
 
@@ -102,12 +102,12 @@ public class User {
         this.user_id = user_id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
