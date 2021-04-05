@@ -65,7 +65,7 @@ public class AnswerService {
         Result result = new Result();
         // count participants
         Optional<Integer> value1 = answerRepository.getCountParticipants(element_id);
-        result.setCount_participants(value1.isPresent() ? value1.stream().iterator().next() : 0);
+        result.setCount_participants(value1.isPresent() ? value1.get() : 0);
         ArrayList<Integer> counting_results = new ArrayList<>(count);
         // initialize arrayList with default values 0
         for (int i =0; i<count;i++){
