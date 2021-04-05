@@ -4,6 +4,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SurveyControllerTest {
 
@@ -28,7 +30,7 @@ class SurveyControllerTest {
         //ToDo add (header for auth and) body for content in {//Given}
         //Given
 
-        //ToDo access response body in {//When} to chenk for correct response message
+        //ToDo access response body in {//When} to check for correct response message
         //ToDo check for correct and incorrect input
         //ToDo check for correct and incorrect auth (not possible yet)
     }
@@ -44,7 +46,19 @@ class SurveyControllerTest {
     }
 
     @Test
-    void getSurvey() {
+    void getSurvey() throws IOException {
+//        Given
+        HttpUriRequest request = RequestBuilder.create("POST")
+                .setUri("http://localhost:8088/api/survey")
+                .setEntity(new StringEntity("{\"a\", \"b\""))
+//                Hier setzt ihr einen String ein, der dem Body in Postman entspricht.
+//                ACHTUNG: 'und" werden vom Java interpretiert und müssen mit \ maskiert werden.
+//                  Viel Spaß :)
+                .build();
+//        When
+        HttpResponse response = HttpClientBuilder.create().build().execute(request);
+//        Then
+        assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
     }
 
     @Test
