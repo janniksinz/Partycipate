@@ -20,9 +20,10 @@ class ParticipantControllerTest {
         HttpUriRequest request = new HttpGet("http://localhost:8088/api/particpant/1" );
 
         // When
-        HttpResponse response = HttpClientBuilder.create().build().execute(request );
+        HttpResponse response = HttpClientBuilder.create().build().execute(request);
 
         // Then
+        System.out.println(response.getEntity());
         assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
     }
 

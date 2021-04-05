@@ -90,7 +90,7 @@ public class ParticipantService {
     }
 
     public Optional<Participant> getParticipant(int participant_id){
-        return participantRepository.findById(participant_id);
+        return participantRepository.findById((Integer)participant_id);
     }
     
 }

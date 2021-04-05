@@ -37,7 +37,9 @@ public class ParticipantController {
     //getSurveyById
     @GetMapping("/{id}")
     public Optional <Participant> getParticipant(@PathVariable ("id")int participant_id){
-        return participantService.getParticipant(participant_id);
+       Optional <Participant> p1= participantService.getParticipant(participant_id);
+       System.out.println(p1);
+       return p1;
     }
 
     //getBasicResultsForWholeSurvey
