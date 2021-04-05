@@ -42,7 +42,7 @@ class UserControllerTest {
         user.setEmail("uschiweb");
         user.setPassword("1234");
 
-        when(userRepository.findById(anyInt())).thenReturn(java.util.Optional.of(user));
+        when(userRepository.findById(anyInt())).thenReturn(user);
 
         User userReturn = userService.getUser(500);
 
