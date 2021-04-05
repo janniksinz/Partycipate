@@ -36,7 +36,7 @@ public class ParticipantController {
 
     //getSurveyById
     @GetMapping("/{id}")
-    public Optional <Participant> getParticipant(@PathVariable ("id")int participant_id){
+    public Optional <Participant> getParticipant(@PathVariable ("id") int participant_id){
        Optional <Participant> p1= participantService.getParticipant(participant_id);
        System.out.println(p1);
        return p1;
@@ -48,7 +48,7 @@ public class ParticipantController {
     //getBasicResults
     @GetMapping("/results/{survey_id}")
     @CrossOrigin(origins = "*")
-    public Set<Result> getBasicResults(@PathVariable ("survey_id")int survey_id){
+    public Set<Result> getBasicResults(@PathVariable ("survey_id") int survey_id){
         return answerService.getAllResultsForSurvey(survey_id);
     }
 

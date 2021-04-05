@@ -47,7 +47,7 @@ public class SurveyController {
     @GetMapping("/{id}")
     @CrossOrigin(origins = "*")
     public Survey getSurvey(@PathVariable("id") int id){
-        return surveyService.getSurvey(id);
+        return surveyService.getSurveyBySurveyId(id);
     }
 
 

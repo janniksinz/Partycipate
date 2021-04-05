@@ -98,18 +98,4 @@ public class SurveyService {
         //ToDo create content for the dummy survey
         return new Survey.Builder().id(0).creation_date("2021-02-28T18:25:43.511Z").cookie("11111222222333333").title("some Survey").build();
     }
-
-
-
-    public List<Survey> findAll() {
-        return null;
-    }
-
-
-    public Survey getSurvey(int id) {
-        return surveyRepository.findById(id);
-    }
-    /*public Iterable<Survey> getUserSurveys(int id){
-        return (Iterable<Survey>) surveyRepository.findAllByUser_id(id);
-    }*/
 }
