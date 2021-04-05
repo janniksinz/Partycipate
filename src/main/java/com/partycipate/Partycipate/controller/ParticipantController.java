@@ -2,6 +2,7 @@ package com.partycipate.Partycipate.controller;
 
 import com.partycipate.Partycipate.dto.Result;
 import com.partycipate.Partycipate.dto.SendAnswer;
+import com.partycipate.Partycipate.model.Participant;
 import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.service.AnswerService;
@@ -11,6 +12,7 @@ import com.partycipate.Partycipate.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -34,8 +36,8 @@ public class ParticipantController {
 
     //getSurveyById
     @GetMapping("/{id}")
-    public Survey getSurvey(int survey_id){
-        return surveyService.getSurveyBySurveyId(survey_id);
+    public Optional <Participant> getParticipant(@PathVariable ("id")int participant_id){
+        return participantService.getParticipant(participant_id);
     }
 
     //getBasicResultsForWholeSurvey

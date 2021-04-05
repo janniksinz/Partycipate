@@ -26,6 +26,8 @@ class SurveyControllerTest {
     @Test
     void addSurvey() {
         //ToDo add (header for auth and) body for content in {//Given}
+        //Given
+
         //ToDo access response body in {//When} to chenk for correct response message
         //ToDo check for correct and incorrect input
         //ToDo check for correct and incorrect auth (not possible yet)

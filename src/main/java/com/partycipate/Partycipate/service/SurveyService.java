@@ -9,6 +9,7 @@ import com.partycipate.Partycipate.model.SurveyElement;
 import com.partycipate.Partycipate.repository.AnswerPossibilityRepository;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.repository.SurveyRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -76,7 +77,7 @@ public class SurveyService {
     }
 
     //getSurveyBySurveyId
-    public Survey getSurveyBySurveyId(int survey_id){ return surveyRepository.findById(survey_id); }
+    public Survey getSurveyBySurveyId(int survey_id) throws NullPointerException{ return surveyRepository.findById(survey_id); }
 
 
 
