@@ -30,8 +30,8 @@ public class SurveyController {
 
 
     @PostMapping("")
-    public int addSurvey(@RequestBody SendSurvey survey){
-        int id = surveyService.addSurvey(survey).getId();
+    public int addSurvey(@RequestBody SendSurvey sendsurvey){
+        int id = surveyService.addSurvey(sendsurvey).getId(); //TODO getId() throws "(InvocationTargetException ex)" addSurvey POST doesnt work
         System.out.println("id: " + id);
         return id;
     }
