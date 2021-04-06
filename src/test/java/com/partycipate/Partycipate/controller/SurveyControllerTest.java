@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -70,19 +71,19 @@ class SurveyControllerTest {
 
     @Test
     void getSurvey() throws IOException {
-//        Given
-        HttpUriRequest request = RequestBuilder.create("POST")
-                .setUri("http://localhost:8088/api/survey")
-                .setEntity(new StringEntity("{\"a\", \"b\""))
-//                Hier setzt ihr einen String ein, der dem Body in Postman entspricht.
-//                ACHTUNG: 'und" werden vom Java interpretiert und müssen mit \ maskiert werden.
-//                  Viel Spaß :)
-                .build();
-//        When
-        HttpResponse response = HttpClientBuilder.create().build().execute(request);
-//        Then
-        assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
-    }
+////        Given
+//        HttpUriRequest request = RequestBuilder.create("POST")
+//                .setUri("http://localhost:8088/api/survey")
+//                .setEntity(new StringEntity("{\"a\", \"b\""))
+////                Hier setzt ihr einen String ein, der dem Body in Postman entspricht.
+////                ACHTUNG: 'und" werden vom Java interpretiert und müssen mit \ maskiert werden.
+////                  Viel Spaß :)
+//                .build();
+////        When
+//        HttpResponse response = HttpClientBuilder.create().build().execute(request);
+////        Then
+//        assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
+   }
 
     @Test
     void deleteSurveybyId() {
