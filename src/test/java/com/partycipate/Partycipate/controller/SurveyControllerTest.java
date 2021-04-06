@@ -28,7 +28,30 @@ class SurveyControllerTest {
     @Test
     void addSurvey() {
         //ToDo add (header for auth and) body for content in {//Given}
-        //Given
+        //        Given
+        HttpUriRequest request = null;
+        try {
+            request = RequestBuilder.create("POST")
+                    .setUri("http://localhost:8088/api/survey")
+                    .setEntity(new StringEntity("{\"cookie\": \"cookie\", " +
+                            "\"creation_date\": \"creation_date\", " +
+                            "\"title\": \"title\", " +
+                            "\"user_id\": 1, " +
+                            "\"elements\": null}"))
+                    .build();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+//        When
+        HttpResponse response = null;
+        try {
+            response = HttpClientBuilder.create().build().execute(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        Then
+        assertEquals( HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
 
         //ToDo access response body in {//When} to check for correct response message
         //ToDo check for correct and incorrect input
@@ -42,7 +65,7 @@ class SurveyControllerTest {
 //        When
         HttpResponse response = HttpClientBuilder.create().build().execute(request);
 //        Then
-        assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
+        assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
     }
 
     @Test
