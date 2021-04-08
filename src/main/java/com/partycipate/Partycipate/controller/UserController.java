@@ -7,23 +7,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("")
-    public @ResponseBody Iterable<User> getAllUser(){
-        return userService.getAllUsers();
-    }
-
     @PostMapping("")
     public User addUser(@RequestBody User user){
         return userService.addUser(user.getEmail(),user.getPassword());
     }
-    @GetMapping("/{id}")
-    public @ResponseBody User getUser(@PathVariable ("id") int id){
-        return userService.getUser(id);
+
+    @GetMapping("")
+    public @ResponseBody User getUser() {
+        return userService.getUserByJWT();
     }
 
     @DeleteMapping("/{id}")

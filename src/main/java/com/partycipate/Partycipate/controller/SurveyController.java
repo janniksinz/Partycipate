@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/survey")
+@CrossOrigin(origins = "*")
 public class SurveyController {
 
     @Autowired
@@ -45,7 +46,6 @@ public class SurveyController {
 
     //getById
     @GetMapping("/{id}")
-    @CrossOrigin(origins = "*")
     public Survey getSurvey(@PathVariable("id") int id){
         return surveyService.getSurvey(id);
     }

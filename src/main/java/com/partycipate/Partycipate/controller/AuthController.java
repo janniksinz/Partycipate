@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     @Autowired
@@ -62,7 +62,7 @@ public class AuthController {
         }
 
         //creating user account
-        User user = new User.Builder().username(signUpRequest.getName()).email(signUpRequest.getEmail()).password(encoder.encode(signUpRequest.getPassword())).build();
+        User user = new User.Builder().username(signUpRequest.getUsername()).email(signUpRequest.getEmail()).password(encoder.encode(signUpRequest.getPassword())).build();
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
