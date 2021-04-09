@@ -6,6 +6,9 @@ import com.partycipate.Partycipate.model.*;
 import com.partycipate.Partycipate.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Iterator;
 import java.util.Optional;
@@ -86,5 +89,8 @@ public class ParticipantService {
 
     }
 
+    public Optional<Participant> getParticipant(int participant_id){
+        return participantRepository.findById((Integer)participant_id);
+    }
     
 }

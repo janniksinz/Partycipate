@@ -31,7 +31,7 @@ public class Survey {
 
     private String creation_date;
     private String title;
-    private String cookie;
+
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
     private Set<SurveyElement> elements = new HashSet<>() ;
@@ -49,11 +49,10 @@ public class Survey {
     public Survey(){}
     public Survey(@JsonProperty("creation_date") String creation_date,
                   @JsonProperty("title") String title,
-                  @JsonProperty("cookie") String cookie,
                   @JsonProperty("user") User user
                   ){
          this.creation_date=creation_date; this.title=title;
-        this.cookie=cookie; this.user=user;
+        this.user=user;
     }
     /*start of Methods*/
 
@@ -63,7 +62,9 @@ public class Survey {
 
         this.creation_date = builder.creation_date;
         this.title = builder.title;
-        this.cookie = builder.cookie;
+        this.elements= builder.elements;
+        this.user=builder.user;
+
 
 
     }
@@ -78,8 +79,8 @@ public class Survey {
 
         private String creation_date = "";
         private String title = "Survey";
-        private String cookie = "";
-        private ArrayList<SurveyElement> elements = null;
+        private Set<SurveyElement> elements = null;
+        private User user;
 
         public Builder id(int id){
             this.id=id;
@@ -94,11 +95,13 @@ public class Survey {
             this.title =title;
             return this;
         }
-        public Builder cookie(String cookie){
-            this.cookie=cookie;
+
+        public Builder user(User user) {
+            this.user = user;
             return this;
         }
-        public Builder elements(ArrayList<SurveyElement> elements){
+
+        public Builder elements(Set<SurveyElement> elements){
             this.elements=elements;
             return this;
         }
@@ -131,9 +134,7 @@ public class Survey {
     }
 
 
-    public void setCookie(String cookie) {
-        this.cookie = cookie;
-    }
+
 
     public void setCreation_date(String creation_date) {
         this.creation_date = creation_date;
@@ -150,9 +151,6 @@ public class Survey {
 
 
 
-    public String getCookie() {
-        return cookie;
-    }
 
     public String getCreation_date() {
         return creation_date;
@@ -180,7 +178,6 @@ public class Survey {
                 "id=" + id +
                 ", creation_date='" + creation_date + '\'' +
                 ", title='" + title + '\'' +
-                ", cookie='" + cookie + '\'' +
                 ", elements=" + elements +
                 ", participantSet=" + participantSet +
                 ", user=" + user +

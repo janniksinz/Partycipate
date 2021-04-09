@@ -2,7 +2,6 @@ package com.partycipate.Partycipate.model;
 
 
 import javax.persistence.*;
-import javax.servlet.http.Part;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -143,4 +142,20 @@ public class Participant {
     public void setSurveySet(Set<Survey> surveySet) {
         this.surveySet = surveySet;
     }
+
+    @Override
+    public String toString() {
+        return "Participant{" +
+                "id=" + id +
+                ", ip_address='" + ip_address + '\'' +
+                ", cookie='" + cookie + '\'' +
+                ", gender='" + gender + '\'' +
+                ", region='" + region + '\'' +
+                ", age='" + age + '\'' +
+                ", email='" + email + '\'' +
+                ", surveySet=" + surveySet +
+                ", answerSet=" + answerSet +
+                '}';
+    }
+
 }
