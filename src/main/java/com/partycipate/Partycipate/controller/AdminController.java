@@ -1,12 +1,8 @@
 package com.partycipate.Partycipate.controller;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.partycipate.Partycipate.dto.ChangePassword;
-import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.PostUpdate;
 
 @RestController
 @RequestMapping("/api/admin")
