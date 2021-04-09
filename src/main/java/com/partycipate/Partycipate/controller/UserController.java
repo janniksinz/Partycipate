@@ -1,9 +1,10 @@
 package com.partycipate.Partycipate.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.partycipate.Partycipate.dto.UserChangePw;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,10 +31,9 @@ public class UserController {
         return id;
     }
 
-    @PostMapping("/password")
-    public String changePassword(@JsonProperty ("newpw") String newPw,
-                                 @JsonProperty ("oldpw") String oldPw){
-        return userService.changePassword(userService.getUserByJWT().getEmail(), oldPw, newPw);
+    @PostMapping("/pw")
+    public ResponseEntity<?> changePassword(@RequestBody UserChangePw userChangePw){
+        return userService.changePassword(userService.getUserByJWT().getEmail(), userChangePw.getOldPw(), userChangePw.getNewPw());
     }
 
 
