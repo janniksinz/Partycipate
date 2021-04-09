@@ -7,15 +7,12 @@ import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 
 
 @RestController
 @RequestMapping("/api/survey")
+@CrossOrigin(origins = "*")
 public class SurveyController {
 
     @Autowired
@@ -28,7 +25,7 @@ public class SurveyController {
         this.surveyElementService = surveyElementService;
     }
 
-
+//    addSurvey
     @PostMapping("")
     public int addSurvey(@RequestBody SendSurvey sendsurvey){
         int id = surveyService.addSurvey(sendsurvey).getId(); //TODO getId() throws "(InvocationTargetException ex)" addSurvey POST doesnt work
@@ -36,23 +33,19 @@ public class SurveyController {
         return id;
     }
 
-    
-    //getAll
+//    getAll
     @GetMapping("")
     public @ResponseBody Iterable<Survey> getAllSurveys(){
         return surveyService.getAllSurveys();
     }
 
-    //getById
+//    getById
     @GetMapping("/{id}")
-    @CrossOrigin(origins = "*")
     public Survey getSurvey(@PathVariable("id") int id){
         return surveyService.getSurveyBySurveyId(id);
     }
 
-
-
-    //deleteById
+//    deleteById
     @DeleteMapping("/{id}")
     public int deleteSurveybyId(@PathVariable("id") int id){
 
@@ -60,11 +53,10 @@ public class SurveyController {
         return id;
     }
 
-    //addSurveyElement
+//    addSurveyElement
     @PostMapping("/element")
     public int addSurveyElement(@RequestBody SendElement sendElement){
-       return 0;
-    }
-
+        return 0;
+}
 
 }

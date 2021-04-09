@@ -17,27 +17,16 @@ ext {
 }
 
 
-	/*implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'org.springframework.session:spring-session-jdbc'
-
-	//runtime "com.h2database:h2"
-	runtime "org.grails.plugins:asset-pipeline"
-	runtime "mysql:mysql-connector-java:5.1.37"
-	runtimeOnly 'mysql:mysql-connector-java'
-
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.projectreactor:reactor-test'
-	testImplementation 'org.testcontainers:junit-jupiter'
+	/*
 
 	compile group: 'javax.persistence', name: 'persistence-api', version: '1.0'
-	compile "org.springframework.boot:spring-boot-starter-data-jpa"
-	compile "org.springframework.boot:spring-boot-starter-web"
-	compile "mysql:mysql-connector-java"
+
+	//	implementation "org.springframework.security.oauth:spring-security-oauth2"
+	//	implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure'
+	//	implementation "org.springframework.security:spring-security-jwt"
 
 
-	testCompile "org.springframework.boot:spring-boot-starter-test"*/
+	*/
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -60,9 +49,7 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-security"
 	// jwt
 	compile "io.jsonwebtoken:jjwt:0.9.0"
-//	implementation "org.springframework.security.oauth:spring-security-oauth2"
-//	implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure'
-//	implementation "org.springframework.security:spring-security-jwt"
+
 }
 
 dependencyManagement {
@@ -74,3 +61,30 @@ dependencyManagement {
 test {
 	useJUnitPlatform()
 }
+
+
+/*
+//	BACKUP
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// Actuator (Mapping and Health)
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	runtimeOnly 'mysql:mysql-connector-java'
+	//test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.apache.httpcomponents:httpclient'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'junit:junit'
+
+	compile "com.google.guava:guava:28.1-jre"
+
+	//security
+	implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
+	implementation "org.springframework.boot:spring-boot-starter-security"
+	// jwt
+	compile "io.jsonwebtoken:jjwt:0.9.0"
+
+*/
