@@ -7,6 +7,8 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,23 +28,22 @@ class SurveyControllerTest {
     void tearDown() {
     }
 
+
     @Test
-    void addSurvey() {
+    void addSurvey() throws UnsupportedEncodingException {
         //ToDo add (header for auth and) body for content in {//Given}
         //        Given
         HttpUriRequest request = null;
-        try {
+
+            StringEntity stringE = new StringEntity("{\"creation_date\": \"creation_date\", " +
+                    "\"title\": \"title\", " +
+                    "\"user_id\": 1, " +
+                    "\"elements\": null}");
+            stringE.setContentType("application/json;charset=utf-8");
             request = RequestBuilder.create("POST")
                     .setUri("http://localhost:8088/api/survey")
-                    .setEntity(new StringEntity("{\"cookie\": \"cookie\", " +
-                            "\"creation_date\": \"creation_date\", " +
-                            "\"title\": \"title\", " +
-                            "\"user_id\": 1, " +
-                            "\"elements\": null}"))
+                    .setEntity(stringE)
                     .build();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
 
 //        When
         HttpResponse response = null;
@@ -57,7 +58,13 @@ class SurveyControllerTest {
         //ToDo access response body in {//When} to check for correct response message
         //ToDo check for correct and incorrect input
         //ToDo check for correct and incorrect auth (not possible yet)
+
+
     }
+    @After
+    //ToDo
+
+
 
     @Test
     void getAllSurveys() throws IOException {
