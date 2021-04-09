@@ -21,6 +21,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+
+    public User getUserByJWT() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = getUserByUsername(username);
+        return user;
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username).get();
+    }
+
     //getAllUsers
     public Iterable<User> getAllUsers(){
         return userRepository.findAll();
