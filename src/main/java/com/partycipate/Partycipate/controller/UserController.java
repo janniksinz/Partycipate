@@ -34,8 +34,9 @@ public class UserController {
 
     @PostMapping("/password")
     public String changePassword(@RequestBody ChangePassword changePassword){
-        return userService.changePassword(changePassword.getEmail(), changePassword.getOldPassword(), changePassword.getNewPassword1(), changePassword.getNewPassword2());
-
+        return userService.changePassword(userService.getUserByJWT().getEmail(), changePassword.getOldPW(), changePassword.getNewPW());
     }
+
+
 
 }

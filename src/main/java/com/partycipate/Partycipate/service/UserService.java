@@ -51,12 +51,11 @@ public class UserService {
     }
 
     //TODO implement check password rules
-    public String changePassword(String email, String oldPassword, String newPassword1, String newPassword2){
+    public String changePassword(String email, String oldPassword, String newPassword1){
         //check oldPassword (have to hash Password to check
         if(userRepository.existsByEmail(email)){
             if (encoder.matches(oldPassword, userRepository.getPassword(email))){
-                //Check newPasswords are equal
-                if(newPassword1.equals(newPassword2)){
+
                     //Check Passwords rules?
                     if (true){
                         //HashPassword and Insert into Database
@@ -67,11 +66,8 @@ public class UserService {
                     else{
                         return "Password rules are not satisfyied";
                     }
-                }
-                else{
 
-                    return "Passwords are not equal";
-                }
+
             }
             else{
                 return "old Password is wrong";
