@@ -62,7 +62,7 @@ public class AuthController {
         }
 
         //creating user account
-        User user = new User.Builder().username(signUpRequest.getUsername()).email(signUpRequest.getEmail()).password(encoder.encode(signUpRequest.getPassword())).build();
+        User user = new User.Builder().username(signUpRequest.getEmail()).email(signUpRequest.getEmail()).password(encoder.encode(signUpRequest.getPassword())).build();
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
