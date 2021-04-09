@@ -7,11 +7,7 @@ import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 
 
 @RestController
@@ -29,7 +25,7 @@ public class SurveyController {
         this.surveyElementService = surveyElementService;
     }
 
-
+//    addSurvey
     @PostMapping("")
     public int addSurvey(@RequestBody SendSurvey survey){
         int id = surveyService.addSurvey(survey).getId();
@@ -37,22 +33,19 @@ public class SurveyController {
         return id;
     }
 
-    
-    //getAll
+//    getAll
     @GetMapping("")
     public @ResponseBody Iterable<Survey> getAllSurveys(){
         return surveyService.getAllSurveys();
     }
 
-    //getById
+//    getById
     @GetMapping("/{id}")
     public Survey getSurvey(@PathVariable("id") int id){
         return surveyService.getSurvey(id);
     }
 
-
-
-    //deleteById
+//    deleteById
     @DeleteMapping("/{id}")
     public int deleteSurveybyId(@PathVariable("id") int id){
 
@@ -60,11 +53,10 @@ public class SurveyController {
         return id;
     }
 
-    //addSurveyElement
+//    addSurveyElement
     @PostMapping("/element")
     public int addSurveyElement(@RequestBody SendElement sendElement){
-       return 0;
-    }
-
+        return 0;
+}
 
 }
