@@ -3,10 +3,7 @@ package com.partycipate.Partycipate.controller;
 import com.partycipate.Partycipate.service.SurveyService;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.After;
@@ -101,6 +98,27 @@ class SurveyControllerTest {
     }
 
     @Test
-    void addSurveyElement() {
+    void addSurveyElement() throws IOException {
+//        Given
+
+        HttpUriRequest request = null;
+        StringEntity element = new StringEntity("{\"may_skip\": true, " +
+                "\"position\": 1, " +
+                "\"question\": \"Testquestion?\", " +
+                "\"type\": \"single-choice\"," +
+                "\"answer_possibilities\": null}");
+        element.setContentType("application/json;charset=utf-8");
+        request = RequestBuilder.create("POST")
+                .setUri("http://localhost:8088/api/survey/element")
+                .setEntity(element)
+                .build();
+
+
+        //        When
+        HttpResponse response = HttpClientBuilder.create().build().execute(request);
+//       Then
+        assertEquals( HttpStatus.SC_OK,response.getStatusLine().getStatusCode());
     }
+    @After
+    //ToDo
 }
