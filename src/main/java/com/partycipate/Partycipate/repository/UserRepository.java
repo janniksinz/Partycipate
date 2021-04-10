@@ -17,5 +17,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Boolean existsByUsername(String name);
     Boolean existsByEmail(String email);
     User findById(int id);
+
+    @Query(value="SELECT password FROM user WHERE email =:email", nativeQuery = true)
+    String getPassword(String email);
+
+    @Transactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query(value = "UPDATE user SET password =: password WHERE user.email =: email", nativeQuery = true)
+    void changePassword(String password, String email);
+
 }
 
