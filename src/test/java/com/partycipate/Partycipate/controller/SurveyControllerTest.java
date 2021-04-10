@@ -1,5 +1,6 @@
 package com.partycipate.Partycipate.controller;
 
+import com.partycipate.Partycipate.service.SurveyService;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,7 +33,7 @@ class SurveyControllerTest {
 
     @Test
     void addSurvey() throws UnsupportedEncodingException {
-        //ToDo add (header for auth and) body for content in {//Given}
+        //ToDo add (header for auth
         //        Given
         HttpUriRequest request = null;
 
@@ -55,10 +57,7 @@ class SurveyControllerTest {
 //        Then
         assertEquals( HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
 
-        //ToDo access response body in {//When} to check for correct response message
-        //ToDo check for correct and incorrect input
         //ToDo check for correct and incorrect auth (not possible yet)
-
 
     }
     @After
@@ -68,28 +67,24 @@ class SurveyControllerTest {
 
     @Test
     void getAllSurveys() throws IOException {
-//        Given
+    //Given
         HttpUriRequest request = new HttpGet("http://localhost:8088/api/survey");
-//        When
+    //When
         HttpResponse response = HttpClientBuilder.create().build().execute(request);
-//        Then
+    //Then
         assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
     }
 
     @Test
     void getSurvey() throws IOException {
-////        Given
-//        HttpUriRequest request = RequestBuilder.create("POST")
-//                .setUri("http://localhost:8088/api/survey")
-//                .setEntity(new StringEntity("{\"a\", \"b\""))
-////                Hier setzt ihr einen String ein, der dem Body in Postman entspricht.
-////                ACHTUNG: 'und" werden vom Java interpretiert und müssen mit \ maskiert werden.
-////                  Viel Spaß :)
-//                .build();
-////        When
-//        HttpResponse response = HttpClientBuilder.create().build().execute(request);
-////        Then
-//        assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
+//        Given
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 3 + 1);
+        int id = randomNum;
+        HttpUriRequest request = new HttpGet("http://localhost:8088/api/survey/" + id);
+//        When
+      HttpResponse response = HttpClientBuilder.create().build().execute(request);
+//       Then
+     assertEquals( HttpStatus.SC_OK,response.getStatusLine().getStatusCode());
    }
 
     @Test
