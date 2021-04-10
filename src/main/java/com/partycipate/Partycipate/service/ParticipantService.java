@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.sql.Date;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
@@ -59,6 +60,7 @@ public class ParticipantService {
         Answer answer = new Answer.Builder().mcAnswerContent(null).build();
         answer.setParticipant(p);
         answer.setSurveyElement(sE);
+        answer.setDate(sendAnswer.getDate());
         // save answer
         System.out.println("saving answer with null in mcAnswerContent");
         answer = answerRepository.save(answer);
