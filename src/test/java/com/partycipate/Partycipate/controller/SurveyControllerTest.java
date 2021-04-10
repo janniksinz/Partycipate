@@ -3,6 +3,7 @@ package com.partycipate.Partycipate.controller;
 import com.partycipate.Partycipate.service.SurveyService;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
@@ -88,7 +89,15 @@ class SurveyControllerTest {
    }
 
     @Test
-    void deleteSurveybyId() {
+    void deleteSurveybyId() throws IOException {
+//        Given
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 3 + 1);
+        int id = randomNum;
+        HttpUriRequest request = new HttpDelete("http://localhost:8088/api/survey/" + id);
+ //        When
+        HttpResponse response = HttpClientBuilder.create().build().execute(request);
+//       Then
+        assertEquals( HttpStatus.SC_OK,response.getStatusLine().getStatusCode());
     }
 
     @Test
