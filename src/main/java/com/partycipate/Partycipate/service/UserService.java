@@ -2,11 +2,17 @@ package com.partycipate.Partycipate.service;
 
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.repository.UserRepository;
+import com.partycipate.Partycipate.security.message.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Iterator;
 
 @Service
 public class UserService {
@@ -27,6 +33,17 @@ public class UserService {
         String username = authentication.getName();
         User user = getUserByUsername(username);
         return user;
+    }
+
+    public Boolean isAdmin(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Iterator<? extends GrantedAuthority> iter = authentication.getAuthorities().stream().iterator();
+        Boolean admin = false;
+        while (iter.hasNext()){
+            GrantedAuthority auth = iter.next();
+            if(Boolean.TRUE.equals(auth.toString().equals("ROLE_ADMIN"))) admin=true;
+        }
+        return admin;
     }
 
     public User getUserByUsername(String username) {
@@ -51,7 +68,7 @@ public class UserService {
     }
 
     //TODO implement check password rules
-    public String changePassword(String email, String oldPassword, String newPassword1){
+    public ResponseEntity<?> changePassword(String email, String oldPassword, String newPassword1){
         //check oldPassword (have to hash Password to check
         if(userRepository.existsByEmail(email)){
             if (encoder.matches(oldPassword, userRepository.getPassword(email))){
@@ -61,20 +78,18 @@ public class UserService {
                         //HashPassword and Insert into Database
                         String newPassword=encoder.encode(newPassword1);
                         userRepository.changePassword(newPassword, email);
-                        return "Success";
+                        return new ResponseEntity<>(new ResponseMessage("Success -> Password Changed"), HttpStatus.OK);
                     }
                     else{
-                        return "Password rules are not satisfyied";
+                        throw new RuntimeException("Fail -> PasswordRules didn't match");
                     }
-
-
             }
             else{
-                return "old Password is wrong";
+                throw new RuntimeException("Fail ->  Old Password is wrong");
             }
         }
         else{
-            return "User Does not Exist";
+            throw new RuntimeException("Fail -> User doesn't exist");
         }
     }
 }
