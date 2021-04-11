@@ -59,7 +59,7 @@ public class AnswerService {
     }
 
     /**
-     * helperMethod - getBasicResults !!!depricated!!!
+     * !!!depricated!!! helperMethod - getBasicResults !!!depricated!!!
      * should be replaced by aggregate for McAnswer
      * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
      * */
