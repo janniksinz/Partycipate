@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 @Entity

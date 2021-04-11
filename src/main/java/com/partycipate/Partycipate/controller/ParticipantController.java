@@ -1,6 +1,6 @@
 package com.partycipate.Partycipate.controller;
 
-import com.partycipate.Partycipate.dto.Result;
+import com.partycipate.Partycipate.dto.ResultMc;
 import com.partycipate.Partycipate.dto.SendAnswer;
 import com.partycipate.Partycipate.model.Participant;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
@@ -44,8 +44,8 @@ public class ParticipantController {
     //getBasicResults
     @GetMapping("/results/{survey_id}")
     @CrossOrigin(origins = "*")
-    public Set<Result> getBasicResults(@PathVariable ("survey_id") int survey_id){
-        return answerService.getAllResultsForSurvey(survey_id);
+    public Set<ResultMc> getBasicResults(@PathVariable ("survey_id") int survey_id){
+        return answerService.getBasicResultsForSurvey(survey_id);
     }
 
     //sendAnswer

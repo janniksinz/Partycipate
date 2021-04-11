@@ -1,6 +1,8 @@
 package com.partycipate.Partycipate.service;
 
-import com.partycipate.Partycipate.dto.Result;
+import com.partycipate.Partycipate.dto.ResultMc;
+import com.partycipate.Partycipate.dto.TimeLine;
+import com.partycipate.Partycipate.dto.TimeResultMc;
 import com.partycipate.Partycipate.model.Answer;
 import com.partycipate.Partycipate.model.AnswerPossibility;
 import com.partycipate.Partycipate.model.MCAnswerContent;
@@ -18,11 +20,6 @@ public class AnswerService {
     private AnswerRepository answerRepository;
 
     @Autowired
-    public AnswerService(AnswerRepository answerRepository) {
-        this.answerRepository = answerRepository;
-    }
-
-    @Autowired
     private AnswerPossibilityService answerPossibilityService;
 
     @Autowired
@@ -31,30 +28,29 @@ public class AnswerService {
     @Autowired
     private SurveyElementService surveyElementService;
 
+
     @Autowired
-    private AnswerService answerService;
-    //getAnswersByElementId
-    public Set<Answer> getAnswersByElementId(int id){
-        Set<Answer> answers = answerRepository.getAnswersByElementId(id);
-        return answers;
+    public AnswerService(AnswerRepository answerRepository, McAnswerContentService mcAnswerContentService, SurveyElementService surveyElementService) {
+        this.answerRepository=answerRepository;
+        this.mcAnswerContentService=mcAnswerContentService;
+        this.surveyElementService=surveyElementService;
     }
 
-    public Set<Result> getAllResultsForSurvey(int survey_id){
-        Set<SurveyElement> sE = surveyElementService.getSurveyElementSetBySurveyID(survey_id);
-        Iterator<SurveyElement> sEI = sE.iterator();
-        Set<Result> results = new HashSet<Result>();
+//    getBasicResults
+    public Set<ResultMc> getBasicResultsForSurvey(int survey_id){
+        Iterator<SurveyElement> sEI = surveyElementService.getSurveyElementSetBySurveyID(survey_id).iterator();
+        Set<ResultMc> resultMcs = new HashSet<ResultMc>();
+//        iterate over SurveyElements to get Results for each
         while(sEI.hasNext()){
             int value = sEI.next().getId();
-            System.out.println(value);
             // add Results from Element to Set<Results>
-            results.add(answerService.results(value));
+            resultMcs.add(results(value));
         }
 
-        return results;
+        return resultMcs;
     }
-
-    //TODO Results are not sorted
-    public Result results(int element_id){
+//    helperMethod - getBasicResults
+    public ResultMc results(int element_id){
         //calculate all the answers to one Result to send back to the Frontend
         System.out.println("Start results ");
         int count = answerPossibilityService.getCountOfAnswersPossibilities(element_id);
@@ -62,10 +58,10 @@ public class AnswerService {
         //brauche Set von Answers; ArrayList initialisen mit Laenge count; Iterator durchgehen und ArrayList hochzaehlen;
         // ArrayList in Result setzen (setResult)
         Set<Answer> answers = answerRepository.getAnswersByElementId(element_id);
-        Result result = new Result();
+        ResultMc resultMc = new ResultMc();
         // count participants
         Optional<Integer> value1 = answerRepository.getCountParticipants(element_id);
-        result.setCount_participants(value1.isPresent() ? value1.get() : 0);
+        resultMc.setCount_participants(value1.isPresent() ? value1.get() : 0);
         ArrayList<Integer> counting_results = new ArrayList<>(count);
         // initialize arrayList with default values 0
         for (int i =0; i<count;i++){
@@ -101,10 +97,56 @@ public class AnswerService {
         }
 
 
-        result.setResults(counting_results);
+        resultMc.setResults(counting_results);
         System.out.println("End of method ");
-        return result;
+        return resultMc;
         // Anmerkung
     }
 
+    /**
+     * getTimeResults for Survey and TimeLine
+     * */
+    public Set<TimeResultMc> getTimeResultsForSurvey(int survey_id, TimeLine timeLine){
+        Iterator<SurveyElement> sEI = surveyElementService.getSurveyElementSetBySurveyID(survey_id).iterator();
+        Set<TimeResultMc> timeResultMcs = new HashSet<>();
+//        iterate over each Surveyelement to get List of TimeResults
+        while (sEI.hasNext()){
+            int value = sEI.next().getId();
+            timeResultMcs.add(timeResults(value, timeLine));
+        }
+        return timeResultMcs;
+    }
+
+    /**
+     * helperMethod - getTimeResultsForSurvey
+     * */
+    public TimeResultMc timeResults(int element_id, TimeLine timeLine){
+//        get all results for the survey_element
+//        iterate through every day from start to end
+//        filter for results from that day
+//        call helpermethod, that aggregates those results to ResultMc
+//
+//        aggregateMcResults()
+        return null;
+    }
+
+    public ResultMc aggregateMcResults(Iterator<MCAnswerContent> mcacIter){
+
+        return null;
+    }
+
+
+    /**
+     * Trims the Time to 00-00-00
+     * */
+    public static Date trim(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+
+        return calendar.getTime();
+    }
 }
