@@ -4,25 +4,21 @@ import com.partycipate.Partycipate.dto.SendAnswer;
 import com.partycipate.Partycipate.dto.SendMCAnswer;
 import com.partycipate.Partycipate.model.*;
 import com.partycipate.Partycipate.repository.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import java.sql.Date;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class ParticipantService {
+    private static final Logger log = LoggerFactory.getLogger(ParticipantService.class);
 
     @Autowired
     private AnswerRepository answerRepository;
-
-    @Autowired
-    private ParticipantService participantService;
 
     @Autowired
     private McAnswerContentRepository mcAnswerContentRepository;
@@ -31,32 +27,29 @@ public class ParticipantService {
     private AnswerPossibilityRepository answerPossibilityRepository;
 
     @Autowired
-    public ParticipantService(AnswerRepository answerRepository) {
-        this.answerRepository = answerRepository;
-    }
-
-    @Autowired
     private ParticipantRepository participantRepository;
 
     @Autowired
     private SurveyElementRepository surveyElementRepository;
+
+    public ParticipantService(AnswerRepository answerRepository, McAnswerContentRepository mcAnswerContentRepository, AnswerPossibilityRepository answerPossibilityRepository, ParticipantRepository participantRepository, SurveyElementRepository surveyElementRepository) {
+        this.answerRepository = answerRepository;
+        this.mcAnswerContentRepository = mcAnswerContentRepository;
+        this.answerPossibilityRepository = answerPossibilityRepository;
+        this.participantRepository = participantRepository;
+        this.surveyElementRepository = surveyElementRepository;
+    }
 
     public Answer addAnswer(SendAnswer sendAnswer){
         //get participantId
         int Pid = sendAnswer.getParticipant_id();
         int Eid = sendAnswer.getSurveyElement_id();
 
-        //get first Participant that matches Id
-        Optional<Participant> participant = participantRepository.findById(Pid).stream().findFirst();
-        //ToDo don't use iterator use participant.get() instead
-        Iterator<Participant> Piter = participant.stream().iterator();
-        Participant p = Piter.next();
-        //get first Element that matches Id
-        Optional<SurveyElement> surveyElement = surveyElementRepository.findById(Eid).stream().findFirst();
-        //ToDo don't use iterator
-        Iterator<SurveyElement> Eiter = surveyElement.stream().iterator();
-        SurveyElement sE = Eiter.next();
-        // save in new Answer with MCAnswerContent = null
+//        get first Participant that matches Id
+        Participant p = participantRepository.findById(Pid).stream().findFirst().get();
+//        get first Element that matches Id
+        SurveyElement sE = surveyElementRepository.findById(Eid).stream().findFirst().get();
+//        save in new Answer with MCAnswerContent = null
         Answer answer = new Answer.Builder().mcAnswerContent(null).build();
         answer.setParticipant(p);
         answer.setSurveyElement(sE);

@@ -10,6 +10,8 @@ import com.partycipate.Partycipate.security.message.request.LoginForm;
 import com.partycipate.Partycipate.security.message.request.SignUpForm;
 import com.partycipate.Partycipate.security.message.response.JwtResponse;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,7 @@ import java.util.Set;
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
 public class AuthController {
+    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     AuthenticationManager authenticationManager;

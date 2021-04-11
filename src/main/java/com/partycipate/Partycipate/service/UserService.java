@@ -3,6 +3,8 @@ package com.partycipate.Partycipate.service;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.repository.UserRepository;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import java.util.Iterator;
 
 @Service
 public class UserService {
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserRepository userRepository;

@@ -1,14 +1,18 @@
 package com.partycipate.Partycipate.dto;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class TimeResultMc {
 
     private Date datetime;
-    private ArrayList<ResultMc> resultMcs;
+    private ResultMc resultMc;
 
     public TimeResultMc(){}
+
+    public TimeResultMc(Date datetime, ResultMc resultMc) {
+        this.datetime = datetime;
+        this.resultMc = resultMc;
+    }
 
     public Date getDatetime() {
         return datetime;
@@ -18,11 +22,11 @@ public class TimeResultMc {
         this.datetime = datetime;
     }
 
-    public ArrayList<ResultMc> getResultMcs() {
-        return resultMcs;
+    public ResultMc getResultMc() {
+        return resultMc;
     }
 
-    public void setResultMcs(ArrayList<ResultMc> resultMcs) {
-        this.resultMcs = resultMcs;
+    public void setResultMc(ResultMc resultMc) {
+        this.resultMc = resultMc;
     }
 }

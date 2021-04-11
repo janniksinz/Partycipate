@@ -2,6 +2,8 @@ package com.partycipate.Partycipate.service;
 
 import com.partycipate.Partycipate.model.SurveyElement;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import java.util.Set;
 
 @Service
 public class SurveyElementService {
+    private static final Logger log = LoggerFactory.getLogger(SurveyElementService.class);
 
     @Autowired
     private SurveyElementRepository surveyElementRepository;

@@ -8,6 +8,8 @@ import com.partycipate.Partycipate.service.AnswerService;
 import com.partycipate.Partycipate.service.ParticipantService;
 import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/participant")
 public class ParticipantController {
+    private static final Logger log = LoggerFactory.getLogger(ParticipantController.class);
 
     @Autowired
     private ParticipantService participantService;
