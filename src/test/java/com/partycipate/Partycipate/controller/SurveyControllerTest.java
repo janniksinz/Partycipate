@@ -3,6 +3,7 @@ package com.partycipate.Partycipate.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.partycipate.Partycipate.repository.SurveyRepository;
 import com.partycipate.Partycipate.repository.UserRepository;
+import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
 import com.partycipate.Partycipate.service.UserService;
 import org.apache.http.HttpResponse;
@@ -20,6 +21,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -29,32 +34,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SurveyControllerTest {
-
-    @InjectMocks
-    SurveyService surveyService;
-
-    @Mock
-    SurveyRepository surveyRepository;
+    private static final Logger log = LoggerFactory.getLogger(SurveyControllerTest.class);
+    private static int survey_id;
 
     @BeforeEach
-    void setUp() throws Exception{
-        MockitoAnnotations.openMocks(this);
+    void setUp(){
     }
 
     @AfterEach
     void tearDown() {
     }
 
-
     @Test
     void addSurvey() throws IOException {
         //ToDo add (header for auth
     //Given
         //create request with body & user_id=1
-        HttpUriRequest request = null;
+        HttpUriRequest request;
         StringEntity stringE = new StringEntity("{\"creation_date\": \"creation_date\", " +
                "\"title\": \"title\", " +
-                "\"user_id\": 1, " +
+                "\"user_id\": 4, " +
                 "\"elements\": null}");
         stringE.setContentType("application/json;charset=utf-8");
         request = RequestBuilder.create("POST")
@@ -71,20 +70,36 @@ class SurveyControllerTest {
         }
 
     //Then
-        String responseString = EntityUtils.toString(response.getEntity());
+        survey_id = retrieveResourceFromResponse(response, Integer.class);
+        log.info("Deleted Survey with ID of {}", survey_id);
+
         //Testing the Status Code
         assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode(), "Testing the Status Code failed");
-        //Testing the Media Type
+        //Testing the Media Type of return body
         assertEquals("application/json", ContentType.getOrDefault(response.getEntity()).getMimeType(), "Testing the Media Type failed");
         //Testing the JSON Payload
-        assertTrue(responseString.matches("[0-9]+"));
-        //ToDo check for correct and incorrect auth (not possible yet)
-
-        //delete
-        if(responseString.matches("[0-9]+"))
-            surveyService.deleteSurveybyId(Integer.parseInt(responseString));
+        //ToDo check for correct and incorrect auth
     }
 
+    @Test
+    void getSurvey() throws IOException {
+//        Given
+        HttpUriRequest request = new HttpGet("http://localhost:8088/api/survey/" +survey_id);
+//        When
+        HttpResponse response = HttpClientBuilder.create().build().execute(request);
+//       Then
+        assertEquals( HttpStatus.SC_OK,response.getStatusLine().getStatusCode());
+    }
+
+    @Test
+    void deleteSurveyById() throws IOException {
+    //Given
+        HttpUriRequest request = new HttpDelete("http://localhost:8088/api/survey/" + survey_id);
+        //        When
+        HttpResponse response = HttpClientBuilder.create().build().execute(request);
+    //Then
+        assertEquals( HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
+    }
 
     @Test
     void getAllSurveys() throws IOException {
@@ -96,35 +111,12 @@ class SurveyControllerTest {
         assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
     }
 
-    @Test
-    void getSurvey() throws IOException {
-//        Given
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 3 + 1);
-        int id = randomNum;
-        HttpUriRequest request = new HttpGet("http://localhost:8088/api/survey/" + id);
-//        When
-      HttpResponse response = HttpClientBuilder.create().build().execute(request);
-//       Then
-     assertEquals( HttpStatus.SC_OK,response.getStatusLine().getStatusCode());
-   }
-
-    @Test
-    void deleteSurveybyId() throws IOException {
-//        Given
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 3 + 1);
-        int id = randomNum;
-        HttpUriRequest request = new HttpDelete("http://localhost:8088/api/survey/" + id);
- //        When
-        HttpResponse response = HttpClientBuilder.create().build().execute(request);
-//       Then
-        assertEquals( HttpStatus.SC_OK,response.getStatusLine().getStatusCode());
-    }
 
     @Test
     void addSurveyElement() throws IOException {
 //        Given
 
-        HttpUriRequest request = null;
+        HttpUriRequest request;
         StringEntity element = new StringEntity("{\"may_skip\": true, " +
                 "\"position\": 1, " +
                 "\"question\": \"Testquestion?\", " +
