@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -122,18 +123,33 @@ public class AnswerService {
      * */
     public Set<TimeResultMcList> timeResultsForSurvey(int survey_id, TimeLine timeLine){
         log.info("TimeResults: Retrieving timeResults for Survey Id: {} between {} and {}", survey_id, trim(timeLine.getStart()), trim(timeLine.getEnd()));
-        Iterator<SurveyElement> sEI = surveyElementService.getSurveyElementSetBySurveyID(survey_id).iterator();
+        Date start = trim(timeLine.getStart());
+        Date end = trim(timeLine.getEnd());
+        if(trim(timeLine.getStart()).compareTo(trim(timeLine.getEnd())) <= 0 ){
+            Date now = trim(new Date(System.currentTimeMillis()));
+            if (start.compareTo(now)<= 0 && end.compareTo(now) <= 0){
+                Iterator<SurveyElement> sEI = surveyElementService.getSurveyElementSetBySurveyID(survey_id).iterator();
 
 //        iterate over each Surveyelement to get List of TimeResults
-        Set<TimeResultMcList> list = new HashSet<>();
-        log.info("TimeResults: Survey has Elements: {}", sEI.hasNext());
-        while (sEI.hasNext()){
-            int element_id = sEI.next().getId();
+                Set<TimeResultMcList> list = new HashSet<>();
+                log.info("TimeResults: Survey has Elements: {}", sEI.hasNext());
+                while (sEI.hasNext()){
+                    int element_id = sEI.next().getId();
 //            get TimeResultMc for Survey_Element
-            log.info("TimeResults: currently looking through answers for Survey_Element: {}", element_id);
-            list.add(new TimeResultMcList(timeResultsForElement(element_id, timeLine), element_id));
+                    log.info("TimeResults: currently looking through answers for Survey_Element: {}", element_id);
+                    list.add(new TimeResultMcList(timeResultsForElement(element_id, timeLine), element_id));
+                }
+                return list;
+            }
+            else{
+                throw new IndexOutOfBoundsException("Start or/and End date are in the future");
+            }
+
         }
-        return list;
+        else{
+            throw new IndexOutOfBoundsException("Start date is after end date");
+        }
+
     }
 
     /**
@@ -145,26 +161,44 @@ public class AnswerService {
         Set<Answer> answerSet = answerRepository.getAnswersByElementId(element_id);
 //        save every day in Set<ResultMc>
         Set<TimeResultMc> timeResultMcSet = new HashSet<>();
-        Date start = timeLine.getStart();
-        Date end = timeLine.getEnd();
+        Date start = trim(timeLine.getStart());
+        Date end = trim(timeLine.getEnd());
         Date today = start;
 //        iterate over Date until start is after end - start++
 //        and create TimeResultMc
         while (today.compareTo(end) <= 0){
             log.info("TimeResult: Getting answers for day {}", today);
-//            iterate over answers and filter for current date
-            Iterator<Answer> todayAnswers = answerSet.stream().filter(a -> a.getDate().equals(today)).iterator();
-//            call helpermethod, that aggregates those results to ResultMc
-//            get ResultMc for the Day
-            ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
-            TimeResultMc timeResultMc = new TimeResultMc(today, resultMc);
-            timeResultMcSet.add(timeResultMc);
-//            make into TimeResultMc - return
+                //            iterate over answers and filter for current date
+
+            Iterator<Answer> todayAnswers = filterByDate(answerSet,today);
+                //            call helpermethod, that aggregates those results to ResultMc
+                //            get ResultMc for the Day
+            if(todayAnswers.hasNext()) {
+                ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
+                System.out.println(today);
+                TimeResultMc timeResultMc = new TimeResultMc(today, resultMc);
+                timeResultMcSet.add(timeResultMc);
+                //            make into TimeResultMc - return
+            }
+                else{
+                ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
+                System.out.println(today);
+                TimeResultMc timeResultMc = new TimeResultMc(today, resultMc);
+                timeResultMcSet.add(timeResultMc);
+            }
+            Calendar c = Calendar.getInstance();
+            c.setTime(today);
+            c.add(Calendar.DATE, 1);
+            today = c.getTime();
+
         }
 
         return timeResultMcSet;
     }
 
+    public  Iterator<Answer> filterByDate (Set<Answer> answerSet, Date today){
+       return answerSet.stream().filter(a -> trim(a.getDate()).equals(today)).iterator();
+    }
     /**
      * helper method - aggregates Answers for MC
      * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
@@ -210,7 +244,7 @@ public class AnswerService {
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 2);
 
         return calendar.getTime();
     }

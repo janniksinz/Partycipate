@@ -136,6 +136,7 @@ public class Answer {
                 ", mcAnswerContentSet=" + mcAnswerContentSet +
                 ", surveyElement=" + surveyElement +
                 ", participant=" + participant +
+                ", date=" + date +
                 '}';
     }
 }
