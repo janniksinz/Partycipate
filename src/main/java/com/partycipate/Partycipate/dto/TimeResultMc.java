@@ -5,7 +5,7 @@ import java.util.Date;
 public class TimeResultMc {
 
     private Date datetime;
-    private ResultMc resultMc;
+    private ResultMc result;
 
     public TimeResultMc(){}
 

@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class TimeResultMcList {
 
-    private Set<TimeResultMc> timeResultMcSet = new HashSet<>();
+    private Set<TimeResultMc> datetime_result = new HashSet<>();
     private int elementId;
 
     public TimeResultMcList(Set<TimeResultMc> timeResultMcSet, int elementId) {
