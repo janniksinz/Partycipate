@@ -33,8 +33,9 @@ public class SurveyController {
 //    addSurvey
     @PostMapping("")
     public ResponseEntity<?> addSurvey(@RequestBody SendSurvey sendsurvey){
+        log.info("Iserting Survey for user {}", sendsurvey.getUser_id());
         int id = surveyService.addSurvey(sendsurvey).getId();
-        log.info("Inserted Survey with Id: ", id);
+        log.info("Inserted Survey with Id: {}", id);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
