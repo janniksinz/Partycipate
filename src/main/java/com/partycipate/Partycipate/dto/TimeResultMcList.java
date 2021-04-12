@@ -8,18 +8,18 @@ public class TimeResultMcList {
     private Set<TimeResultMc> datetime_result = new HashSet<>();
     private int elementId;
 
-    public TimeResultMcList(Set<TimeResultMc> timeResultMcSet, int elementId) {
-        this.timeResultMcSet = timeResultMcSet;
+    public TimeResultMcList(Set<TimeResultMc> datetime_result, int elementId) {
+        this.datetime_result = datetime_result;
         this.elementId = elementId;
     }
     public TimeResultMcList(){}
 
-    public Set<TimeResultMc> getTimeResultMcSet() {
-        return timeResultMcSet;
+    public Set<TimeResultMc> getDatetime_result() {
+        return datetime_result;
     }
 
-    public void setTimeResultMcSet(Set<TimeResultMc> timeResultMcSet) {
-        this.timeResultMcSet = timeResultMcSet;
+    public void setDatetime_result(Set<TimeResultMc> datetime_result) {
+        this.datetime_result = datetime_result;
     }
 
     public int getElementId() {
