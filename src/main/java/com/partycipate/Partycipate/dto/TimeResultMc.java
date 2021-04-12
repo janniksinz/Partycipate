@@ -9,9 +9,9 @@ public class TimeResultMc {
 
     public TimeResultMc(){}
 
-    public TimeResultMc(Date datetime, ResultMc resultMc) {
+    public TimeResultMc(Date datetime, ResultMc result) {
         this.datetime = datetime;
-        this.resultMc = resultMc;
+        this.result = result;
     }
 
     public Date getDatetime() {
@@ -22,11 +22,11 @@ public class TimeResultMc {
         this.datetime = datetime;
     }
 
-    public ResultMc getResultMc() {
-        return resultMc;
+    public ResultMc getResult() {
+        return result;
     }
 
-    public void setResultMc(ResultMc resultMc) {
-        this.resultMc = resultMc;
+    public void setResult(ResultMc result) {
+        this.result = result;
     }
 }
