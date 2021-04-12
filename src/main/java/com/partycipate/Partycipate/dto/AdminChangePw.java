@@ -3,24 +3,24 @@ package com.partycipate.Partycipate.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AdminChangePw {
-    private String email;
+    private int id;
     private String oldPw;
     private String newPw;
 
-    public AdminChangePw(@JsonProperty("email") String email,
+    public AdminChangePw(@JsonProperty("user_id") int id,
                          @JsonProperty("oldPw") String oldPw,
                          @JsonProperty("newPw") String newPw) {
-        this.email = email;
+        this.id = id;
         this.oldPw = oldPw;
         this.newPw = newPw;
     }
 
-    public String getEmail() {
-        return email;
+    public int getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getOldPw() {

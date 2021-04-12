@@ -1,6 +1,5 @@
 package com.partycipate.Partycipate.controller;
 
-import com.partycipate.Partycipate.dto.ResultMc;
 import com.partycipate.Partycipate.dto.SendAnswer;
 import com.partycipate.Partycipate.model.Participant;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
@@ -11,9 +10,9 @@ import com.partycipate.Partycipate.service.SurveyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/participant")
@@ -47,8 +46,8 @@ public class ParticipantController {
     //getBasicResults
     @GetMapping("/results/{survey_id}")
     @CrossOrigin(origins = "*")
-    public Set<ResultMc> getBasicResults(@PathVariable ("survey_id") int survey_id){
-        return answerService.getBasicResultsForSurvey(survey_id);
+    public ResponseEntity<?> getBasicResults(@PathVariable ("survey_id") int survey_id){
+        return new ResponseEntity<>(answerService.getBasicResultsForSurvey(survey_id), HttpStatus.OK);
     }
 
     //sendAnswer

@@ -9,6 +9,7 @@ import com.partycipate.Partycipate.service.SurveyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +32,11 @@ public class SurveyController {
     }
 
 //    addSurvey
-    @PostMapping("")
+    @PostMapping(value = "", produces = "application/json")
     public ResponseEntity<?> addSurvey(@RequestBody SendSurvey sendsurvey){
+        log.info("addSurvey: Inserting edSurvey for user {}", sendsurvey.getUser_id());
         int id = surveyService.addSurvey(sendsurvey).getId();
-        log.info("Inserted Survey with Id: ", id);
+        log.info("addSurvey: Inserted Survey with Id: {}", id);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
@@ -52,10 +54,9 @@ public class SurveyController {
 
 //    deleteById
     @DeleteMapping("/{id}")
-    public int deleteSurveybyId(@PathVariable("id") int id){
-
-        surveyService.deleteSurveybyId(id);
-        return id;
+    public ResponseEntity<?> deleteSurveybyId(@PathVariable("id") int id) throws EmptyResultDataAccessException {
+        log.info("deleteSurvey: Deleting Survey {}", id);
+        return new ResponseEntity<>(surveyService.deleteSurveybyId(id), HttpStatus.OK);
     }
 
 //    addSurveyElement

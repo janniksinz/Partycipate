@@ -1,7 +1,6 @@
 package com.partycipate.Partycipate.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.partycipate.Partycipate.model.SurveyElement;
 
 import java.util.Set;
 
@@ -16,7 +15,6 @@ public class SendSurvey {
                       @JsonProperty ("title") String title,
                       @JsonProperty ("user_id") int user_id,
                       @JsonProperty ("elements") Set<SendElement> elements){
-
 
         this.creation_date=creation_date;
         this.title=title;
