@@ -1,6 +1,5 @@
 package com.partycipate.Partycipate.service;
 
-import com.partycipate.Partycipate.controller.AnalyticsController;
 import com.partycipate.Partycipate.dto.SendAnswerPossibility;
 import com.partycipate.Partycipate.dto.SendElement;
 import com.partycipate.Partycipate.dto.SendSurvey;
@@ -13,6 +12,7 @@ import com.partycipate.Partycipate.repository.SurveyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -87,14 +87,15 @@ public class SurveyService {
 
 
 
-    public void deleteSurveybyId(int id)  {
+    public int deleteSurveybyId(int id) throws EmptyResultDataAccessException {
         try {
             surveyRepository.deleteById(id);
-        }
-        catch (Exception e){
-            System.err.println("Id not found");
+        } catch (EmptyResultDataAccessException e){
+            throw new RuntimeException("Fail -> Survey not found");
+        } catch (Exception e){
             e.printStackTrace();
         }
+        return id;
     }
 
 

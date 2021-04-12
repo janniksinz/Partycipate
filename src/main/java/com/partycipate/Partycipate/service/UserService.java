@@ -82,6 +82,7 @@ public class UserService {
 
     //TODO implement check password rules
     public ResponseEntity<?> changePassword(String email, String oldPassword, String newPassword1){
+        log.info("changePW: changing PW for user {}: {}", getUserByJWT().getUser_id(), getUserByJWT().getUsername());
         //check oldPassword (have to hash Password to check
         if(userRepository.existsByEmail(email)){
             if (encoder.matches(oldPassword, userRepository.getPassword(email))){
