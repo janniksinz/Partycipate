@@ -74,8 +74,7 @@ public class UserService {
     public User getUser(int id){
         return userRepository.findById(id);
     }
-    public User deleteUser(){
-        User user = getUserByJWT();
+    public User deleteUser(User user){
         userRepository.deleteById(user.getUser_id());
         return user;
     }

@@ -31,7 +31,8 @@ public class UserController {
 
     @DeleteMapping("")
     public ResponseEntity<?> deleteUser(){
-        return new ResponseEntity<>(userService.deleteUser().getUser_id(), HttpStatus.OK);
+        User user = userService.getUserByJWT();
+        return new ResponseEntity<>(userService.deleteUser(user).getUser_id(), HttpStatus.OK);
     }
 
     @PostMapping("/pw")

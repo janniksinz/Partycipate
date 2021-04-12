@@ -23,7 +23,7 @@ public class AdminController {
     @PostMapping("/user/pw")
     public ResponseEntity<?> changePassword(@RequestBody AdminChangePw adminChangePw){
         if (Boolean.TRUE.equals(userService.isAdmin())) {
-            User user = userService.getUserByJWT();
+            User user = userService.getUser(adminChangePw.getId());
             return new ResponseEntity<>(userService.changePassword(user, adminChangePw.getOldPw(), adminChangePw.getNewPw()), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(new ResponseMessage("Fail -> you have no authority to change PW over this endpoint"), HttpStatus.BAD_REQUEST);
@@ -32,6 +32,7 @@ public class AdminController {
 
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") int user_id){
-
+        User user = userService.getUser(user_id);
+        return new ResponseEntity<>(userService.deleteUser(user), HttpStatus.OK);
     }
 }
