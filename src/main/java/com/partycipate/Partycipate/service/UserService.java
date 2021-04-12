@@ -81,17 +81,17 @@ public class UserService {
     }
 
     //TODO implement check password rules
-    public ResponseEntity<?> changePassword(String email, String oldPassword, String newPassword1){
+    public ResponseEntity<?> changePassword(User user, String oldPassword, String newPassword1){
         log.info("changePW: changing PW for user {}: {}", getUserByJWT().getUser_id(), getUserByJWT().getUsername());
         //check oldPassword (have to hash Password to check
-        if(userRepository.existsByEmail(email)){
-            if (encoder.matches(oldPassword, userRepository.getPassword(email))){
+        if(userRepository.existsById(user.getUser_id())){
+            if (encoder.matches(oldPassword, userRepository.getPassword(user.getEmail()))){
 
                     //Check Passwords rules?
                     if (true){
                         //HashPassword and Insert into Database
                         String newPassword=encoder.encode(newPassword1);
-                        userRepository.changePassword(newPassword, email);
+                        userRepository.changePassword(newPassword, user.getEmail());
                         return new ResponseEntity<>(new ResponseMessage("Success -> Password Changed"), HttpStatus.OK);
                     }
                     else{

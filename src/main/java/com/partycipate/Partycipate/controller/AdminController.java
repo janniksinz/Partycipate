@@ -1,6 +1,7 @@
 package com.partycipate.Partycipate.controller;
 
 import com.partycipate.Partycipate.dto.AdminChangePw;
+import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
 import com.partycipate.Partycipate.service.UserService;
 import org.slf4j.Logger;
@@ -22,9 +23,15 @@ public class AdminController {
     @PostMapping("/user/pw")
     public ResponseEntity<?> changePassword(@RequestBody AdminChangePw adminChangePw){
         if (Boolean.TRUE.equals(userService.isAdmin())) {
-            return userService.changePassword(adminChangePw.getEmail(), adminChangePw.getOldPw(), adminChangePw.getNewPw());
+            User user = userService.getUserByJWT();
+            return new ResponseEntity<>(userService.changePassword(user, adminChangePw.getOldPw(), adminChangePw.getNewPw()), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(new ResponseMessage("Fail -> you have no authority to change PW over this endpoint"), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") int user_id){
+
     }
 }

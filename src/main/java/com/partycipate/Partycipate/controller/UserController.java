@@ -36,7 +36,8 @@ public class UserController {
 
     @PostMapping("/pw")
     public ResponseEntity<?> changePassword(@RequestBody UserChangePw userChangePw){
-        return userService.changePassword(userService.getUserByJWT().getEmail(), userChangePw.getOldPw(), userChangePw.getNewPw());
+        User user = userService.getUserByJWT();
+        return userService.changePassword(user, userChangePw.getOldPw(), userChangePw.getNewPw());
     }
 
 
