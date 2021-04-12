@@ -1,7 +1,9 @@
 package com.partycipate.Partycipate.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Date;
 import java.util.Set;
 
 public class SendAnswer {
@@ -9,6 +11,7 @@ public class SendAnswer {
     private int participant_id;
     private int surveyElement_id;
     private Set<SendMCAnswer> sendMCAnswers;
+    private java.util.Date date;
 
     //constructor
     public SendAnswer(@JsonProperty("participant_id") int participant_id,
@@ -17,6 +20,15 @@ public class SendAnswer {
         this.participant_id=participant_id;
         this.surveyElement_id=surveyElement_id;
         this.sendMCAnswers=sendMCAnswers;
+        this.date=new Date(System.currentTimeMillis());
+    }
+
+    public java.util.Date getDate() {
+        return date;
+    }
+
+    public void setDate(java.util.Date date) {
+        this.date = date;
     }
 
     public int getId() {

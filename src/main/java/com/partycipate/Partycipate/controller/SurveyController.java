@@ -6,7 +6,11 @@ import com.partycipate.Partycipate.dto.SendSurvey;
 import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/survey")
 @CrossOrigin(origins = "*")
 public class SurveyController {
+    private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
 
     @Autowired
     private final SurveyElementService surveyElementService;
@@ -27,10 +32,10 @@ public class SurveyController {
 
 //    addSurvey
     @PostMapping("")
-    public int addSurvey(@RequestBody SendSurvey sendsurvey){
-        int id = surveyService.addSurvey(sendsurvey).getId(); //TODO getId() throws "(InvocationTargetException ex)" addSurvey POST doesnt work
-        System.out.println("id: " + id);
-        return id;
+    public ResponseEntity<?> addSurvey(@RequestBody SendSurvey sendsurvey){
+        int id = surveyService.addSurvey(sendsurvey).getId();
+        log.info("Inserted Survey with Id: ", id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
 //    getAll

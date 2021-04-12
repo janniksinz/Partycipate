@@ -1,5 +1,7 @@
 package com.partycipate.Partycipate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +34,7 @@ public class User {
     private int user_id;
     private String username;
     private String email;
+    String name;
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -41,6 +44,7 @@ public class User {
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Survey> surveys = new HashSet<>() ;
 
 //    Constructor
@@ -63,6 +67,7 @@ public class User {
         private String username = "username";
         private String email = "user@email.de";
         private String password = "password";
+        private String name = "name";
         private Set<Role> roles = null;
         private Set<Survey> surveys = null;
 
@@ -90,6 +95,10 @@ public class User {
 
         public User build() {
             return new User(this);
+        }
+
+        public void setName(String name) {
+        this.name = name;
         }
     }
 //      Getter & Setter
@@ -140,5 +149,13 @@ public class User {
 
     public void setSurveys(Set<Survey> surveys) {
         this.surveys = surveys;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

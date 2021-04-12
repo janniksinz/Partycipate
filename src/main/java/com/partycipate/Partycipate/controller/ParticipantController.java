@@ -1,6 +1,6 @@
 package com.partycipate.Partycipate.controller;
 
-import com.partycipate.Partycipate.dto.Result;
+import com.partycipate.Partycipate.dto.ResultMc;
 import com.partycipate.Partycipate.dto.SendAnswer;
 import com.partycipate.Partycipate.model.Participant;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
@@ -8,6 +8,8 @@ import com.partycipate.Partycipate.service.AnswerService;
 import com.partycipate.Partycipate.service.ParticipantService;
 import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/participant")
 public class ParticipantController {
+    private static final Logger log = LoggerFactory.getLogger(ParticipantController.class);
 
     @Autowired
     private ParticipantService participantService;
@@ -44,8 +47,8 @@ public class ParticipantController {
     //getBasicResults
     @GetMapping("/results/{survey_id}")
     @CrossOrigin(origins = "*")
-    public Set<Result> getBasicResults(@PathVariable ("survey_id") int survey_id){
-        return answerService.getAllResultsForSurvey(survey_id);
+    public Set<ResultMc> getBasicResults(@PathVariable ("survey_id") int survey_id){
+        return answerService.getBasicResultsForSurvey(survey_id);
     }
 
     //sendAnswer

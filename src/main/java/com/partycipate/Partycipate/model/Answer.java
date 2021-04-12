@@ -3,8 +3,7 @@ package com.partycipate.Partycipate.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Date;
 import java.util.Set;
 
 @Entity
@@ -38,6 +37,8 @@ public class Answer {
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Participant participant;
 
+    private java.util.Date date;
+
     //end of variables--------------------------------
 
     private Answer(Builder builder){
@@ -45,11 +46,12 @@ public class Answer {
         this.mcAnswerContentSet= builder.mcAnswerContent;
         this.participant=builder.participant;
         this.surveyElement=builder.surveyElement;
+        this.date = builder.date;
     }
     public Answer(){}
-    public Answer(int id, Set<MCAnswerContent> mcAnswerContent, SurveyElement surveyElement, Participant participant){
+    public Answer(int id, Set<MCAnswerContent> mcAnswerContent, SurveyElement surveyElement, Participant participant, Date date){
         this.id=id; this.surveyElement=surveyElement; this.participant=participant;
-        this.mcAnswerContentSet=mcAnswerContent;
+        this.mcAnswerContentSet=mcAnswerContent; this.date=date;
 
     }
 
@@ -58,11 +60,18 @@ public class Answer {
         private Set<MCAnswerContent> mcAnswerContent = null;
         private SurveyElement surveyElement = null;
         private Participant participant = null;
+        private java.util.Date date = null;
 
         public Builder id(int id){
             this.id=id;
             return this;
         }
+
+        public Builder date(Date date) {
+            this.date = date;
+            return this;
+        }
+
         public Builder mcAnswerContent(Set<MCAnswerContent> mcAnswerContent){
             this.mcAnswerContent=mcAnswerContent;
             return this;
@@ -109,6 +118,15 @@ public class Answer {
 
     public void setParticipant(Participant participant) {
         this.participant = participant;
+    }
+
+
+    public java.util.Date getDate() {
+        return date;
+    }
+
+    public void setDate(java.util.Date date) {
+        this.date = date;
     }
 
     @Override

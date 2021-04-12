@@ -1,5 +1,6 @@
 package com.partycipate.Partycipate.service;
 
+import com.partycipate.Partycipate.controller.AnalyticsController;
 import com.partycipate.Partycipate.dto.SendAnswerPossibility;
 import com.partycipate.Partycipate.dto.SendElement;
 import com.partycipate.Partycipate.dto.SendSurvey;
@@ -9,7 +10,8 @@ import com.partycipate.Partycipate.model.SurveyElement;
 import com.partycipate.Partycipate.repository.AnswerPossibilityRepository;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.repository.SurveyRepository;
-import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,12 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 
 @Service
 public class SurveyService {
+    private static final Logger log = LoggerFactory.getLogger(SurveyService.class);
 
     @Autowired
     private AnswerPossibilityRepository answerPossibilityRepository;

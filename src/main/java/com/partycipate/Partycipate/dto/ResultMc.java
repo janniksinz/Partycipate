@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 
-public class Result {
+public class ResultMc {
 
     private ArrayList<Integer> results = new ArrayList();
 
