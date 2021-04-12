@@ -31,11 +31,11 @@ public class SurveyController {
     }
 
 //    addSurvey
-    @PostMapping("")
+    @PostMapping(value = "", produces = "application/json")
     public ResponseEntity<?> addSurvey(@RequestBody SendSurvey sendsurvey){
-        log.info("Iserting Survey for user {}", sendsurvey.getUser_id());
+        log.info("addSurvey: Inserting edSurvey for user {}", sendsurvey.getUser_id());
         int id = surveyService.addSurvey(sendsurvey).getId();
-        log.info("Inserted Survey with Id: {}", id);
+        log.info("addSurvey: Inserted Survey with Id: {}", id);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
