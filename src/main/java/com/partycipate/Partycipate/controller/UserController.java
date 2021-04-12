@@ -28,10 +28,9 @@ public class UserController {
         return userService.getUserByJWT();
     }
 
-    @DeleteMapping("/{id}")
-    public int deleteUser(@PathVariable ("id") int id){
-        userService.deleteUser(id);
-        return id;
+    @DeleteMapping("/")
+    public int deleteUser(){
+        return userService.deleteUser().getUser_id();
     }
 
     @PostMapping("/pw")

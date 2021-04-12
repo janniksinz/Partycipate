@@ -37,7 +37,10 @@ public class UserService {
         User user = getUserByUsername(username);
         return user;
     }
-
+    /**
+     * isAdmin
+     * <auhtor> Jannik Sinz - jannik.sinz@ibm.com </auhtor>
+     * */
     public Boolean isAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Iterator<? extends GrantedAuthority> iter = authentication.getAuthorities().stream().iterator();
@@ -49,6 +52,10 @@ public class UserService {
         return admin;
     }
 
+    /**
+     * getUserByUsername
+     * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     * */
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username).get();
     }
@@ -58,6 +65,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
+
     public User addUser(String email, String password){
         User user = new User.Builder().email(email).password(password).build();
         userRepository.save(user);
@@ -66,8 +74,10 @@ public class UserService {
     public User getUser(int id){
         return userRepository.findById(id);
     }
-    public void deleteUser(int id){
-        userRepository.deleteById(id);
+    public User deleteUser(){
+        User user = getUserByJWT();
+        userRepository.deleteById(user.getUser_id());
+        return user;
     }
 
     //TODO implement check password rules
