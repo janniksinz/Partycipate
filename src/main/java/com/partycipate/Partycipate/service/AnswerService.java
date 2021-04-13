@@ -115,6 +115,7 @@ public class AnswerService {
 
         resultMc.setResults(counting_results);
         System.out.println("End of method ");
+        resultMc.setElement_id(element_id);
         return resultMc;
         // Anmerkung
     }
