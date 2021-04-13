@@ -55,7 +55,10 @@ public class AnswerService {
             int element_id = sEI.next().getId();
 //            iterate over Element
             // add Results from Element to Set<Results>
-            resultMcs.add(results(element_id));
+            Set<Answer> answers = answerRepository.getAnswersByElementId(element_id);
+            Iterator<Answer> answerIterator= answers.iterator();
+
+            resultMcs.add(aggregateMcResults(answerIterator,element_id));
         }
 
         return resultMcs;
@@ -66,7 +69,11 @@ public class AnswerService {
      * should be replaced by aggregate for McAnswer
      * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
      * */
-//    ToDo replace with aggregateMcResults after testing
+
+
+
+
+/*   //DEPRECATED
     public ResultMc results(int element_id){
         //calculate all the answers to one Result to send back to the Frontend
         System.out.println("Start results ");
@@ -119,7 +126,7 @@ public class AnswerService {
         resultMc.setElement_id(element_id);
         return resultMc;
         // Anmerkung
-    }
+    }/*
 
     /**
      * getTimeResults for Survey and TimeLine
@@ -190,14 +197,12 @@ public class AnswerService {
                 //            get ResultMc for the Day
                 if(todayAnswers.hasNext()) {
                     ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
-                    System.out.println(today);
                     TimeResultMc timeResultMc = new TimeResultMc(today, resultMc);
                     timeResultMcSet.add(timeResultMc);
                     //            make into TimeResultMc - return
                 }
                 else{
                     ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
-                    System.out.println(today);
                     TimeResultMc timeResultMc = new TimeResultMc(today, resultMc);
                     timeResultMcSet.add(timeResultMc);
                 }
@@ -255,6 +260,7 @@ public class AnswerService {
             }
         }
         resultMc.setResults(counting_results);
+        resultMc.setElement_id(element_id);
         return resultMc;
     }
 
