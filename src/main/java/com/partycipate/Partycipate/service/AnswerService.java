@@ -195,24 +195,22 @@ public class AnswerService {
                 Iterator<Answer> todayAnswers = filterByDate(answerSet,today);
                 //            call helpermethod, that aggregates those results to ResultMc
                 //            get ResultMc for the Day
+                ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
+                TimeResultMc timeResultMc;
                 if(todayAnswers.hasNext()) {
-                    ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
-                    TimeResultMc timeResultMc = new TimeResultMc(today, resultMc);
-                    timeResultMcSet.add(timeResultMc);
-                    //            make into TimeResultMc - return
+                    timeResultMc = new TimeResultMc(today, resultMc);
                 }
                 else{
-                    ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
-                    TimeResultMc timeResultMc = new TimeResultMc(today, resultMc);
-                    timeResultMcSet.add(timeResultMc);
+                    timeResultMc = new TimeResultMc(today, resultMc);
                 }
+                log.info("TimeResult: adding results for {}", timeResultMc.getDatetime());
+                timeResultMcSet.add(timeResultMc);
                 Calendar c = Calendar.getInstance();
                 c.setTime(today);
                 c.add(Calendar.DATE, 1);
                 today = c.getTime();
 
             }
-
             return timeResultMcSet;
         }
        else {
