@@ -55,10 +55,9 @@ public class ParticipantService {
         answer.setSurveyElement(sE);
         answer.setDate(sendAnswer.getDate());
         // save answer
-        System.out.println("saving answer with null in mcAnswerContent");
         answer = answerRepository.save(answer);
         int answerId = answer.getId();
-        System.out.println(answerId);
+        log.info("addAnswer: saved answer with id {}", answerId);
 
         // save MC Answers
         Set<SendMCAnswer> mcacS = sendAnswer.getSendMCAnswers();
@@ -75,6 +74,7 @@ public class ParticipantService {
             // save mcAnswer
             mcAnswerContentRepository.save(mcAnswer);
         }
+        log.info("addAnswer: saved MCContent for Answer");
     return answer;
     }
 

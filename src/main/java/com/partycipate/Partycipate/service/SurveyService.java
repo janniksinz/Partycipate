@@ -6,6 +6,7 @@ import com.partycipate.Partycipate.dto.SendSurvey;
 import com.partycipate.Partycipate.model.AnswerPossibility;
 import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.model.SurveyElement;
+import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.repository.AnswerPossibilityRepository;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.repository.SurveyRepository;
@@ -44,8 +45,8 @@ public class SurveyService {
     }
 
     @Transactional
-    public Survey addSurvey(SendSurvey surveyS) {
-        Survey survey = new Survey.Builder().creation_date(surveyS.getCreation_date()).title(surveyS.getTitle()).user(userService.getUser(surveyS.getUser_id())).build();
+    public Survey addSurvey(SendSurvey surveyS, User user) {
+        Survey survey = new Survey.Builder().creation_date(surveyS.getCreation_date()).title(surveyS.getTitle()).user(userService.getUser(user.getUser_id())).build();
         surveyRepository.save(survey);
 
         if(surveyS.getElements() !=null) {
