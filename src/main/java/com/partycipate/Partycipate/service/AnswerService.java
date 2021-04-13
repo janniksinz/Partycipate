@@ -188,15 +188,15 @@ public class AnswerService {
                 Iterator<Answer> todayAnswers = filterByDate(answerSet,today);
                 //            call helpermethod, that aggregates those results to ResultMc
                 //            get ResultMc for the Day
+                ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
+                resultMc.setElement_id(element_id);
                 if(todayAnswers.hasNext()) {
-                    ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
                     System.out.println(today);
                     TimeResultMc timeResultMc = new TimeResultMc(today, resultMc);
                     timeResultMcSet.add(timeResultMc);
                     //            make into TimeResultMc - return
                 }
                 else{
-                    ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
                     System.out.println(today);
                     TimeResultMc timeResultMc = new TimeResultMc(today, resultMc);
                     timeResultMcSet.add(timeResultMc);
