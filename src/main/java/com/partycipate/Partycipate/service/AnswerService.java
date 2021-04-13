@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -119,7 +118,10 @@ public class AnswerService {
 
     /**
      * getTimeResults for Survey and TimeLine
-     * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     * <authors>
+     *      <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     *      <author> Giovanni Carlucci </author>
+     * </authors>
      * */
     public Set<TimeResultMcList> timeResultsForSurvey(int survey_id, TimeLine timeLine){
         log.info("TimeResults: Retrieving timeResults for Survey Id: {} between {} and {}", survey_id, trim(timeLine.getStart()), trim(timeLine.getEnd()));
@@ -136,7 +138,7 @@ public class AnswerService {
                 while (sEI.hasNext()){
                     int element_id = sEI.next().getId();
 //            get TimeResultMc for Survey_Element
-                    log.info("TimeResults: currently looking through answers for Survey_Element: {}", element_id);
+                    log.info("TimeResults: Getting answers for Survey_Element: {}", element_id);
                     list.add(new TimeResultMcList(timeResultsForElement(element_id, timeLine), element_id));
                 }
                 return list;
@@ -154,7 +156,10 @@ public class AnswerService {
 
     /**
      * helperMethod - getTimeResultsForSurvey
-     * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     * <authors>
+     *      <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     *      <author> Giovanni Carlucci </author>
+     * </authors>
      * */
     public Set<TimeResultMc> timeResultsForElement(int element_id, TimeLine timeLine){
 //        get all answers for the survey_element
@@ -209,7 +214,10 @@ public class AnswerService {
     }
     /**
      * helper method - aggregates Answers for MC
-     * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     * <authors>
+     *      <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     *      <author> Giovanni Carlucci </author>
+     * </authors>
      * */
     public ResultMc aggregateMcResults(Iterator<Answer> answers, int element_id){
         ResultMc resultMc = new ResultMc();
