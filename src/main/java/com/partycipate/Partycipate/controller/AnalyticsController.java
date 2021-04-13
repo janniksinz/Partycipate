@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/analytics")
 public class AnalyticsController {
     private static final Logger log = LoggerFactory.getLogger(AnalyticsController.class);
@@ -34,7 +35,7 @@ public class AnalyticsController {
         return new ResponseEntity<>(answerService.getBasicResultsForSurvey(survey_id), HttpStatus.OK);
     }
 
-    @GetMapping("/timeline/{survey_id}")
+    @PostMapping("/timeline/{survey_id}")
     public @ResponseBody
     ResponseEntity<?> getTimeResults(@PathVariable("survey_id") int survey_id,
                                   @RequestBody TimeLine timeLine){

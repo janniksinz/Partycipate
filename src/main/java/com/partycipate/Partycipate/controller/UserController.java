@@ -11,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user")
 @CrossOrigin(origins = "*")
+@RequestMapping("/api/user")
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 

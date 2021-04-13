@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,7 +35,7 @@ public class SurveyElement {
     private Survey survey;
 
     @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
-    private Set<AnswerPossibility> answerPossibilities= new HashSet<>();
+    private Set<AnswerPossibility> answer_possibilities = new HashSet<>();
 
     @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -89,12 +88,12 @@ public class SurveyElement {
         }
     }
 
-    public Set<AnswerPossibility> getAnswerPossibilities() {
-        return answerPossibilities;
+    public Set<AnswerPossibility> getAnswer_possibilities() {
+        return answer_possibilities;
     }
 
-    public void setAnswerPossibilities(Set<AnswerPossibility> answerPossibilities) {
-        this.answerPossibilities = answerPossibilities;
+    public void setAnswer_possibilities(Set<AnswerPossibility> answerPossibilities) {
+        this.answer_possibilities = answerPossibilities;
     }
 
     public Set<Answer> getAnswers() {
@@ -165,7 +164,7 @@ public class SurveyElement {
                 ", question='" + question + '\'' +
                 ", may_skip=" + may_skip +
                 ", survey=" + survey +
-                ", answerPossibilities=" + answerPossibilities +
+                ", answerPossibilities=" + answer_possibilities +
                 ", answers=" + answers +
                 '}';
     }

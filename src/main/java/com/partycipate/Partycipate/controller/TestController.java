@@ -34,7 +34,7 @@ public class TestController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> getUserAdmin(){
        return new ResponseEntity<>(new ResponseMessage(">>> Users and Admins only"), HttpStatus.OK);
-   }
+    }
 
 
     @GetMapping("/user")

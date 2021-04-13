@@ -36,7 +36,7 @@ public class SurveyController {
     }
 
 //    addSurvey
-    @PostMapping(value = "", produces = "application/json")
+    @PostMapping(value = "")
     public ResponseEntity<?> addSurvey(@RequestBody SendSurvey sendsurvey){
         User user = userService.getUserByJWT();
         log.info("addSurvey: Inserting edSurvey for user {}", user.getUser_id());
