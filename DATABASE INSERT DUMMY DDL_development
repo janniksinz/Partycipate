@@ -32,6 +32,6 @@ INSERT INTO mcanswer_content (id, answer_id, answer_possibility_id) VALUES (3, 3
 INSERT INTO mcanswer_content (id, answer_id, answer_possibility_id) VALUES (4, 4, 4);
 INSERT INTO mcanswer_content (id, answer_id, answer_possibility_id) VALUES (5, 5, 2);
 
-
+INSERT INTO
 
 #INSERT INTO auth_token (token, user_id) VALUES ('t0kEn', 1);

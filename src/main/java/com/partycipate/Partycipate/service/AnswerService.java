@@ -9,9 +9,12 @@ import com.partycipate.Partycipate.model.AnswerPossibility;
 import com.partycipate.Partycipate.model.MCAnswerContent;
 import com.partycipate.Partycipate.model.SurveyElement;
 import com.partycipate.Partycipate.repository.AnswerRepository;
+import com.partycipate.Partycipate.security.message.response.ResponseMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -123,7 +126,8 @@ public class AnswerService {
      *      <author> Giovanni Carlucci </author>
      * </authors>
      * */
-    public Set<TimeResultMcList> timeResultsForSurvey(int survey_id, TimeLine timeLine){
+    public ResponseEntity<?> timeResultsForSurvey(int survey_id, TimeLine timeLine){
+
         log.info("TimeResults: Retrieving timeResults for Survey Id: {} between {} and {}", survey_id, trim(timeLine.getStart()), trim(timeLine.getEnd()));
         Date start = trim(timeLine.getStart());
         Date end = trim(timeLine.getEnd());
@@ -141,18 +145,20 @@ public class AnswerService {
                     log.info("TimeResults: Getting answers for Survey_Element: {}", element_id);
                     list.add(new TimeResultMcList(timeResultsForElement(element_id, timeLine), element_id));
                 }
-                return list;
+                return new ResponseEntity<>(list, HttpStatus.OK);
             }
             else{
-                throw new IndexOutOfBoundsException("Start or/and End date are in the future");
+                return new ResponseEntity<>(new ResponseMessage("Start or/and End date are in the future"), HttpStatus.BAD_REQUEST);
             }
 
         }
         else{
-            throw new IndexOutOfBoundsException("Start date is after end date");
+                return new ResponseEntity<>(new ResponseMessage("Start date is after end date"), HttpStatus.BAD_REQUEST);
         }
 
     }
+
+
 
     /**
      * helperMethod - getTimeResultsForSurvey
