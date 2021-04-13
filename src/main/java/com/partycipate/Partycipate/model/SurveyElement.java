@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class SurveyElement {
@@ -35,11 +35,11 @@ public class SurveyElement {
     private Survey survey;
 
     @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
-    private Set<AnswerPossibility> answer_possibilities = new HashSet<>();
+    private List<AnswerPossibility> answerPossibilities= new ArrayList<>();
 
     @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Answer> answers = new HashSet<>();
+    private List<Answer> answers = new ArrayList<>();
 
     private SurveyElement(Builder builder){
         this.id = builder.id;
@@ -88,19 +88,19 @@ public class SurveyElement {
         }
     }
 
-    public Set<AnswerPossibility> getAnswer_possibilities() {
-        return answer_possibilities;
+    public List<AnswerPossibility> getAnswerPossibilities() {
+        return answerPossibilities;
     }
 
-    public void setAnswer_possibilities(Set<AnswerPossibility> answerPossibilities) {
-        this.answer_possibilities = answerPossibilities;
+    public void setAnswerPossibilities(List<AnswerPossibility> answerPossibilities) {
+        this.answerPossibilities = answerPossibilities;
     }
 
-    public Set<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<Answer> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
 
@@ -164,7 +164,7 @@ public class SurveyElement {
                 ", question='" + question + '\'' +
                 ", may_skip=" + may_skip +
                 ", survey=" + survey +
-                ", answerPossibilities=" + answer_possibilities +
+                ", answerPossibilities=" + answerPossibilities +
                 ", answers=" + answers +
                 '}';
     }

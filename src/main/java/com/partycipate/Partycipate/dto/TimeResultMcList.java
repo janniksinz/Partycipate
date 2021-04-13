@@ -1,24 +1,32 @@
 package com.partycipate.Partycipate.dto;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.springframework.core.annotation.AnnotationAwareOrderComparator;
+
+import javax.annotation.PostConstruct;
+import java.util.*;
 
 public class TimeResultMcList {
 
-    private Set<TimeResultMc> datetime_result = new HashSet<>();
+    private List<TimeResultMc> datetime_result = new ArrayList<>();
     private int element_id;
 
-    public TimeResultMcList(Set<TimeResultMc> datetime_result, int element_id) {
+    public TimeResultMcList(List<TimeResultMc> datetime_result, int element_id) {
         this.datetime_result = datetime_result;
         this.element_id = element_id;
     }
+
     public TimeResultMcList(){}
 
-    public Set<TimeResultMc> getDatetime_result() {
+    @PostConstruct
+    public void init() {
+        Collections.sort(datetime_result, AnnotationAwareOrderComparator.INSTANCE);
+    }
+
+    public List<TimeResultMc> getDatetime_result() {
         return datetime_result;
     }
 
-    public void setDatetime_result(Set<TimeResultMc> datetime_result) {
+    public void setDatetime_result(List<TimeResultMc> datetime_result) {
         this.datetime_result = datetime_result;
     }
 

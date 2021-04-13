@@ -146,7 +146,7 @@ public class AnswerService {
                 Iterator<SurveyElement> sEI = surveyElementService.getSurveyElementSetBySurveyID(survey_id).iterator();
 
 //        iterate over each Surveyelement to get List of TimeResults
-                Set<TimeResultMcList> list = new HashSet<>();
+                List<TimeResultMcList> list = new ArrayList<>();
                 log.info("TimeResults: Survey has Elements: {}", sEI.hasNext());
                 while (sEI.hasNext()){
                     int element_id = sEI.next().getId();
@@ -176,13 +176,13 @@ public class AnswerService {
      *      <author> Giovanni Carlucci </author>
      * </authors>
      * */
-    public Set<TimeResultMc> timeResultsForElement(int element_id, TimeLine timeLine){
+    public List<TimeResultMc> timeResultsForElement(int element_id, TimeLine timeLine){
 //        get all answers for the survey_element
         Set<Answer> answerSet = answerRepository.getAnswersByElementId(element_id);
         Iterator<Answer> answerSetIt= answerSet.iterator();
         if (answerSetIt.hasNext()){
             //save every day in Set<ResultMc>
-            Set<TimeResultMc> timeResultMcSet = new HashSet<>();
+            List<TimeResultMc> timeResultMcSet = new ArrayList<>();
             Date start = trim(timeLine.getStart());
             Date end = trim(timeLine.getEnd());
             Date today = start;
@@ -195,24 +195,22 @@ public class AnswerService {
                 Iterator<Answer> todayAnswers = filterByDate(answerSet,today);
                 //            call helpermethod, that aggregates those results to ResultMc
                 //            get ResultMc for the Day
+                ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
+                TimeResultMc timeResultMc;
                 if(todayAnswers.hasNext()) {
-                    ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
-                    TimeResultMc timeResultMc = new TimeResultMc(today, resultMc);
-                    timeResultMcSet.add(timeResultMc);
-                    //            make into TimeResultMc - return
+                    timeResultMc = new TimeResultMc(today, resultMc);
                 }
                 else{
-                    ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
-                    TimeResultMc timeResultMc = new TimeResultMc(today, resultMc);
-                    timeResultMcSet.add(timeResultMc);
+                    timeResultMc = new TimeResultMc(today, resultMc);
                 }
+                log.info("TimeResult: adding results for {}", timeResultMc.getDatetime());
+                timeResultMcSet.add(timeResultMc);
                 Calendar c = Calendar.getInstance();
                 c.setTime(today);
                 c.add(Calendar.DATE, 1);
                 today = c.getTime();
 
             }
-
             return timeResultMcSet;
         }
        else {
