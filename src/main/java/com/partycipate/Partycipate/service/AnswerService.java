@@ -76,6 +76,7 @@ public class AnswerService {
         // ArrayList in Result setzen (setResult)
         Set<Answer> answers = answerRepository.getAnswersByElementId(element_id);
         ResultMc resultMc = new ResultMc();
+        resultMc.setElement_id(element_id);
         // count participants
         Optional<Integer> countParticipants = answerRepository.getCountParticipants(element_id);
         resultMc.setCount_participants(countParticipants.orElse(0));

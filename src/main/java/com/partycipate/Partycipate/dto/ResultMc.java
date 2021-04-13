@@ -12,7 +12,7 @@ public class ResultMc {
 
     int count_participants;
     @JsonIgnore
-    int size;
+    int element_id;
 
     public void setResults(ArrayList<Integer> arrayList){
         this.results = arrayList;
@@ -23,12 +23,12 @@ public class ResultMc {
         return results;
     }
 
-    public int getSize() {
-        return size;
+    public int getElement_id() {
+        return element_id;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setElement_id(int element_id) {
+        this.element_id = element_id;
     }
 
     public int getCount_participants() {
