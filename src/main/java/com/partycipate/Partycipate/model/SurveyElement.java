@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class SurveyElement {
@@ -36,11 +35,11 @@ public class SurveyElement {
     private Survey survey;
 
     @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
-    private Set<AnswerPossibility> answerPossibilities= new HashSet<>();
+    private List<AnswerPossibility> answerPossibilities= new ArrayList<>();
 
     @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Answer> answers = new HashSet<>();
+    private List<Answer> answers = new ArrayList<>();
 
     private SurveyElement(Builder builder){
         this.id = builder.id;
@@ -89,19 +88,19 @@ public class SurveyElement {
         }
     }
 
-    public Set<AnswerPossibility> getAnswerPossibilities() {
+    public List<AnswerPossibility> getAnswerPossibilities() {
         return answerPossibilities;
     }
 
-    public void setAnswerPossibilities(Set<AnswerPossibility> answerPossibilities) {
+    public void setAnswerPossibilities(List<AnswerPossibility> answerPossibilities) {
         this.answerPossibilities = answerPossibilities;
     }
 
-    public Set<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<Answer> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
 

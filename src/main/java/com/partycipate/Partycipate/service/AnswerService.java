@@ -146,7 +146,7 @@ public class AnswerService {
                 Iterator<SurveyElement> sEI = surveyElementService.getSurveyElementSetBySurveyID(survey_id).iterator();
 
 //        iterate over each Surveyelement to get List of TimeResults
-                Set<TimeResultMcList> list = new HashSet<>();
+                List<TimeResultMcList> list = new ArrayList<>();
                 log.info("TimeResults: Survey has Elements: {}", sEI.hasNext());
                 while (sEI.hasNext()){
                     int element_id = sEI.next().getId();
@@ -176,13 +176,13 @@ public class AnswerService {
      *      <author> Giovanni Carlucci </author>
      * </authors>
      * */
-    public Set<TimeResultMc> timeResultsForElement(int element_id, TimeLine timeLine){
+    public List<TimeResultMc> timeResultsForElement(int element_id, TimeLine timeLine){
 //        get all answers for the survey_element
         Set<Answer> answerSet = answerRepository.getAnswersByElementId(element_id);
         Iterator<Answer> answerSetIt= answerSet.iterator();
         if (answerSetIt.hasNext()){
             //save every day in Set<ResultMc>
-            Set<TimeResultMc> timeResultMcSet = new HashSet<>();
+            List<TimeResultMc> timeResultMcSet = new ArrayList<>();
             Date start = trim(timeLine.getStart());
             Date end = trim(timeLine.getEnd());
             Date today = start;

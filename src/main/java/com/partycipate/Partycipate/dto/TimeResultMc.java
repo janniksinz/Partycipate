@@ -1,5 +1,9 @@
 package com.partycipate.Partycipate.dto;
 
+import org.springframework.core.annotation.AnnotationAwareOrderComparator;
+
+import javax.annotation.PostConstruct;
+import java.util.Collections;
 import java.util.Date;
 
 public class TimeResultMc {
@@ -8,6 +12,7 @@ public class TimeResultMc {
     private ResultMc result;
 
     public TimeResultMc(){}
+
 
     public TimeResultMc(Date datetime, ResultMc result) {
         this.datetime = datetime;
