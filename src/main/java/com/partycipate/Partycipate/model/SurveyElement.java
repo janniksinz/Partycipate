@@ -35,7 +35,7 @@ public class SurveyElement {
     private Survey survey;
 
     @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
-    private List<AnswerPossibility> answerPossibilities= new ArrayList<>();
+    private List<AnswerPossibility> answer_possibilities = new ArrayList<>();
 
     @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -88,12 +88,12 @@ public class SurveyElement {
         }
     }
 
-    public List<AnswerPossibility> getAnswerPossibilities() {
-        return answerPossibilities;
+    public List<AnswerPossibility> getAnswer_possibilities() {
+        return answer_possibilities;
     }
 
-    public void setAnswerPossibilities(List<AnswerPossibility> answerPossibilities) {
-        this.answerPossibilities = answerPossibilities;
+    public void setAnswer_possibilities(List<AnswerPossibility> answerPossibilities) {
+        this.answer_possibilities = answerPossibilities;
     }
 
     public List<Answer> getAnswers() {
@@ -164,7 +164,7 @@ public class SurveyElement {
                 ", question='" + question + '\'' +
                 ", may_skip=" + may_skip +
                 ", survey=" + survey +
-                ", answerPossibilities=" + answerPossibilities +
+                ", answerPossibilities=" + answer_possibilities +
                 ", answers=" + answers +
                 '}';
     }
