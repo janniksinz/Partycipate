@@ -49,6 +49,7 @@ class ParticipantControllerTest {
     private static int survey_id;
     private static int participant_id = 1;
     //Todo Fehler wegen Optional Objekt?
+
     @Test
     void getParticipant() throws IOException {
         //Given
@@ -57,7 +58,6 @@ class ParticipantControllerTest {
         HttpResponse response = null;
         try {
             response = HttpClientBuilder.create().build().execute(request);
-            Pa
         } catch (IOException e) {
             e.printStackTrace();
         }

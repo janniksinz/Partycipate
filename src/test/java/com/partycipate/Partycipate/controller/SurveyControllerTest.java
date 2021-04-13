@@ -1,11 +1,6 @@
 package com.partycipate.Partycipate.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.partycipate.Partycipate.repository.SurveyRepository;
-import com.partycipate.Partycipate.repository.UserRepository;
-import com.partycipate.Partycipate.service.SurveyElementService;
-import com.partycipate.Partycipate.service.SurveyService;
-import com.partycipate.Partycipate.service.UserService;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.*;
@@ -13,25 +8,15 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.concurrent.ThreadLocalRandom;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 class SurveyControllerTest {
     private static final Logger log = LoggerFactory.getLogger(SurveyControllerTest.class);
@@ -53,7 +38,7 @@ class SurveyControllerTest {
         HttpUriRequest request;
         StringEntity stringE = new StringEntity("{\"creation_date\": \"creation_date\", " +
                "\"title\": \"title\", " +
-                "\"user_id\": 4, " +
+                "\"user_id\": 1, " +
                 "\"elements\": null}");
         stringE.setContentType("application/json;charset=utf-8");
         request = RequestBuilder.create("POST")
