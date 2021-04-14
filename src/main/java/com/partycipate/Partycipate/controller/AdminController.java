@@ -41,12 +41,8 @@ public class AdminController {
     }
 
     //total number of Partycipants
-    @GetMapping("/participants/")
-    public ResponseEntity<?> numberOfParticipants(){
-        if (Boolean.TRUE.equals(userService.isAdmin())) {
-            return new ResponseEntity<>(participantService.numberOfParticipants(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(new ResponseMessage("Fail -> you have no authority to request the total number of participants over this endpoint"), HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping("/participants")
+    public ResponseEntity<?> getCountParticipants(){
+        return new ResponseEntity<>(participantService.numberOfParticipants(), HttpStatus.OK);
     }
 }
