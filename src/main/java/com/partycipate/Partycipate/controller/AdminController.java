@@ -3,6 +3,7 @@ package com.partycipate.Partycipate.controller;
 import com.partycipate.Partycipate.dto.AdminChangePw;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
+import com.partycipate.Partycipate.service.AnswerService;
 import com.partycipate.Partycipate.service.ParticipantService;
 import com.partycipate.Partycipate.service.UserService;
 import org.slf4j.Logger;
@@ -20,6 +21,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AnswerService answerService;
 
     @Autowired
     ParticipantService participantService;
@@ -43,6 +47,6 @@ public class AdminController {
     //total number of Partycipants
     @GetMapping("/participants")
     public ResponseEntity<?> getCountParticipants(){
-        return new ResponseEntity<>(participantService.numberOfParticipants(), HttpStatus.OK);
+        return new ResponseEntity<>(answerService., HttpStatus.OK);
     }
 }

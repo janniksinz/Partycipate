@@ -32,14 +32,6 @@ public class ParticipantService {
     @Autowired
     private SurveyElementRepository surveyElementRepository;
 
-    public ParticipantService(AnswerRepository answerRepository, McAnswerContentRepository mcAnswerContentRepository, AnswerPossibilityRepository answerPossibilityRepository, ParticipantRepository participantRepository, SurveyElementRepository surveyElementRepository) {
-        this.answerRepository = answerRepository;
-        this.mcAnswerContentRepository = mcAnswerContentRepository;
-        this.answerPossibilityRepository = answerPossibilityRepository;
-        this.participantRepository = participantRepository;
-        this.surveyElementRepository = surveyElementRepository;
-    }
-
     public Answer addAnswer(SendAnswer sendAnswer){
         //get participantId
         int Pid = sendAnswer.getParticipant_id();
@@ -82,9 +74,5 @@ public class ParticipantService {
 
     public Optional<Participant> getParticipant(int participant_id){
         return participantRepository.findById(participant_id);
-    }
-
-    public Optional<Integer> numberOfParticipants() {
-        return participantRepository.getCountParticipants();
     }
 }

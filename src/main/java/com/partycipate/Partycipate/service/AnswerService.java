@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
 @Service
@@ -69,9 +70,6 @@ public class AnswerService {
      * should be replaced by aggregate for McAnswer
      * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
      * */
-
-
-
 
 /*   //DEPRECATED
     public ResultMc results(int element_id){
@@ -126,7 +124,7 @@ public class AnswerService {
         resultMc.setElement_id(element_id);
         return resultMc;
         // Anmerkung
-    }/*
+    }*/
 
     /**
      * getTimeResults for Survey and TimeLine
@@ -166,8 +164,6 @@ public class AnswerService {
         }
 
     }
-
-
 
     /**
      * helperMethod - getTimeResultsForSurvey
@@ -262,7 +258,6 @@ public class AnswerService {
         return resultMc;
     }
 
-
     /**
      * Trims the Time to 00-00-00
      * */
@@ -275,5 +270,15 @@ public class AnswerService {
         calendar.set(Calendar.HOUR_OF_DAY, 2);
 
         return calendar.getTime();
+    }
+
+    public List<>(TimeLine timeLine, User user){
+        Set<Integer> elementIdList = new HashSet<>();
+        Set<Integer> surveyIdList = new HashSet<>(); //in element
+        if (user.getRoles.contains("ROLE_USER")) {
+         elementIdList = answerRepository.für user services
+        }
+        if
+        List<ParticipantCount> participantCountList = new ArrayList<>();
     }
 }
