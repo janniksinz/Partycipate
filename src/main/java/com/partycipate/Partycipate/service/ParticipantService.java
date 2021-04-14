@@ -61,9 +61,7 @@ public class ParticipantService {
 
         // save MC Answers
         Set<SendMCAnswer> mcacS = sendAnswer.getSendMCAnswers();
-        Iterator<SendMCAnswer> mcacSI= mcacS.iterator();
-        while(mcacSI.hasNext()){
-            SendMCAnswer value = mcacSI.next();
+        for (SendMCAnswer value : mcacS) {
             // get first AnswerPossibility that matches Id
             Optional<AnswerPossibility> dummyAnswerPSet = answerPossibilityRepository.findById(value.getAnswerPossibility_id()).stream().findFirst();
             AnswerPossibility dummyAnswerP = dummyAnswerPSet.get();
@@ -79,13 +77,14 @@ public class ParticipantService {
     }
 
     public Participant addParticipant(Participant participant){
-        participantRepository.save(participant);
-        return participant;
-
+        return participantRepository.save(participant);
     }
 
     public Optional<Participant> getParticipant(int participant_id){
-        return participantRepository.findById((Integer)participant_id);
+        return participantRepository.findById(participant_id);
     }
-    
+
+    public Optional<Integer> numberOfParticipants() {
+        return participantRepository.getCountParticipants();
+    }
 }

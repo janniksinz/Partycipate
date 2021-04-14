@@ -3,6 +3,7 @@ package com.partycipate.Partycipate.controller;
 import com.partycipate.Partycipate.dto.AdminChangePw;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
+import com.partycipate.Partycipate.service.ParticipantService;
 import com.partycipate.Partycipate.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,9 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    ParticipantService participantService;
+
     @PostMapping("/user/pw")
     public ResponseEntity<?> changePassword(@RequestBody AdminChangePw adminChangePw){
         if (Boolean.TRUE.equals(userService.isAdmin())) {
@@ -34,5 +38,15 @@ public class AdminController {
     public ResponseEntity<?> deleteUser(@PathVariable("id") int user_id){
         User user = userService.getUser(user_id);
         return new ResponseEntity<>(userService.deleteUser(user), HttpStatus.OK);
+    }
+
+    //total number of Partycipants
+    @GetMapping("/participants/")
+    public ResponseEntity<?> numberOfParticipants(){
+        if (Boolean.TRUE.equals(userService.isAdmin())) {
+            return new ResponseEntity<>(participantService.numberOfParticipants(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new ResponseMessage("Fail -> you have no authority to request the total number of participants over this endpoint"), HttpStatus.BAD_REQUEST);
+        }
     }
 }
