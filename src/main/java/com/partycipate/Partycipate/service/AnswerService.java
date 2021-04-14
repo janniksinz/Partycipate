@@ -1,14 +1,10 @@
 package com.partycipate.Partycipate.service;
 
-import com.partycipate.Partycipate.dto.ResultMc;
-import com.partycipate.Partycipate.dto.TimeLine;
-import com.partycipate.Partycipate.dto.TimeResultMc;
-import com.partycipate.Partycipate.dto.TimeResultMcList;
-import com.partycipate.Partycipate.model.Answer;
-import com.partycipate.Partycipate.model.AnswerPossibility;
-import com.partycipate.Partycipate.model.MCAnswerContent;
-import com.partycipate.Partycipate.model.SurveyElement;
+import com.partycipate.Partycipate.dto.*;
+import com.partycipate.Partycipate.model.*;
 import com.partycipate.Partycipate.repository.AnswerRepository;
+import com.partycipate.Partycipate.repository.SurveyElementRepository;
+import com.partycipate.Partycipate.repository.SurveyRepository;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class AnswerService {
@@ -36,13 +32,11 @@ public class AnswerService {
     @Autowired
     private SurveyElementService surveyElementService;
 
+    @Autowired
+    private SurveyRepository surveyRepository;
 
     @Autowired
-    public AnswerService(AnswerRepository answerRepository, McAnswerContentService mcAnswerContentService, SurveyElementService surveyElementService) {
-        this.answerRepository=answerRepository;
-        this.mcAnswerContentService=mcAnswerContentService;
-        this.surveyElementService=surveyElementService;
-    }
+    private SurveyElementRepository surveyElementRepository;
 
     /**
     * getBasicResults
@@ -70,7 +64,6 @@ public class AnswerService {
      * should be replaced by aggregate for McAnswer
      * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
      * */
-
 /*   //DEPRECATED
     public ResultMc results(int element_id){
         //calculate all the answers to one Result to send back to the Frontend
@@ -188,7 +181,7 @@ public class AnswerService {
                 log.info("TimeResult: Getting answers for day {}", today);
                 //            iterate over answers and filter for current date
 
-                Iterator<Answer> todayAnswers = filterByDate(answerSet,today);
+                Iterator<Answer> todayAnswers = filterByDate(answerSet,today).iterator();
                 //            call helpermethod, that aggregates those results to ResultMc
                 //            get ResultMc for the Day
                 ResultMc resultMc = aggregateMcResults(todayAnswers, element_id);
@@ -216,9 +209,10 @@ public class AnswerService {
 
     }
 
-    public  Iterator<Answer> filterByDate (Set<Answer> answerSet, Date today){
-       return answerSet.stream().filter(a -> trim(a.getDate()).equals(today)).iterator();
+    public Stream<Answer> filterByDate (Set<Answer> answerSet, Date today){
+       return answerSet.stream().filter(a -> trim(a.getDate()).equals(today));
     }
+
     /**
      * helper method - aggregates Answers for MC
      * <authors>
@@ -272,13 +266,73 @@ public class AnswerService {
         return calendar.getTime();
     }
 
-    public List<>(TimeLine timeLine, User user){
-        Set<Integer> elementIdList = new HashSet<>();
-        Set<Integer> surveyIdList = new HashSet<>(); //in element
-        if (user.getRoles.contains("ROLE_USER")) {
-         elementIdList = answerRepository.für user services
+    /**
+     * getAnswerCount for the relevant scope
+     * */
+    public List<AnswerCount> getAnswerCountAllSurveys(TimeLine timeLine, User user){
+        log.info("TimelineAnswers: Getting all answers for {} from {} to {}", user.getUsername(), timeLine.getStart(), timeLine.getEnd());
+        Set<Integer> element_ids = new HashSet<>();
+        Set<Integer> survey_ids = new HashSet<>();
+        if (user.getRoles().contains("ROLE_ADMIN")) {
+            //get element_ids for all surveys
+            element_ids = answerRepository.getDistinctElementIds();
         }
-        if
-        List<ParticipantCount> participantCountList = new ArrayList<>();
+        if (user.getRoles().contains("ROLE_USER")) {
+            survey_ids = surveyRepository.getDistinctSurveyIds(user.getUser_id());
+            Iterator<Integer> surveyIter = survey_ids.iterator();
+            while (surveyIter.hasNext()){
+                Set<Integer> elements = surveyElementRepository.getSurveyElementsBySurveyId(surveyIter.next());
+                Iterator<Integer> elementIter = elements.iterator();
+                while (elementIter.hasNext()){
+                    element_ids.add(elementIter.next());
+                }
+            }
+        }
+        //ToDo check return of DB Queries
+        log.info("TimelineAnswers: Collected all relevant ElementIds in {}", element_ids);
+//        we now have the list of surveyElements to get the answeres from
+        List<AnswerCount> list = new ArrayList<>();
+
+        // send list of elements
+        list = aggregateAnswersForElements(element_ids, timeLine);
+        log.info("TimelineAnswers: Retrieved aggregated AnswerCount in {}", list);
+        // save and return list of AnswerCount and Dates
+        return list;
+    }
+
+    /**
+     * helperMethod getAnswerCount for all elements
+     * <authors>
+     *     <author>Jannik Sinz jannik.sinz@ibm.com</author>
+     * </authors>
+     */
+    public List<AnswerCount> aggregateAnswersForElements(Set<Integer> elements, TimeLine timeLine){
+        Date start = trim(timeLine.getStart());
+        Date end = trim(timeLine.getEnd());
+        Set<Answer> answers = new HashSet<>();
+//        ToDo check return of DB queries, especially !Date!
+        Iterator<Integer> elementIter = elements.iterator();
+        while (elementIter.hasNext()){
+            Set<Answer> elementAnswers = answerRepository.getAnswersByDateAndElement(start, end, elementIter.next());
+//            store all those in a common AnswerSet that contains all relevant answers
+            Iterator<Answer> elementAnswerIter = elementAnswers.iterator();
+            while (elementAnswerIter.hasNext()){
+                answers.add(elementAnswerIter.next());
+            }
+        }
+        log.info("TimelineAnswers: Collected ALL relevant answers(unsorted) in {}", answers);
+        List<AnswerCount> list = new ArrayList<>();
+//        Count through every Day
+        Date today = start;
+        while (today.compareTo(end) <= 0){
+            int countAnswers = (int) filterByDate(answers, today).count();
+            list.add(new AnswerCount(today, countAnswers));
+//            count up today
+            Calendar c = Calendar.getInstance();
+            c.setTime(today);
+            c.add(Calendar.DATE, 1);
+            today = c.getTime();
+        }
+        return list;
     }
 }

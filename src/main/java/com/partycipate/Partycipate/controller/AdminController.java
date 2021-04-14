@@ -1,6 +1,7 @@
 package com.partycipate.Partycipate.controller;
 
 import com.partycipate.Partycipate.dto.AdminChangePw;
+import com.partycipate.Partycipate.dto.TimeLine;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
 import com.partycipate.Partycipate.service.AnswerService;
@@ -46,7 +47,8 @@ public class AdminController {
 
     //total number of Partycipants
     @GetMapping("/participants")
-    public ResponseEntity<?> getCountParticipants(){
-        return new ResponseEntity<>(answerService., HttpStatus.OK);
+    public ResponseEntity<?> getCountParticipants(@RequestBody TimeLine timeline){
+        User user = userService.getUserByJWT();
+        return new ResponseEntity<>(answerService.getAnswerCountAllSurveys(timeline, user), HttpStatus.OK);
     }
 }
