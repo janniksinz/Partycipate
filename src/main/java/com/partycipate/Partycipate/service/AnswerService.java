@@ -38,6 +38,9 @@ public class AnswerService {
     @Autowired
     private SurveyElementRepository surveyElementRepository;
 
+    @Autowired
+    private UserService userService;
+
     /**
     * getBasicResults
      * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
@@ -273,11 +276,10 @@ public class AnswerService {
         log.info("TimelineAnswers: Getting all answers for {} from {} to {}", user.getUsername(), timeLine.getStart(), timeLine.getEnd());
         Set<Integer> element_ids = new HashSet<>();
         Set<Integer> survey_ids = new HashSet<>();
-        if (user.getRoles().contains("ROLE_ADMIN")) {
+        if (Boolean.TRUE.equals(userService.isAdmin())) {
             //get element_ids for all surveys
             element_ids = answerRepository.getDistinctElementIds();
-        }
-        if (user.getRoles().contains("ROLE_USER")) {
+        } else {
             survey_ids = surveyRepository.getDistinctSurveyIds(user.getUser_id());
             Iterator<Integer> surveyIter = survey_ids.iterator();
             while (surveyIter.hasNext()){
