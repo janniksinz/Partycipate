@@ -1,6 +1,5 @@
 package com.partycipate.Partycipate.service;
 
-import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.model.SurveyElement;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import org.slf4j.Logger;
@@ -44,7 +43,4 @@ public class SurveyElementService {
         return surveyElementRepository.getSurveyIdByElementId(id);
     }*/
 
-    public Set<Integer> getSurveyElementIdBySurveyId(Set<Integer> survey_id){
-    //todo für alle sIds
-    }
 }
