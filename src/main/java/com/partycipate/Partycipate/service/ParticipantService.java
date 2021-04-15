@@ -9,9 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ParticipantService {
@@ -45,7 +43,7 @@ public class ParticipantService {
         Answer answer = new Answer.Builder().mcAnswerContent(null).build();
         answer.setParticipant(p);
         answer.setSurveyElement(sE);
-        answer.setDate(sendAnswer.getDate());
+        answer.setDate(trim(sendAnswer.getDate()));
         // save answer
         answer = answerRepository.save(answer);
         int answerId = answer.getId();
@@ -74,5 +72,16 @@ public class ParticipantService {
 
     public Optional<Participant> getParticipant(int participant_id){
         return participantRepository.findById(participant_id);
+    }
+
+    public static Date trim(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 2);
+
+        return calendar.getTime();
     }
 }

@@ -193,9 +193,9 @@ public class AnswerService {
                     timeResultMc = new TimeResultMc(today, resultMc);
                 }
                 else{
-                    timeResultMc = new TimeResultMc(today, resultMc);
+                    timeResultMc = new TimeResultMc(trim(today), resultMc);
                 }
-                log.info("TimeResult: adding results for {}", timeResultMc.getDatetime());
+                log.info("TimeResult: adding results for {}", trim(timeResultMc.getDatetime()));
                 timeResultMcSet.add(timeResultMc);
                 Calendar c = Calendar.getInstance();
                 c.setTime(today);
@@ -213,7 +213,7 @@ public class AnswerService {
     }
 
     public Stream<Answer> filterByDate (Set<Answer> answerSet, Date today){
-       return answerSet.stream().filter(a -> trim(a.getDate()).equals(today));
+        return answerSet.stream().filter(a -> trim(a.getDate()).toInstant().equals(trim(today).toInstant()));
     }
 
     /**
@@ -264,10 +264,13 @@ public class AnswerService {
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MINUTE, 0);
+        log.info("Timezone: {}", calendar.getTimeZone());
+//        ToDo check for different TimeZones and SummerTimes
         calendar.set(Calendar.HOUR_OF_DAY, 2);
 
         return calendar.getTime();
     }
+
 
     /**
      * getAnswerCount for the relevant scope
@@ -327,13 +330,16 @@ public class AnswerService {
                 answers.add(elementAnswerIter.next());
             }
         }
-        log.info("TimelineAnswers: Collected ALL relevant answers(unsorted) in {}", answers);
+        //log.info("TimelineAnswers: Collected ALL relevant answers(unsorted) in {}", answers);
         List<AnswerCount> list = new ArrayList<>();
 //        Count through every Day
-        Date today = start;
+        Date today = trim(start);
         while (today.compareTo(end) <= 0){
+            Stream stream = filterByDate(answers, today);
             int countAnswers = (int) filterByDate(answers, today).count();
+            log.info("Date: {}", today);
             list.add(new AnswerCount(today, countAnswers));
+            log.info("Date after: {}", today);
 //            count up today
             Calendar c = Calendar.getInstance();
             c.setTime(today);

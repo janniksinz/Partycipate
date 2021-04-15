@@ -134,8 +134,8 @@ public class Answer {
         return "Answer{" +
                 "id=" + id +
                 ", mcAnswerContentSet=" + mcAnswerContentSet +
-                ", surveyElement=" + surveyElement +
-                ", participant=" + participant +
+                ", surveyElement=" + surveyElement.getId() +
+                ", participant=" + participant.getId() +
                 ", date=" + date +
                 '}';
     }
