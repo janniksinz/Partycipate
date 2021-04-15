@@ -264,7 +264,7 @@ public class AnswerService {
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MINUTE, 0);
-        log.info("Timezone: {}", calendar.getTimeZone());
+//        log.info("Timezone: {}", calendar.getTimeZone());
 //        ToDo check for different TimeZones and SummerTimes
         calendar.set(Calendar.HOUR_OF_DAY, 2);
 
