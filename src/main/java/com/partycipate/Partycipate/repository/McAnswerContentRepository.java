@@ -14,6 +14,4 @@ public interface McAnswerContentRepository extends CrudRepository<MCAnswerConten
 
     @Query(value = "Select * from mcanswer_content where answer_id = :answer_id", nativeQuery = true)
     Iterable<MCAnswerContent> findAllByAnswer_Id(@Param("answer_id") int answer_id);
-
-
 }

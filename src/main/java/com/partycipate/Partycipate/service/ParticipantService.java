@@ -32,14 +32,6 @@ public class ParticipantService {
     @Autowired
     private SurveyElementRepository surveyElementRepository;
 
-    public ParticipantService(AnswerRepository answerRepository, McAnswerContentRepository mcAnswerContentRepository, AnswerPossibilityRepository answerPossibilityRepository, ParticipantRepository participantRepository, SurveyElementRepository surveyElementRepository) {
-        this.answerRepository = answerRepository;
-        this.mcAnswerContentRepository = mcAnswerContentRepository;
-        this.answerPossibilityRepository = answerPossibilityRepository;
-        this.participantRepository = participantRepository;
-        this.surveyElementRepository = surveyElementRepository;
-    }
-
     public Answer addAnswer(SendAnswer sendAnswer){
         //get participantId
         int Pid = sendAnswer.getParticipant_id();
@@ -61,9 +53,7 @@ public class ParticipantService {
 
         // save MC Answers
         Set<SendMCAnswer> mcacS = sendAnswer.getSendMCAnswers();
-        Iterator<SendMCAnswer> mcacSI= mcacS.iterator();
-        while(mcacSI.hasNext()){
-            SendMCAnswer value = mcacSI.next();
+        for (SendMCAnswer value : mcacS) {
             // get first AnswerPossibility that matches Id
             Optional<AnswerPossibility> dummyAnswerPSet = answerPossibilityRepository.findById(value.getAnswerPossibility_id()).stream().findFirst();
             AnswerPossibility dummyAnswerP = dummyAnswerPSet.get();
@@ -79,13 +69,10 @@ public class ParticipantService {
     }
 
     public Participant addParticipant(Participant participant){
-        participantRepository.save(participant);
-        return participant;
-
+        return participantRepository.save(participant);
     }
 
     public Optional<Participant> getParticipant(int participant_id){
-        return participantRepository.findById((Integer)participant_id);
+        return participantRepository.findById(participant_id);
     }
-    
 }
