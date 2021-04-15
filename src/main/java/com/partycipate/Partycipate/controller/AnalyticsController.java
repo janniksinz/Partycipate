@@ -45,7 +45,7 @@ public class AnalyticsController {
     }
 
     //total number of Partycipants
-    @GetMapping("/participants")
+    @PostMapping("/participants")
     public ResponseEntity<?> getCountParticipants(@RequestBody TimeLine timeline){
         User user = userService.getUserByJWT();
         return new ResponseEntity<>(answerService.getAnswerCountAllSurveys(timeline, user), HttpStatus.OK);
