@@ -271,6 +271,10 @@ public class AnswerService {
 
     /**
      * getAnswerCount for the relevant scope
+     * <authors>
+     *     <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     *     <author> Giovanni Carlucci </author>
+     * </authors>
      * */
     public List<AnswerCount> getAnswerCountAllSurveys(TimeLine timeLine, User user){
         log.info("TimelineAnswers: Getting all answers for {} from {} to {}", user.getUsername(), timeLine.getStart(), timeLine.getEnd());
@@ -305,7 +309,8 @@ public class AnswerService {
     /**
      * helperMethod getAnswerCount for all elements
      * <authors>
-     *     <author>Jannik Sinz jannik.sinz@ibm.com</author>
+     *     <author> Jannik Sinz jannik.sinz@ibm.com </author>
+     *     <author> Giovanni Carlucci </author>
      * </authors>
      */
     public List<AnswerCount> aggregateAnswersForElements(Set<Integer> elements, TimeLine timeLine){
