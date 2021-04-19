@@ -1,6 +1,8 @@
 package com.partycipate.Partycipate.controller;
 
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
-
+    private static final Logger log = LoggerFactory.getLogger(TestController.class);
 
    @GetMapping("/everyone")
    public ResponseEntity<?> getEveryone(){
@@ -32,7 +34,7 @@ public class TestController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> getUserAdmin(){
        return new ResponseEntity<>(new ResponseMessage(">>> Users and Admins only"), HttpStatus.OK);
-   }
+    }
 
 
     @GetMapping("/user")

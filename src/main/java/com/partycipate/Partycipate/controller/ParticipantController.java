@@ -1,21 +1,23 @@
 package com.partycipate.Partycipate.controller;
 
-import com.partycipate.Partycipate.dto.Result;
 import com.partycipate.Partycipate.dto.SendAnswer;
-import com.partycipate.Partycipate.model.Survey;
+import com.partycipate.Partycipate.model.Participant;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.service.AnswerService;
 import com.partycipate.Partycipate.service.ParticipantService;
 import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/participant")
 public class ParticipantController {
+    private static final Logger log = LoggerFactory.getLogger(ParticipantController.class);
 
     @Autowired
     private ParticipantService participantService;
@@ -34,8 +36,8 @@ public class ParticipantController {
 
     //getSurveyById
     @GetMapping("/{id}")
-    public Survey getSurvey(int survey_id){
-        return surveyService.getSurveyBySurveyId(survey_id);
+    public Participant getParticipant(@PathVariable ("id")int participant_id){
+       return participantService.getParticipant(participant_id).get();
     }
 
     //getBasicResultsForWholeSurvey
@@ -44,8 +46,8 @@ public class ParticipantController {
     //getBasicResults
     @GetMapping("/results/{survey_id}")
     @CrossOrigin(origins = "*")
-    public Set<Result> getBasicResults(@PathVariable ("survey_id")int survey_id){
-        return answerService.getAllResultsForSurvey(survey_id);
+    public ResponseEntity<?> getBasicResults(@PathVariable ("survey_id") int survey_id){
+        return new ResponseEntity<>(answerService.getBasicResultsForSurvey(survey_id), HttpStatus.OK);
     }
 
     //sendAnswer

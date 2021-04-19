@@ -4,9 +4,16 @@ package com.partycipate.Partycipate.controller;
 import com.partycipate.Partycipate.dto.SendElement;
 import com.partycipate.Partycipate.dto.SendSurvey;
 import com.partycipate.Partycipate.model.Survey;
+import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
+import com.partycipate.Partycipate.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -14,11 +21,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/survey")
 @CrossOrigin(origins = "*")
 public class SurveyController {
+    private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
 
     @Autowired
     private final SurveyElementService surveyElementService;
     @Autowired
     private final SurveyService surveyService;
+    @Autowired
+    private UserService userService;
     @Autowired
     public SurveyController(SurveyService surveyService, SurveyElementService surveyElementService){
         this.surveyService=surveyService;
@@ -26,11 +36,13 @@ public class SurveyController {
     }
 
 //    addSurvey
-    @PostMapping("")
-    public int addSurvey(@RequestBody SendSurvey survey){
-        int id = surveyService.addSurvey(survey).getId();
-        System.out.println("id: " + id);
-        return id;
+    @PostMapping(value = "")
+    public ResponseEntity<?> addSurvey(@RequestBody SendSurvey sendsurvey){
+        User user = userService.getUserByJWT();
+        log.info("addSurvey: Inserting edSurvey for user {}", user.getUser_id());
+        int id = surveyService.addSurvey(sendsurvey, user).getId();
+        log.info("addSurvey: Inserted Survey with Id: {}", id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
 //    getAll
@@ -42,15 +54,14 @@ public class SurveyController {
 //    getById
     @GetMapping("/{id}")
     public Survey getSurvey(@PathVariable("id") int id){
-        return surveyService.getSurvey(id);
+        return surveyService.getSurveyBySurveyId(id);
     }
 
 //    deleteById
     @DeleteMapping("/{id}")
-    public int deleteSurveybyId(@PathVariable("id") int id){
-
-        surveyService.deleteSurveybyId(id);
-        return id;
+    public ResponseEntity<?> deleteSurveybyId(@PathVariable("id") int id) throws EmptyResultDataAccessException {
+        log.info("deleteSurvey: Deleting Survey {}", id);
+        return new ResponseEntity<>(surveyService.deleteSurveybyId(id), HttpStatus.OK);
     }
 
 //    addSurveyElement

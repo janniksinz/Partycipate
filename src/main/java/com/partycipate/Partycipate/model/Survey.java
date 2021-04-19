@@ -2,13 +2,10 @@ package com.partycipate.Partycipate.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.partycipate.Partycipate.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name = "Survey")
@@ -31,10 +28,10 @@ public class Survey {
 
     private String creation_date;
     private String title;
-    private String cookie;
+
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
-    private Set<SurveyElement> elements = new HashSet<>() ;
+    private List<SurveyElement> elements = new ArrayList<>() ;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Survey_Participant",joinColumns = @JoinColumn(name="survey_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name="participant_id", referencedColumnName = "id"))
@@ -49,11 +46,10 @@ public class Survey {
     public Survey(){}
     public Survey(@JsonProperty("creation_date") String creation_date,
                   @JsonProperty("title") String title,
-                  @JsonProperty("cookie") String cookie,
                   @JsonProperty("user") User user
                   ){
          this.creation_date=creation_date; this.title=title;
-        this.cookie=cookie; this.user=user;
+        this.user=user;
     }
     /*start of Methods*/
 
@@ -63,7 +59,9 @@ public class Survey {
 
         this.creation_date = builder.creation_date;
         this.title = builder.title;
-        this.cookie = builder.cookie;
+        this.elements= builder.elements;
+        this.user=builder.user;
+
 
 
     }
@@ -78,8 +76,8 @@ public class Survey {
 
         private String creation_date = "";
         private String title = "Survey";
-        private String cookie = "";
-        private ArrayList<SurveyElement> elements = null;
+        private List<SurveyElement> elements = null;
+        private User user;
 
         public Builder id(int id){
             this.id=id;
@@ -94,11 +92,13 @@ public class Survey {
             this.title =title;
             return this;
         }
-        public Builder cookie(String cookie){
-            this.cookie=cookie;
+
+        public Builder user(User user) {
+            this.user = user;
             return this;
         }
-        public Builder elements(ArrayList<SurveyElement> elements){
+
+        public Builder elements(List<SurveyElement> elements){
             this.elements=elements;
             return this;
         }
@@ -131,9 +131,7 @@ public class Survey {
     }
 
 
-    public void setCookie(String cookie) {
-        this.cookie = cookie;
-    }
+
 
     public void setCreation_date(String creation_date) {
         this.creation_date = creation_date;
@@ -150,19 +148,16 @@ public class Survey {
 
 
 
-    public String getCookie() {
-        return cookie;
-    }
 
     public String getCreation_date() {
         return creation_date;
     }
 
-    public Set<SurveyElement> getElements() {
+    public List<SurveyElement> getElements() {
         return elements;
     }
 
-    public void setElements(Set<SurveyElement> elements) {
+    public void setElements(List<SurveyElement> elements) {
         this.elements = elements;
     }
 
@@ -180,7 +175,6 @@ public class Survey {
                 "id=" + id +
                 ", creation_date='" + creation_date + '\'' +
                 ", title='" + title + '\'' +
-                ", cookie='" + cookie + '\'' +
                 ", elements=" + elements +
                 ", participantSet=" + participantSet +
                 ", user=" + user +

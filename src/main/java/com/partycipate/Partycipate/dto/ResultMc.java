@@ -4,15 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 
-public class Result {
+public class ResultMc {
 
     private ArrayList<Integer> results = new ArrayList();
 
     //how many answer possibilities (amount of answers with same survey_element_id)
 
     int count_participants;
-    @JsonIgnore
-    int size;
+    int element_id;
 
     public void setResults(ArrayList<Integer> arrayList){
         this.results = arrayList;
@@ -23,12 +22,12 @@ public class Result {
         return results;
     }
 
-    public int getSize() {
-        return size;
+    public int getElement_id() {
+        return element_id;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setElement_id(int element_id) {
+        this.element_id = element_id;
     }
 
     public int getCount_participants() {
