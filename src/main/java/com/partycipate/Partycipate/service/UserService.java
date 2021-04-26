@@ -15,6 +15,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,8 @@ public class UserService {
     private PasswordEncoder encoder;
     @Autowired
     private JwtProvider jwtProvider;
+    @Autowired
+    private SessionRegistry sessionRegistry;
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -93,7 +97,28 @@ public class UserService {
         return user;
     }
 
-    public Authentication renewAuth(){
+    public Authentication renewAuth(User user){
+//        invalidate
+        // invalidate user session
+        List<Object> loggedUsers = sessionRegistry.getAllPrincipals();
+        log.info("All Pricipals: {}", loggedUsers);
+        for (Object principal : loggedUsers) {
+            if(principal instanceof User) {
+                final User loggedUser = (User) principal;
+                if(user.getUsername().equals(loggedUser.getUsername())) {
+                    List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(principal, false);
+                    if(null != sessionsInfo && sessionsInfo.size() > 0) {
+                        for (SessionInformation sessionInformation : sessionsInfo) {
+                            log.info("Exprire now : {}", sessionInformation.getSessionId());
+                            sessionInformation.expireNow();
+                            sessionRegistry.removeSessionInformation(sessionInformation.getSessionId());
+                            // User is not forced to re-logging
+                        }
+                    }
+                }
+            }
+        }
+//        re-authenticate
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
@@ -111,7 +136,7 @@ public class UserService {
             if (changeUser.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))") && changeUser.getName().matches("^(([A-Za-z0-9_-]{0,30})[ ]?)*([A-Za-z0-9_-]{0,30})?$")){
 
                 userRepository.changeUser(user.getUser_id(), changeUser.getEmail(), changeUser.getName());
-                Authentication newAuth = renewAuth();
+                Authentication newAuth = renewAuth(user);
                 UserDetails userDetails = (UserDetails) newAuth.getPrincipal();
                 return new ResponseEntity<>(new JwtResponse(jwtProvider.generateJwtToken(newAuth), userDetails.getUsername(), userDetails.getAuthorities()), HttpStatus.OK);
             } else throw new RuntimeException("Fail -> EmailRules or NameRules didn't match");
