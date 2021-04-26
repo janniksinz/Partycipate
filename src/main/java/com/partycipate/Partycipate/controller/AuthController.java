@@ -10,6 +10,7 @@ import com.partycipate.Partycipate.security.message.request.LoginForm;
 import com.partycipate.Partycipate.security.message.request.SignUpForm;
 import com.partycipate.Partycipate.security.message.response.JwtResponse;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
+import com.partycipate.Partycipate.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +34,17 @@ public class AuthController {
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     @Autowired
-    PasswordEncoder encoder;
+    private PasswordEncoder encoder;
     @Autowired
-    JwtProvider jwtProvider;
+    private JwtProvider jwtProvider;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginForm loginRequest){
@@ -65,21 +68,20 @@ public class AuthController {
         }
 
         //creating user account
-        User user = new User.Builder().username(signUpRequest.getEmail()).email(signUpRequest.getEmail()).password(encoder.encode(signUpRequest.getPassword())).build();
+        User user = new User.Builder().username(signUpRequest.getEmail()).email(signUpRequest.getEmail()).password(encoder.encode(signUpRequest.getPassword())).name(signUpRequest.getName()).build();
+
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
+//        get roles Roles
         strRoles.forEach(role -> {
             switch (role) {
                 case "admin":
-                    Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN)
-                            .orElseThrow(() -> new RuntimeException("Fail -> Cause : Admin User Role not found."));
-                    roles.add(adminRole);
-                    break;
-                case "pm":
-                    Role pmRole = roleRepository.findByName(RoleName.ROLE_PM)
-                            .orElseThrow(() -> new RuntimeException("Fail -> PM User Role not found"));
-                    roles.add(pmRole);
+                    if (userService.isAdmin()) {
+                        Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Fail -> Cause : Admin User Role not found."));
+                        roles.add(adminRole);
+                    } else throw new RuntimeException("Fail -> no Authority create Admins");
                     break;
                 default:
                     Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
