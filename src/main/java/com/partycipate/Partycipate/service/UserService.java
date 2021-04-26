@@ -3,19 +3,25 @@ package com.partycipate.Partycipate.service;
 import com.partycipate.Partycipate.dto.AdminChangeUser;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.repository.UserRepository;
+import com.partycipate.Partycipate.security.jwt.JwtProvider;
+import com.partycipate.Partycipate.security.message.response.JwtResponse;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -24,7 +30,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    PasswordEncoder encoder;
+    private PasswordEncoder encoder;
+    @Autowired
+    private JwtProvider jwtProvider;
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -85,13 +93,27 @@ public class UserService {
         return user;
     }
 
+    public Authentication renewAuth(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
+
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
+
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+        return newAuth;
+    }
+
     public ResponseEntity<?> changeUser(User user, AdminChangeUser changeUser){
         log.info("changeEmail: for User {}: {}", user.getUser_id(), user.getUsername());
         if(userRepository.existsById(user.getUser_id())){
 //                match email rules
             if (changeUser.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))") && changeUser.getName().matches("^(([A-Za-z0-9_-]{0,30})[ ]?)*([A-Za-z0-9_-]{0,30})?$")){
 
-                return new ResponseEntity<>(userRepository.changeUser(user.getUser_id(), changeUser.getEmail(), changeUser.getName()), HttpStatus.OK);
+                userRepository.changeUser(user.getUser_id(), changeUser.getEmail(), changeUser.getName());
+                Authentication newAuth = renewAuth();
+                UserDetails userDetails = (UserDetails) newAuth.getPrincipal();
+                return new ResponseEntity<>(new JwtResponse(jwtProvider.generateJwtToken(newAuth), userDetails.getUsername(), userDetails.getAuthorities()), HttpStatus.OK);
             } else throw new RuntimeException("Fail -> EmailRules or NameRules didn't match");
         } else throw new RuntimeException("Fail -> User doesn't exist");
     }
