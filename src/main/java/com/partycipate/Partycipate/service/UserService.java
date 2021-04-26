@@ -65,10 +65,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User addUser(String email, String password){
-        User user = new User.Builder().email(email).password(password).build();
-        userRepository.save(user);
-        return user;
+    public User addUser(User user){
+        User user1 = new User.Builder().email(user.getEmail()).password(user.getPassword()).build();
+        userRepository.save(user1);
+        return user1;
     }
     public User getUser(int id){
         return userRepository.findById(id);
