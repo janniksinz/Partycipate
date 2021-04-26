@@ -89,8 +89,9 @@ public class UserService {
         log.info("changeEmail: for User {}: {}", user.getUser_id(), user.getUsername());
         if(userRepository.existsById(user.getUser_id())){
             if (user.getEmail()==changeEmail.getOldEmail()){
-//                email rules match?
+//                match email rules
                 if (user.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))")){
+                    userRepository.changeEmail(user.getUser_id(), changeEmail.getNewEmail());
                     return new ResponseEntity<>(userRepository.changeEmail(user.getUser_id(), changeEmail.getNewEmail()), HttpStatus.OK);
                 } else throw new RuntimeException("Fail -> EmailRules didn't match");
             } else throw new RuntimeException("Fail -> Old Emails don't match");
