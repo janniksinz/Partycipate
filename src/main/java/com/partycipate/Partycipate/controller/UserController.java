@@ -1,6 +1,6 @@
 package com.partycipate.Partycipate.controller;
 
-import com.partycipate.Partycipate.dto.AdminChangeEmail;
+import com.partycipate.Partycipate.dto.AdminChangeUser;
 import com.partycipate.Partycipate.dto.UserChangePw;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.service.UserService;
@@ -45,10 +45,10 @@ public class UserController {
         return userService.changePassword(user, userChangePw.getOldPw(), userChangePw.getNewPw());
     }
 
-    @PostMapping("/email")
-    public ResponseEntity<?> changeEmail(@RequestBody AdminChangeEmail changeEmail){
+    @PostMapping("")
+    public ResponseEntity<?> changeEmail(@RequestBody AdminChangeUser changeUser){
         User user = userService.getUserByJWT();
-        return userService.changeEmail(user, changeEmail);
+        return userService.changeUser(user, changeUser);
     }
 
 }

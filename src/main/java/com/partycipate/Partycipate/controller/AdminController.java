@@ -1,6 +1,6 @@
 package com.partycipate.Partycipate.controller;
 
-import com.partycipate.Partycipate.dto.AdminChangeEmail;
+import com.partycipate.Partycipate.dto.AdminChangeUser;
 import com.partycipate.Partycipate.dto.AdminChangePw;
 import com.partycipate.Partycipate.dto.TimeLine;
 import com.partycipate.Partycipate.model.User;
@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,15 +42,16 @@ public class AdminController {
     }
 
     @DeleteMapping("/user/{id}")
+    @PreAuthorize("")
     public ResponseEntity<?> deleteUser(@PathVariable("id") int user_id){
         User user = userService.getUser(user_id);
         return new ResponseEntity<>(userService.deleteUser(user), HttpStatus.OK);
     }
 
-    @PostMapping("/user/email")
-    public ResponseEntity<?> changeEmail(@RequestBody AdminChangeEmail changeEmail){
-        User user = userService.getUser(changeEmail.getId());
-        return new ResponseEntity<>(userService.changeEmail(user, changeEmail), HttpStatus.OK);
+    @PostMapping("/user")
+    public ResponseEntity<?> changeEmail(@RequestBody AdminChangeUser changeUser){
+        User user = userService.getUser(changeUser.getId());
+        return new ResponseEntity<>(userService.changeUser(user, changeUser), HttpStatus.OK);
     }
 
     //total number of Partycipants

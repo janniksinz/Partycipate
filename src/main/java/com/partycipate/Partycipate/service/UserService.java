@@ -1,6 +1,6 @@
 package com.partycipate.Partycipate.service;
 
-import com.partycipate.Partycipate.dto.AdminChangeEmail;
+import com.partycipate.Partycipate.dto.AdminChangeUser;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.repository.UserRepository;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
@@ -85,14 +85,14 @@ public class UserService {
         return user;
     }
 
-    public ResponseEntity<?> changeEmail(User user, AdminChangeEmail changeEmail){
+    public ResponseEntity<?> changeUser(User user, AdminChangeUser changeUser){
         log.info("changeEmail: for User {}: {}", user.getUser_id(), user.getUsername());
         if(userRepository.existsById(user.getUser_id())){
-            if (user.getEmail()==changeEmail.getOldEmail()){
+            if (user.getEmail()==changeUser.getOldEmail()){
 //                match email rules
                 if (user.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))")){
-                    userRepository.changeEmail(user.getUser_id(), changeEmail.getNewEmail());
-                    return new ResponseEntity<>(userRepository.changeEmail(user.getUser_id(), changeEmail.getNewEmail()), HttpStatus.OK);
+                    userRepository.changeEmail(user.getUser_id(), changeUser.getNewEmail());
+                    return new ResponseEntity<>(userRepository.changeEmail(user.getUser_id(), changeUser.getNewEmail()), HttpStatus.OK);
                 } else throw new RuntimeException("Fail -> EmailRules didn't match");
             } else throw new RuntimeException("Fail -> Old Emails don't match");
         } else throw new RuntimeException("Fail -> User doesn't exist");
