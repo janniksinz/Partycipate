@@ -1,5 +1,6 @@
 package com.partycipate.Partycipate.service;
 
+import com.partycipate.Partycipate.dto.AdminChangeEmail;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.repository.UserRepository;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
@@ -32,9 +33,15 @@ public class UserService {
 
 
     public User getUserByJWT() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User user = getUserByUsername(username);
+        User user = null;
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            user = getUserByUsername(username);
+        } catch (Exception e){
+            e.printStackTrace();
+            log.info("Fail -> SecurityContext not found");
+        }
         return user;
     }
     /**
@@ -78,15 +85,26 @@ public class UserService {
         return user;
     }
 
-    //TODO implement check password rules
+    public ResponseEntity<?> changeEmail(User user, AdminChangeEmail changeEmail){
+        log.info("changeEmail: for User {}: {}", user.getUser_id(), user.getUsername());
+        if(userRepository.existsById(user.getUser_id())){
+            if (user.getEmail()==changeEmail.getOldEmail()){
+//                email rules match?
+                if (user.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))")){
+                    return new ResponseEntity<>(userRepository.changeEmail(user.getUser_id(), changeEmail.getNewEmail()), HttpStatus.OK);
+                } else throw new RuntimeException("Fail -> EmailRules didn't match");
+            } else throw new RuntimeException("Fail -> Old Emails don't match");
+        } else throw new RuntimeException("Fail -> User doesn't exist");
+    }
+
     public ResponseEntity<?> changePassword(User user, String oldPassword, String newPassword1){
-        log.info("changePW: changing PW for user {}: {}", getUserByJWT().getUser_id(), getUserByJWT().getUsername());
+        log.info("changePW: changing PW for user {}: {}", user.getUser_id(), user.getUsername());
         //check oldPassword (have to hash Password to check
         if(userRepository.existsById(user.getUser_id())){
             if (encoder.matches(oldPassword, userRepository.getPassword(user.getEmail()))){
 
                     //Check Passwords rules?
-                    if (true){
+                    if (oldPassword.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")){
                         //HashPassword and Insert into Database
                         String newPassword=encoder.encode(newPassword1);
                         userRepository.changePassword(newPassword, user.getEmail());
