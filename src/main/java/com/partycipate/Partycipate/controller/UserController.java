@@ -22,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     // add User manually only with Admin auth
-    @PostMapping("")
+    @PutMapping("")
     @PreAuthorize("hasRole('ADMIN')")
     public User addUser(@RequestBody User user){
         return userService.addUser(user);
