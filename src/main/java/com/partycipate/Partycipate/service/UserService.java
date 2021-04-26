@@ -88,13 +88,11 @@ public class UserService {
     public ResponseEntity<?> changeUser(User user, AdminChangeUser changeUser){
         log.info("changeEmail: for User {}: {}", user.getUser_id(), user.getUsername());
         if(userRepository.existsById(user.getUser_id())){
-            if (user.getEmail()==changeUser.getOldEmail()){
 //                match email rules
-                if (user.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))")){
-                    userRepository.changeEmail(user.getUser_id(), changeUser.getNewEmail());
-                    return new ResponseEntity<>(userRepository.changeEmail(user.getUser_id(), changeUser.getNewEmail()), HttpStatus.OK);
-                } else throw new RuntimeException("Fail -> EmailRules didn't match");
-            } else throw new RuntimeException("Fail -> Old Emails don't match");
+            if (user.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))") && user.getName().matches("^(([A-Za-z0-9_-]{0,30})[ ]?)*([A-Za-z0-9_-]{0,30})?$")){
+
+                return new ResponseEntity<>(userRepository.changeUser(user.getUser_id(), changeUser.getEmail(), changeUser.getName()), HttpStatus.OK);
+            } else throw new RuntimeException("Fail -> EmailRules or NameRules didn't match");
         } else throw new RuntimeException("Fail -> User doesn't exist");
     }
 

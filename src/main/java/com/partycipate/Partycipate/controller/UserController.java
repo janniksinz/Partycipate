@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> changeEmail(@RequestBody AdminChangeUser changeUser){
+    public ResponseEntity<?> changeUser(@RequestBody AdminChangeUser changeUser){
         User user = userService.getUserByJWT();
         return userService.changeUser(user, changeUser);
     }

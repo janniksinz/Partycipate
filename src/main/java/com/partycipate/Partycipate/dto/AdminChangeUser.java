@@ -4,21 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AdminChangeUser {
     private int id;
-    private String oldEmail;
-    private String newEmail;
-    private String oldName;
-    private String newName;
+    private String email;
+    private String name;
 
     public AdminChangeUser(@JsonProperty("user_id") int id,
-                           @JsonProperty("old_email") String oldEmail,
-                           @JsonProperty("new_email") String newEmail,
-                           @JsonProperty("old_name") String oldName,
-                           @JsonProperty("new_name") String newName) {
+                           @JsonProperty("email") String email,
+                           @JsonProperty("name") String name){
         this.id = id;
-        this.oldEmail = oldEmail;
-        this.newEmail = newEmail;
-        this.oldName = oldName;
-        this.newName = newName;
+        this.email = email;
+        this.name = name;
     }
 
     public int getId() {
@@ -29,35 +23,19 @@ public class AdminChangeUser {
         this.id = id;
     }
 
-    public String getOldEmail() {
-        return oldEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setOldEmail(String oldEmail) {
-        this.oldEmail = oldEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getNewEmail() {
-        return newEmail;
+    public String getName() {
+        return name;
     }
 
-    public void setNewEmail(String newEmail) {
-        this.newEmail = newEmail;
-    }
-
-    public String getOldName() {
-        return oldName;
-    }
-
-    public void setOldName(String oldName) {
-        this.oldName = oldName;
-    }
-
-    public String getNewName() {
-        return newName;
-    }
-
-    public void setNewName(String newName) {
-        this.newName = newName;
+    public void setName(String name) {
+        this.name = name;
     }
 }
