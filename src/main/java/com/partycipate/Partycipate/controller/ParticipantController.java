@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/participant")
 public class ParticipantController {
@@ -33,6 +35,15 @@ public class ParticipantController {
 
     @Autowired
     private SurveyElementRepository surveyElementRepository;
+
+
+    //getSurveyById
+    @GetMapping("")
+
+    public String getWebSnippetJS() throws IOException {
+        return "websnippet";
+    }
+
 
     //getSurveyById
     @GetMapping("/{id}")
