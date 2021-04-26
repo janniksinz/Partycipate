@@ -10,10 +10,10 @@ public class AdminChangeUser {
     private String newName;
 
     public AdminChangeUser(@JsonProperty("user_id") int id,
-                           @JsonProperty("oldEmail") String oldEmail,
-                           @JsonProperty("newEmail") String newEmail,
-                           @JsonProperty("oldName") String oldName,
-                           @JsonProperty("newName") String newName) {
+                           @JsonProperty("old_email") String oldEmail,
+                           @JsonProperty("new_email") String newEmail,
+                           @JsonProperty("old_name") String oldName,
+                           @JsonProperty("new_name") String newName) {
         this.id = id;
         this.oldEmail = oldEmail;
         this.newEmail = newEmail;
