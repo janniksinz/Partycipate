@@ -46,10 +46,10 @@ public class AdminController {
         return new ResponseEntity<>(userService.deleteUser(user), HttpStatus.OK);
     }
 
-    @PostMapping("/user/email")
-    public ResponseEntity<?> changeEmail(@RequestBody AdminChangeUser changeEmail){
-        User user = userService.getUser(changeEmail.getId());
-        return new ResponseEntity<>(userService.changeUser(user, changeEmail), HttpStatus.OK);
+    @PostMapping("/user")
+    public ResponseEntity<?> changeUser(@RequestBody AdminChangeUser changeUser){
+        User user = userService.getUser(changeUser.getId());
+        return new ResponseEntity<>(userService.changeUser(user, changeUser), HttpStatus.OK);
     }
 
     //total number of Partycipants
