@@ -62,7 +62,7 @@ public class ParticipantController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public SendParticipant setParticipant(SubmitSurvey submitSurvey, HttpServletRequest request){
+    public SendParticipant setParticipant(@RequestBody SubmitSurvey submitSurvey, HttpServletRequest request){
         return participantService.setParticipant(submitSurvey,request.getRemoteAddr());
     }
 }

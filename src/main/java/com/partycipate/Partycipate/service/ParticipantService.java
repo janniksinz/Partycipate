@@ -97,7 +97,11 @@ public class ParticipantService {
 
     public SendParticipant setParticipant(SubmitSurvey submitSurvey, String ipAdress){
         SendParticipant sendParticipant = new SendParticipant();
+        System.out.println(submitSurvey.getParticipant_cookie());
+        System.out.println(submitSurvey.getSurvey_id());
+        System.out.println(submitSurvey.getLanguage());
         if (submitSurvey.getParticipant_cookie() != null){
+
             Participant participant = participantRepository.getParticipantByCookie(submitSurvey.getParticipant_cookie());
             sendParticipant.setParticipant_id(participant.getId());
         }

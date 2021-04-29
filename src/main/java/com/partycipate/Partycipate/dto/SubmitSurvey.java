@@ -1,5 +1,7 @@
 package com.partycipate.Partycipate.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SubmitSurvey {
     private int survey_id;
     private String participant_cookie;
@@ -7,9 +9,11 @@ public class SubmitSurvey {
 
     public SubmitSurvey(){}
 
-    public SubmitSurvey(int survey_id, String cookie, String language) {
+    public SubmitSurvey(@JsonProperty("survey_id") int survey_id,
+                        @JsonProperty("participant_cookie") String participant_cookie,
+                        @JsonProperty("language") String language) {
         this.survey_id = survey_id;
-        this.participant_cookie = cookie;
+        this.participant_cookie = participant_cookie;
         this.language = language;
     }
 
@@ -28,6 +32,7 @@ public class SubmitSurvey {
     public void setParticipant_cookie(String participant_cookie) {
         this.participant_cookie = participant_cookie;
     }
+
 
     public String getLanguage() {
         return language;
