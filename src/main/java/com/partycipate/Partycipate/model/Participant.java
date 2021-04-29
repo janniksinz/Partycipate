@@ -25,10 +25,20 @@ public class Participant {
     private int id;
     private String cookie;
     private String region;
+    private String language;
 
-    public Participant(String cookie, String region) {
+    public Participant(String cookie, String region, String language) {
         this.cookie = cookie;
         this.region = region;
+        this.language = language;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public String getCookie() {

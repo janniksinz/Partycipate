@@ -120,7 +120,7 @@ public class ParticipantService {
             participant.setRegion(getLocation(ipAdress));
             participant= addParticipant(participant);
             sendParticipant.setParticipant_id(participant.getId());
-            sendParticipant.setCookie(participant.getCookie());
+            sendParticipant.setParticipant_cookie(participant.getCookie());
 
         }
         return sendParticipant;
