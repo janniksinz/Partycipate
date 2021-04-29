@@ -1,5 +1,6 @@
 package com.partycipate.Partycipate.controller;
 
+import com.partycipate.Partycipate.dto.AdminChangeUser;
 import com.partycipate.Partycipate.dto.UserChangePw;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.service.UserService;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,9 +21,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("")
+    // add User manually only with Admin auth
+    @PutMapping("")
+    @PreAuthorize("hasRole('ADMIN')")
     public User addUser(@RequestBody User user){
-        return userService.addUser(user.getEmail(),user.getPassword());
+        return userService.addUser(user);
     }
 
     @GetMapping("")
@@ -39,6 +43,12 @@ public class UserController {
     public ResponseEntity<?> changePassword(@RequestBody UserChangePw userChangePw){
         User user = userService.getUserByJWT();
         return userService.changePassword(user, userChangePw.getOldPw(), userChangePw.getNewPw());
+    }
+
+    @PostMapping("")
+    public ResponseEntity<?> changeUser(@RequestBody AdminChangeUser changeUser){
+        User user = userService.getUserByJWT();
+        return userService.changeUser(user, changeUser);
     }
 
 }
