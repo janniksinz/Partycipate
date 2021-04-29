@@ -199,7 +199,7 @@ public class AnswerService {
                 timeResultMcSet.add(timeResultMc);
                 Calendar c = Calendar.getInstance();
                 c.setTime(today);
-                c.add(Calendar.DATE, 1);
+                c.add(Calendar.DATE, 7);
                 today = c.getTime();
 
             }
@@ -265,6 +265,7 @@ public class AnswerService {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.HOUR_OF_DAY, 2);
+        calendar.getTimeZone();
 
         return calendar.getTime();
     }
