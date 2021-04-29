@@ -36,11 +36,15 @@ public class AnalyticsController {
     }
 
     @PostMapping("/timeline/{survey_id}")
-    public @ResponseBody
-    ResponseEntity<?> getTimeResults(@PathVariable("survey_id") int survey_id,
-                                  @RequestBody TimeLine timeLine){
+    public @ResponseBody ResponseEntity<?> getTimeResults(@PathVariable("survey_id") int survey_id,
+                                                         @RequestBody TimeLine timeLine){
         return answerService.timeResultsForSurvey(survey_id, timeLine);
 
+    }
+
+    @GetMapping("/countries/{survey_id}")
+    public  @ResponseBody ResponseEntity<?> getCountry(@PathVariable("survey_id") int survey_id){
+        return new ResponseEntity<>(analyticsService.getRegionCountForSurvey(survey_id), HttpStatus.OK);
     }
 
 
