@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/participant")
+@CrossOrigin(origins = "*")
 public class ParticipantController {
     private static final Logger log = LoggerFactory.getLogger(ParticipantController.class);
 
