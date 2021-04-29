@@ -2,7 +2,7 @@ package com.partycipate.Partycipate.dto;
 
 public class SendParticipant {
     private int participant_id;
-    private String cookie;
+    private String participant_cookie;
 
     public SendParticipant() {
 
@@ -10,7 +10,7 @@ public class SendParticipant {
 
     public SendParticipant(int participant_id, String cookie) {
         this.participant_id = participant_id;
-        this.cookie = cookie;
+        this.participant_cookie = cookie;
     }
 
     public int getParticipant_id() {
@@ -21,11 +21,12 @@ public class SendParticipant {
         this.participant_id = participant_id;
     }
 
-    public String getCookie() {
-        return cookie;
+
+    public String getParticipant_cookie() {
+        return participant_cookie;
     }
 
-    public void setCookie(String cookie) {
-        this.cookie = cookie;
+    public void setParticipant_cookie(String participant_cookie) {
+        this.participant_cookie = participant_cookie;
     }
 }
