@@ -7,7 +7,6 @@ public class SendParticipant {
     public SendParticipant() {
 
     }
-
     public SendParticipant(int participant_id, String cookie) {
         this.participant_id = participant_id;
         this.participant_cookie = cookie;
