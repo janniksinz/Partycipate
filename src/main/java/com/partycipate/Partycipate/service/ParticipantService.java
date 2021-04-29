@@ -51,6 +51,9 @@ public class ParticipantService {
     @Autowired
     private SurveyElementRepository surveyElementRepository;
 
+    @Autowired
+    private Survey_ParticipantRepository survey_participantRepository;
+
     public Answer addAnswer(SendAnswer sendAnswer){
         //get participantId
         int Pid = sendAnswer.getParticipant_id();
@@ -127,6 +130,13 @@ public class ParticipantService {
             sendParticipant.setParticipant_cookie(participant.getCookie());
 
         }
+        try{
+            survey_participantRepository.sendAnswer(submitSurvey.getSurvey_id(),sendParticipant.getParticipant_id());
+        }
+        catch (Exception e){
+            System.err.println("You cannot participate two times to the same survey");
+        }
+
         return sendParticipant;
     }
 
