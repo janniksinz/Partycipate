@@ -43,6 +43,4 @@ public class SurveyElementService {
         return surveyElementRepository.getSurveyIdByElementId(id);
     }*/
 
-
-    
 }
