@@ -1,5 +1,6 @@
 package com.partycipate.Partycipate.controller;
 
+import com.partycipate.Partycipate.dto.AdminChangeUser;
 import com.partycipate.Partycipate.dto.AdminChangePw;
 import com.partycipate.Partycipate.dto.TimeLine;
 import com.partycipate.Partycipate.model.User;
@@ -30,10 +31,10 @@ public class AdminController {
     ParticipantService participantService;
 
     @PostMapping("/user/pw")
-    public ResponseEntity<?> changePassword(@RequestBody AdminChangePw adminChangePw){
+    public ResponseEntity<?> changePassword(@RequestBody AdminChangePw changePw){
         if (Boolean.TRUE.equals(userService.isAdmin())) {
-            User user = userService.getUser(adminChangePw.getId());
-            return new ResponseEntity<>(userService.changePassword(user, adminChangePw.getOldPw(), adminChangePw.getNewPw()), HttpStatus.OK);
+            User user = userService.getUser(changePw.getId());
+            return new ResponseEntity<>(userService.changePassword(user, changePw.getOldPw(), changePw.getNewPw()), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(new ResponseMessage("Fail -> you have no authority to change PW over this endpoint"), HttpStatus.BAD_REQUEST);
         }
@@ -50,5 +51,10 @@ public class AdminController {
     public ResponseEntity<?> getCountParticipants(@RequestBody TimeLine timeline){
         User user = userService.getUserByJWT();
         return new ResponseEntity<>(answerService.getAnswerCountAllSurveys(timeline, user), HttpStatus.OK);
+    }
+    @PostMapping("/user")
+    public ResponseEntity<?> changeUser(@RequestBody AdminChangeUser changeUser){
+        User user = userService.getUser(changeUser.getId());
+        return new ResponseEntity<>(userService.changeUser(user, changeUser), HttpStatus.OK);
     }
 }

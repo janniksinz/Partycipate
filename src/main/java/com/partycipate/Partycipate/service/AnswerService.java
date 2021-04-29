@@ -62,67 +62,7 @@ public class AnswerService {
         return resultMcs;
     }
 
-    /**
-     * !!!depricated!!! helperMethod - getBasicResults !!!depricated!!!
-     * should be replaced by aggregate for McAnswer
-     * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
-     * */
-/*   //DEPRECATED
-    public ResultMc results(int element_id){
-        //calculate all the answers to one Result to send back to the Frontend
-        System.out.println("Start results ");
-        int count = answerPossibilityService.getCountOfAnswersPossibilities(element_id);
-        System.out.println("count "+ count);
-        //brauche Set von Answers; ArrayList initialisen mit Laenge count; Iterator durchgehen und ArrayList hochzaehlen;
-        // ArrayList in Result setzen (setResult)
-        Set<Answer> answers = answerRepository.getAnswersByElementId(element_id);
-        ResultMc resultMc = new ResultMc();
-        resultMc.setElement_id(element_id);
-        // count participants
-        Optional<Integer> countParticipants = answerRepository.getCountParticipants(element_id);
-        resultMc.setCount_participants(countParticipants.orElse(0));
-        ArrayList<Integer> counting_results = new ArrayList<>(count);
-        // initialize arrayList with default values 0
-        for (int i =0; i<count;i++){
-            counting_results.add(i, 0);
-        }
 
-
-        Iterator<Answer> iterator = answers.iterator();
-        // go through every answer for ElementId
-        while (iterator.hasNext()){
-            Answer a = iterator.next();
-            // get all MCAnswerContents for Answer a
-            Iterable<MCAnswerContent> mcac =  mcAnswerContentService.getAllMcAnswerContentByAnswerId(a.getId());
-
-            Iterator<MCAnswerContent> mcacIterator = mcac.iterator();
-            // go through every MCAnswerContent content
-
-            while(mcacIterator.hasNext()){
-
-                MCAnswerContent content = mcacIterator.next();
-                // get AP for MCAnswerContent
-                AnswerPossibility answerPossibility = content.getAnswerPossibility();
-                // reference the id
-                int position = answerPossibility.getPosition(); //content.getPosition();
-                int value = counting_results.get(position-1);
-
-                value += 1;
-
-                counting_results.set(position-1, value);
-
-            }
-        }
-
-
-        resultMc.setResults(counting_results);
-        System.out.println("End of method ");
-        resultMc.setElement_id(element_id);
-        return resultMc;
-        // Anmerkung
-    }*/
-
-    /**
      * getTimeResults for Survey and TimeLine
      * <authors>
      *      <author> Jannik Sinz - jannik.sinz@ibm.com </author>
@@ -193,9 +133,9 @@ public class AnswerService {
                     timeResultMc = new TimeResultMc(today, resultMc);
                 }
                 else{
-                    timeResultMc = new TimeResultMc(today, resultMc);
+                    timeResultMc = new TimeResultMc(trim(today), resultMc);
                 }
-                log.info("TimeResult: adding results for {}", timeResultMc.getDatetime());
+                log.info("TimeResult: adding results for {}", trim(timeResultMc.getDatetime()));
                 timeResultMcSet.add(timeResultMc);
                 Calendar c = Calendar.getInstance();
                 c.setTime(today);
@@ -213,7 +153,7 @@ public class AnswerService {
     }
 
     public Stream<Answer> filterByDate (Set<Answer> answerSet, Date today){
-       return answerSet.stream().filter(a -> trim(a.getDate()).equals(today));
+        return answerSet.stream().filter(a -> trim(a.getDate()).toInstant().equals(trim(today).toInstant()));
     }
 
     /**
@@ -264,11 +204,14 @@ public class AnswerService {
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MINUTE, 0);
+//        log.info("Timezone: {}", calendar.getTimeZone());
+//        ToDo check for different TimeZones and SummerTimes
         calendar.set(Calendar.HOUR_OF_DAY, 2);
         calendar.getTimeZone();
 
         return calendar.getTime();
     }
+
 
     /**
      * getAnswerCount for the relevant scope
@@ -328,13 +271,18 @@ public class AnswerService {
                 answers.add(elementAnswerIter.next());
             }
         }
-        log.info("TimelineAnswers: Collected ALL relevant answers(unsorted) in {}", answers);
+
+        //log.info("TimelineAnswers: Collected ALL relevant answers(unsorted) in {}", answers);
         List<AnswerCount> list = new ArrayList<>();
 //        Count through every Day
-        Date today = start;
+        Date today = trim(start);
         while (today.compareTo(end) <= 0){
+            Stream stream = filterByDate(answers, today);
             int countAnswers = (int) filterByDate(answers, today).count();
+            log.info("Date: {}", today);
             list.add(new AnswerCount(today, countAnswers));
+            log.info("Date after: {}", today);
+
 //            count up today
             Calendar c = Calendar.getInstance();
             c.setTime(today);

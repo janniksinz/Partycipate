@@ -15,9 +15,11 @@ public interface ParticipantRepository extends CrudRepository<Participant, Integ
     @Query(value= "SELECT Count(participant_id) from answer", nativeQuery = true)
     public Optional<Integer> getCountParticipants();
 
+
     public Participant getParticipantByCookie(String cookie);
 
     @Query(value = "SELECT next_val FROM partycipate.participant_sequence", nativeQuery = true)
     Integer getNextValue();
+
 }
 

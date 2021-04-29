@@ -5,6 +5,7 @@ import com.partycipate.Partycipate.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -23,6 +24,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query(value = "UPDATE user SET password = :password WHERE user.email = :email",nativeQuery = true)
-    void changePassword(String password, String email);
+    User changePassword(@Param("password") String password,@Param("email") String email);
+
+    @Transactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query(value = "UPDATE user SET email = :email, name = :name, username = :email WHERE user.id = :user_id",nativeQuery = true)
+    int changeUser(@Param("user_id") int user_id, @Param("email") String newEmail, @Param("name") String name);
 }
 

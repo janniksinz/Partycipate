@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -30,6 +31,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 import java.util.*;
 
 @Service
@@ -51,8 +53,10 @@ public class ParticipantService {
     @Autowired
     private SurveyElementRepository surveyElementRepository;
 
+
     @Autowired
     private Survey_ParticipantRepository survey_participantRepository;
+
 
     public Answer addAnswer(SendAnswer sendAnswer){
         //get participantId
@@ -67,7 +71,7 @@ public class ParticipantService {
         Answer answer = new Answer.Builder().mcAnswerContent(null).build();
         answer.setParticipant(p);
         answer.setSurveyElement(sE);
-        answer.setDate(sendAnswer.getDate());
+        answer.setDate(trim(sendAnswer.getDate()));
         // save answer
         answer = answerRepository.save(answer);
         int answerId = answer.getId();
@@ -96,6 +100,7 @@ public class ParticipantService {
 
     public Optional<Participant> getParticipant(int participant_id){
         return participantRepository.findById(participant_id);
+
     }
 
     public SendParticipant setParticipant(SubmitSurvey submitSurvey, String ipAdress){
@@ -196,6 +201,20 @@ public class ParticipantService {
             e.printStackTrace();
         }
         return region;
+    }
+
+
+    }
+
+    public static Date trim(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 2);
+
+        return calendar.getTime();
     }
 
 }
