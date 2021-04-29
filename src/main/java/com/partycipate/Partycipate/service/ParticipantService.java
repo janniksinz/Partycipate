@@ -97,8 +97,8 @@ public class ParticipantService {
 
     public SendParticipant setParticipant(SubmitSurvey submitSurvey, String ipAdress){
         SendParticipant sendParticipant = new SendParticipant();
-        if (submitSurvey.getCookie()!= null){
-            Participant participant = participantRepository.getParticipantByCookie(submitSurvey.getCookie());
+        if (submitSurvey.getParticipant_cookie() != null){
+            Participant participant = participantRepository.getParticipantByCookie(submitSurvey.getParticipant_cookie());
             sendParticipant.setParticipant_id(participant.getId());
         }
         else {

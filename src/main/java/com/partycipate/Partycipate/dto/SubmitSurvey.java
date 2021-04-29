@@ -2,14 +2,14 @@ package com.partycipate.Partycipate.dto;
 
 public class SubmitSurvey {
     private int survey_id;
-    private String cookie;
+    private String participant_cookie;
     private String language;
 
     public SubmitSurvey(){}
 
     public SubmitSurvey(int survey_id, String cookie, String language) {
         this.survey_id = survey_id;
-        this.cookie = cookie;
+        this.participant_cookie = cookie;
         this.language = language;
     }
 
@@ -21,12 +21,12 @@ public class SubmitSurvey {
         this.survey_id = survey_id;
     }
 
-    public String getCookie() {
-        return cookie;
+    public String getParticipant_cookie() {
+        return participant_cookie;
     }
 
-    public void setCookie(String cookie) {
-        this.cookie = cookie;
+    public void setParticipant_cookie(String participant_cookie) {
+        this.participant_cookie = participant_cookie;
     }
 
     public String getLanguage() {
