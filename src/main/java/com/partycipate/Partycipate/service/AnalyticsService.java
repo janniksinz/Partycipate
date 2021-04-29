@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.persistence.Tuple;
 import java.util.*;
 
 @Service
@@ -23,11 +24,8 @@ public class AnalyticsService {
     }
 
     public List<RegionUser> getRegionCountForSurvey(int survey_id){
-        List<RegionUser> regionUserSet = survey_participantRepository.getParticipantCountPerRegion(survey_id);
-
-        // survey_participantRepository.getParticipantCountPerRegion(survey_id).forEach(regionUserSet::add);
-        // regionUserSet.add(new RegionUser("DEs", 33L));
-        return regionUserSet;
+        List<RegionUser> regionUserList = survey_participantRepository.getParticipantCountPerRegion(survey_id);
+        return regionUserList;
     }
 
 

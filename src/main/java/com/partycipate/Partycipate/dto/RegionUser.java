@@ -1,11 +1,12 @@
 package com.partycipate.Partycipate.dto;
 
-public class RegionUser {
+public interface RegionUser {
 
-    private String id;
-    private Long v;
+    String getId();
+    Long getValue();
 
-    public RegionUser(String id, Long v) {
+
+    /*public RegionUser(String id, Long v) {
         this.id = id;
         this.v = v;
     }
@@ -24,5 +25,5 @@ public class RegionUser {
 
     public void setV(Long v) {
         this.v = v;
-    }
+    }*/
 }
