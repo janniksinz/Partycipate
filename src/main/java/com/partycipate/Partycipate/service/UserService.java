@@ -15,9 +15,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,13 +38,16 @@ public class UserService {
     private JwtProvider jwtProvider;
     @Autowired
     private SessionRegistry sessionRegistry;
-
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserDetailsService userDetailsService;
 
 
+    /**
+     * getUser from current Session (ContextHolder)
+     * <authors>
+     *     <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     * </authors>
+     * */
     public User getUserByJWT() {
         User user = null;
         try {
@@ -56,6 +60,7 @@ public class UserService {
         }
         return user;
     }
+
     /**
      * isAdmin
      * <auhtor> Jannik Sinz - jannik.sinz@ibm.com </auhtor>
@@ -80,7 +85,7 @@ public class UserService {
     }
 
     //getAllUsers
-    public Iterable<User> getAllUsers(){
+    public List<User> getAllUsers(){
         return userRepository.findAll();
     }
 
@@ -89,60 +94,57 @@ public class UserService {
         userRepository.save(user1);
         return user1;
     }
+
     public User getUser(int id){
         return userRepository.findById(id);
     }
+
     public User deleteUser(User user){
         userRepository.deleteById(user.getUser_id());
         return user;
     }
 
+    /**
+     * create new auth JWT token for user
+     * <authors>
+     *     <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     * </authors>
+     * */
     public Authentication renewAuth(User user){
-//        invalidate - just for good practise, we don't actually use sessionRegistry yet
-        // invalidate user session
-        List<Object> loggedUsers = sessionRegistry.getAllPrincipals();
-        log.info("All Pricipals: {}", loggedUsers);
-        for (Object principal : loggedUsers) {
-            if(principal instanceof User) {
-                final User loggedUser = (User) principal;
-                if(user.getUsername().equals(loggedUser.getUsername())) {
-                    List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(principal, false);
-                    if(null != sessionsInfo && sessionsInfo.size() > 0) {
-                        for (SessionInformation sessionInformation : sessionsInfo) {
-                            log.info("Exprire now : {}", sessionInformation.getSessionId());
-                            sessionInformation.expireNow();
-                            sessionRegistry.removeSessionInformation(sessionInformation.getSessionId());
-                            // User is not forced to re-logging
-                        }
-                    }
-                }
-            }
-        }
+        Authentication previousAuth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), previousAuth.getAuthorities());
 //        re-authenticate
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
-
-        Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
-
-        SecurityContextHolder.getContext().setAuthentication(newAuth);
-        return newAuth;
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return authentication;
     }
 
+    /**
+     * changing user details & creds
+     * <authors> Jannik Sinz - jannik.sinz@ibm.com </authors>
+     * */
     public ResponseEntity<?> changeUser(User user, AdminChangeUser changeUser){
-        log.info("changeUserDetails: for User {}: {} into {}, {}", user.getUser_id(), user.getUsername(), changeUser.getEmail(), changeUser.getName());
+        log.info("changeUserDetails: for User {}: {} into {}, {}", user.getUser_id(), user.getUsername(), changeUser.getName(), changeUser.getEmail());
         if(userRepository.existsById(user.getUser_id())){
 //                match email rules
             if (changeUser.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))") && changeUser.getName().matches("^(([A-Za-z0-9_-]{0,30})[ ]?)*([A-Za-z0-9_-]{0,30})?$")){
 
                 userRepository.changeUser(user.getUser_id(), changeUser.getEmail(), changeUser.getName());
-                Authentication newAuth = renewAuth(user);
-                UserDetails userDetails = (UserDetails) newAuth.getPrincipal();
-                return new ResponseEntity<>(new JwtResponse(jwtProvider.generateJwtToken(newAuth), userDetails.getUsername(), userDetails.getAuthorities()), HttpStatus.OK);
-            } else return new ResponseEntity<>(new ResponseMessage("Fail -> EmailRules or NameRules didn't match"), HttpStatus.BAD_REQUEST);
-        } else return new ResponseEntity<>(new ResponseMessage("Fail -> User doesn't exist"), HttpStatus.BAD_REQUEST);
+                User user1 = userRepository.findById(user.getUser_id());
+                Authentication authentication = renewAuth(user1);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(user1.getUsername());
+                log.info("changeUserDetails: SecurityContext {}", SecurityContextHolder.getContext().getAuthentication());
+                return new ResponseEntity<>(new JwtResponse(jwtProvider.generateJwtTokenFromUser(authentication), userDetails.getUsername(), authentication.getAuthorities()), HttpStatus.OK);
+            } else throw new RuntimeException("Fail -> EmailRules or NameRules didn't match");
+        } else throw new RuntimeException("Fail -> User doesn't exist");
     }
 
+    /**
+     * changePassword for User
+     * <authors>
+     *     <author> Giovanni Carlucci </author>
+     * </authors>
+     * */
     public ResponseEntity<?> changePassword(User user, String oldPassword, String newPassword1){
         log.info("changePW: changing PW for user {}: {}", user.getUser_id(), user.getUsername());
         //check oldPassword (have to hash Password to check
@@ -157,7 +159,7 @@ public class UserService {
                         return new ResponseEntity<>(new ResponseMessage("Success -> Password Changed"), HttpStatus.OK);
                     }
                     else{
-                        throw new RuntimeException("Fail -> PasswordRules didn't match");
+                        return new ResponseEntity<>(new ResponseMessage("Fail -> PasswordRules didn't match"), HttpStatus.BAD_REQUEST);
                     }
             }
             else{
