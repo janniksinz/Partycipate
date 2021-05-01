@@ -39,12 +39,13 @@ public class UserService {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
-
+    /**
+     * getUser from current Session (ContextHolder)
+     * <authors>
+     *     <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     * </authors>
+     * */
     public User getUserByJWT() {
         User user = null;
         try {
@@ -91,14 +92,22 @@ public class UserService {
         userRepository.save(user1);
         return user1;
     }
+
     public User getUser(int id){
         return userRepository.findById(id);
     }
+
     public User deleteUser(User user){
         userRepository.deleteById(user.getUser_id());
         return user;
     }
 
+    /**
+     * create new auth JWT token for user
+     * <authors>
+     *     <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     * </authors>
+     * */
     public Authentication renewAuth(User user){
         Authentication previousAuth = SecurityContextHolder.getContext().getAuthentication();
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), previousAuth.getAuthorities());
@@ -108,8 +117,12 @@ public class UserService {
         return authentication;
     }
 
+    /**
+     * changing user details & creds
+     * <authors> Jannik Sinz - jannik.sinz@ibm.com </authors>
+     * */
     public ResponseEntity<?> changeUser(User user, AdminChangeUser changeUser){
-        log.info("changeEmail: for User {}: {}", user.getUser_id(), user.getUsername());
+        log.info("changeUserDetails: for User {}: {} into {}, {}", user.getUser_id(), user.getUsername(), changeUser.getName(), changeUser.getEmail());
         if(userRepository.existsById(user.getUser_id())){
 //                match email rules
             if (changeUser.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))") && changeUser.getName().matches("^(([A-Za-z0-9_-]{0,30})[ ]?)*([A-Za-z0-9_-]{0,30})?$")){
@@ -117,14 +130,19 @@ public class UserService {
                 userRepository.changeUser(user.getUser_id(), changeUser.getEmail(), changeUser.getName());
                 User user1 = userRepository.findById(user.getUser_id());
                 Authentication authentication = renewAuth(user1);
-                log.info("Securitycontext: {}", SecurityContextHolder.getContext().getAuthentication());
                 UserDetails userDetails = userDetailsService.loadUserByUsername(user1.getUsername());
-                log.info("newAuth: {}, {}", authentication, userDetails);
+                log.info("changeUserDetails: SecurityContext {}", SecurityContextHolder.getContext().getAuthentication());
                 return new ResponseEntity<>(new JwtResponse(jwtProvider.generateJwtTokenFromUser(authentication), userDetails.getUsername(), authentication.getAuthorities()), HttpStatus.OK);
             } else throw new RuntimeException("Fail -> EmailRules or NameRules didn't match");
         } else throw new RuntimeException("Fail -> User doesn't exist");
     }
 
+    /**
+     * changePassword for User
+     * <authors>
+     *     <author> Giovanni Carlucci </author>
+     * </authors>
+     * */
     public ResponseEntity<?> changePassword(User user, String oldPassword, String newPassword1){
         log.info("changePW: changing PW for user {}: {}", user.getUser_id(), user.getUsername());
         //check oldPassword (have to hash Password to check
