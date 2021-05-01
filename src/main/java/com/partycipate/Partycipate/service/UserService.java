@@ -98,7 +98,7 @@ public class UserService {
     }
 
     public Authentication renewAuth(User user){
-//        invalidate
+//        invalidate - just for good practise, we don't actually use sessionRegistry yet
         // invalidate user session
         List<Object> loggedUsers = sessionRegistry.getAllPrincipals();
         log.info("All Pricipals: {}", loggedUsers);
@@ -130,7 +130,7 @@ public class UserService {
     }
 
     public ResponseEntity<?> changeUser(User user, AdminChangeUser changeUser){
-        log.info("changeEmail: for User {}: {}", user.getUser_id(), user.getUsername());
+        log.info("changeUserDetails: for User {}: {} into {}, {}", user.getUser_id(), user.getUsername(), changeUser.getEmail(), changeUser.getName());
         if(userRepository.existsById(user.getUser_id())){
 //                match email rules
             if (changeUser.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))") && changeUser.getName().matches("^(([A-Za-z0-9_-]{0,30})[ ]?)*([A-Za-z0-9_-]{0,30})?$")){
@@ -139,8 +139,8 @@ public class UserService {
                 Authentication newAuth = renewAuth(user);
                 UserDetails userDetails = (UserDetails) newAuth.getPrincipal();
                 return new ResponseEntity<>(new JwtResponse(jwtProvider.generateJwtToken(newAuth), userDetails.getUsername(), userDetails.getAuthorities()), HttpStatus.OK);
-            } else throw new RuntimeException("Fail -> EmailRules or NameRules didn't match");
-        } else throw new RuntimeException("Fail -> User doesn't exist");
+            } else return new ResponseEntity<>(new ResponseMessage("Fail -> EmailRules or NameRules didn't match"), HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>(new ResponseMessage("Fail -> User doesn't exist"), HttpStatus.BAD_REQUEST);
     }
 
     public ResponseEntity<?> changePassword(User user, String oldPassword, String newPassword1){
