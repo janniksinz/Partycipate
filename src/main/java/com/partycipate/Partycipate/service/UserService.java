@@ -15,13 +15,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,6 +36,8 @@ public class UserService {
     private JwtProvider jwtProvider;
     @Autowired
     private SessionRegistry sessionRegistry;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -56,6 +57,7 @@ public class UserService {
         }
         return user;
     }
+
     /**
      * isAdmin
      * <auhtor> Jannik Sinz - jannik.sinz@ibm.com </auhtor>
@@ -80,7 +82,7 @@ public class UserService {
     }
 
     //getAllUsers
-    public Iterable<User> getAllUsers(){
+    public List<User> getAllUsers(){
         return userRepository.findAll();
     }
 
@@ -98,35 +100,12 @@ public class UserService {
     }
 
     public Authentication renewAuth(User user){
-//        invalidate
-        // invalidate user session
-        List<Object> loggedUsers = sessionRegistry.getAllPrincipals();
-        log.info("All Pricipals: {}", loggedUsers);
-        for (Object principal : loggedUsers) {
-            if(principal instanceof User) {
-                final User loggedUser = (User) principal;
-                if(user.getUsername().equals(loggedUser.getUsername())) {
-                    List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(principal, false);
-                    if(null != sessionsInfo && sessionsInfo.size() > 0) {
-                        for (SessionInformation sessionInformation : sessionsInfo) {
-                            log.info("Exprire now : {}", sessionInformation.getSessionId());
-                            sessionInformation.expireNow();
-                            sessionRegistry.removeSessionInformation(sessionInformation.getSessionId());
-                            // User is not forced to re-logging
-                        }
-                    }
-                }
-            }
-        }
+        Authentication previousAuth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), previousAuth.getAuthorities());
 //        re-authenticate
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
-
-        Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
-
-        SecurityContextHolder.getContext().setAuthentication(newAuth);
-        return newAuth;
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return authentication;
     }
 
     public ResponseEntity<?> changeUser(User user, AdminChangeUser changeUser){
@@ -136,9 +115,12 @@ public class UserService {
             if (changeUser.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))") && changeUser.getName().matches("^(([A-Za-z0-9_-]{0,30})[ ]?)*([A-Za-z0-9_-]{0,30})?$")){
 
                 userRepository.changeUser(user.getUser_id(), changeUser.getEmail(), changeUser.getName());
-                Authentication newAuth = renewAuth(user);
-                UserDetails userDetails = (UserDetails) newAuth.getPrincipal();
-                return new ResponseEntity<>(new JwtResponse(jwtProvider.generateJwtToken(newAuth), userDetails.getUsername(), userDetails.getAuthorities()), HttpStatus.OK);
+                User user1 = userRepository.findById(user.getUser_id());
+                Authentication authentication = renewAuth(user1);
+                log.info("Securitycontext: {}", SecurityContextHolder.getContext().getAuthentication());
+                UserDetails userDetails = userDetailsService.loadUserByUsername(authentication.getName());
+                log.info("newAuth: {}, {}", authentication, userDetails);
+                return new ResponseEntity<>(new JwtResponse(jwtProvider.generateJwtTokenFromUser(authentication), userDetails.getUsername(), authentication.getAuthorities()), HttpStatus.OK);
             } else throw new RuntimeException("Fail -> EmailRules or NameRules didn't match");
         } else throw new RuntimeException("Fail -> User doesn't exist");
     }
@@ -157,7 +139,7 @@ public class UserService {
                         return new ResponseEntity<>(new ResponseMessage("Success -> Password Changed"), HttpStatus.OK);
                     }
                     else{
-                        throw new RuntimeException("Fail -> PasswordRules didn't match");
+                        return new ResponseEntity<>(new ResponseMessage("Fail -> PasswordRules didn't match"), HttpStatus.BAD_REQUEST);
                     }
             }
             else{

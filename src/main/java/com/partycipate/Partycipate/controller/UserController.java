@@ -28,6 +28,11 @@ public class UserController {
         return userService.addUser(user);
     }
 
+    @GetMapping
+    public @ResponseBody ResponseEntity<?> getAllUsers(){
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+    }
+
     @GetMapping("")
     public @ResponseBody User getUser() {
         return userService.getUserByJWT();
