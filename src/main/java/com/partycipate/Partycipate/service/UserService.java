@@ -101,7 +101,7 @@ public class UserService {
 
     public Authentication renewAuth(User user){
         Authentication previousAuth = SecurityContextHolder.getContext().getAuthentication();
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), previousAuth.getAuthorities());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), previousAuth.getAuthorities());
 //        re-authenticate
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -118,7 +118,7 @@ public class UserService {
                 User user1 = userRepository.findById(user.getUser_id());
                 Authentication authentication = renewAuth(user1);
                 log.info("Securitycontext: {}", SecurityContextHolder.getContext().getAuthentication());
-                UserDetails userDetails = userDetailsService.loadUserByUsername(authentication.getName());
+                UserDetails userDetails = userDetailsService.loadUserByUsername(user1.getUsername());
                 log.info("newAuth: {}, {}", authentication, userDetails);
                 return new ResponseEntity<>(new JwtResponse(jwtProvider.generateJwtTokenFromUser(authentication), userDetails.getUsername(), authentication.getAuthorities()), HttpStatus.OK);
             } else throw new RuntimeException("Fail -> EmailRules or NameRules didn't match");

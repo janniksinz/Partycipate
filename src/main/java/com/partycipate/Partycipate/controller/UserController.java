@@ -28,7 +28,8 @@ public class UserController {
         return userService.addUser(user);
     }
 
-    @GetMapping
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
     public @ResponseBody ResponseEntity<?> getAllUsers(){
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
