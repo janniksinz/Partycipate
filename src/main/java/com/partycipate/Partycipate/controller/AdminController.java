@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,6 +30,12 @@ public class AdminController {
 
     @Autowired
     ParticipantService participantService;
+
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public @ResponseBody ResponseEntity<?> getAllUsers(){
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+    }
 
     @PostMapping("/user/pw")
     public ResponseEntity<?> changePassword(@RequestBody AdminChangePw changePw){
