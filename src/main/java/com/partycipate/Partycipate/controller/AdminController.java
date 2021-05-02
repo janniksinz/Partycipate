@@ -47,7 +47,7 @@ public class AdminController {
     public ResponseEntity<?> changePassword(@RequestBody AdminChangePw changePw){
         if (Boolean.TRUE.equals(userService.isAdmin())) {
             User user = userService.getUser(changePw.getId());
-            return new ResponseEntity<>(userService.changePassword(user, changePw.getOldPw(), changePw.getNewPw()), HttpStatus.OK);
+            return new ResponseEntity<>(userService.changePassword(user, user.getPassword(), changePw.getNewPw()), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(new ResponseMessage("Fail -> you have no authority to change PW over this endpoint"), HttpStatus.BAD_REQUEST);
         }
