@@ -14,6 +14,7 @@ public class AdminChangeUser {
         this.email = email;
         this.name = name;
     }
+    public AdminChangeUser(){}
 
     public int getId() {
         return id;
