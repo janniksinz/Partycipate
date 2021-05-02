@@ -124,7 +124,7 @@ public class UserService {
      * <authors> Jannik Sinz - jannik.sinz@ibm.com </authors>
      * */
     public ResponseEntity<?> changeUser(User user, AdminChangeUser changeUser){
-        log.info("changeUserDetails: for User {}: {} into {}, {}", user.getUser_id(), user.getUsername(), changeUser.getName(), changeUser.getEmail());
+        //log.info("changeUserDetails: for User {}: {} into {}, {}", user.getUser_id(), user.getUsername(), changeUser.getName(), changeUser.getEmail());
         if(userRepository.existsById(user.getUser_id())){
 //                match email rules
             if (changeUser.getEmail().matches("(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))") && changeUser.getName().matches("^(([A-Za-z0-9_-]{0,30})[ ]?)*([A-Za-z0-9_-]{0,30})?$")){
@@ -145,17 +145,17 @@ public class UserService {
      *     <author> Giovanni Carlucci </author>
      * </authors>
      * */
-    public ResponseEntity<?> changePassword(User user, String oldPassword, String newPassword1){
+    public ResponseEntity<?> changePassword(User user, String oldPassword, String newPassword){
         log.info("changePW: changing PW for user {}: {}", user.getUser_id(), user.getUsername());
         //check oldPassword (have to hash Password to check
         if(userRepository.existsById(user.getUser_id())){
             if (encoder.matches(oldPassword, userRepository.getPassword(user.getEmail()))){
 
                     //Check Passwords rules?
-                    if (oldPassword.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")){
+                    if (newPassword.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{10,}$")){
                         //HashPassword and Insert into Database
-                        String newPassword=encoder.encode(newPassword1);
-                        userRepository.changePassword(newPassword, user.getEmail());
+                        String encodedPassword=encoder.encode(newPassword);
+                        userRepository.changePassword(encodedPassword, user.getEmail());
                         return new ResponseEntity<>(new ResponseMessage("Success -> Password Changed"), HttpStatus.OK);
                     }
                     else{
@@ -163,11 +163,11 @@ public class UserService {
                     }
             }
             else{
-                throw new RuntimeException("Fail ->  Old Password is wrong");
+                return new ResponseEntity<>(new ResponseMessage("Fail -> Old Password is wrong"), HttpStatus.BAD_REQUEST);
             }
         }
         else{
-            throw new RuntimeException("Fail -> User doesn't exist");
+            return new ResponseEntity<>(new ResponseMessage("Fail -> User doesn't exist"), HttpStatus.BAD_REQUEST);
         }
     }
 }
