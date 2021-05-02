@@ -31,10 +31,16 @@ public class AdminController {
     @Autowired
     ParticipantService participantService;
 
-    @GetMapping("/users")
+    @GetMapping("/user")
     @PreAuthorize("hasRole('ADMIN')")
     public @ResponseBody ResponseEntity<?> getAllUsers(){
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{id}")
+    public @ResponseBody ResponseEntity<?> getUser(@PathVariable("id") int user_id){
+        User user = userService.getUser(user_id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/user/pw")
