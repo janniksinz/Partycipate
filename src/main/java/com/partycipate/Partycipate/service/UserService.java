@@ -156,9 +156,13 @@ public class UserService {
     public ResponseEntity<?> changePassword(User user, String oldPassword, String newPassword){
         log.info("changePW: changing PW for user {}: {}", user.getUser_id(), user.getUsername());
         //check oldPassword (have to hash Password to check
-        if(userRepository.existsById(user.getUser_id())){
+        if (isAdmin()){
+            log.info("changePW: admin changes PW");
+            String encodedPassword = encoder.encode(newPassword);
+            userRepository.changePassword(encodedPassword, user.getEmail());
+            return new ResponseEntity<>(new ResponseMessage("Success -> Password changed"), HttpStatus.OK);
+        } else if(userRepository.existsById(user.getUser_id())){
             if (encoder.matches(oldPassword, userRepository.getPassword(user.getEmail()))){
-
                     //Check Passwords rules?
                     if (newPassword.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{10,}$")){
                         //HashPassword and Insert into Database

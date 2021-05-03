@@ -38,12 +38,14 @@ public class AdminController {
     }
 
     @GetMapping("/user/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public @ResponseBody ResponseEntity<?> getUser(@PathVariable("id") int user_id){
         User user = userService.getUser(user_id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/user/pw")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changePassword(@RequestBody AdminChangePw changePw){
         if (Boolean.TRUE.equals(userService.isAdmin())) {
             User user = userService.getUser(changePw.getId());
@@ -61,6 +63,7 @@ public class AdminController {
     }
 
     @PostMapping("/user")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeUser(@RequestBody AdminChangeUser changeUser){
         User user = userService.getUser(changeUser.getId());
         return userService.changeUser(user, changeUser);
@@ -68,6 +71,7 @@ public class AdminController {
 
     //total number of Partycipants
     @GetMapping("/participants")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getCountParticipants(@RequestBody TimeLine timeline){
         User user = userService.getUserByJWT();
         return new ResponseEntity<>(answerService.getAnswerCountAllSurveys(timeline, user), HttpStatus.OK);
