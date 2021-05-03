@@ -1,5 +1,6 @@
 package com.partycipate.Partycipate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class Role {
     private RoleName name;
 
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     private Set<User> userSet;
 
     //ToDo Replace with Builder

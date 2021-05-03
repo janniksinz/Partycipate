@@ -29,7 +29,6 @@ public class UserController {
     }
 
     @GetMapping("")
-    @PreAuthorize("hasRole('USER')")
     public @ResponseBody User getUser() {
         return userService.getUserByJWT();
     }
