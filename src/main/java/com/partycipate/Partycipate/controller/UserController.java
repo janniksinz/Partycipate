@@ -34,18 +34,21 @@ public class UserController {
     }
 
     @DeleteMapping("")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteUser(){
         User user = userService.getUserByJWT();
         return new ResponseEntity<>(userService.deleteUser(user).getUser_id(), HttpStatus.OK);
     }
 
     @PostMapping("/pw")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> changePassword(@RequestBody UserChangePw userChangePw){
         User user = userService.getUserByJWT();
         return userService.changePassword(user, userChangePw.getOldPw(), userChangePw.getNewPw());
     }
 
     @PostMapping("")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> changeUser(@RequestBody AdminChangeUser changeUser){
         User user = userService.getUserByJWT();
         return userService.changeUser(user, changeUser);

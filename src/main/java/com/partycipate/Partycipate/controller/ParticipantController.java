@@ -1,6 +1,8 @@
 package com.partycipate.Partycipate.controller;
 
 import com.partycipate.Partycipate.dto.SendAnswer;
+import com.partycipate.Partycipate.dto.SendParticipant;
+import com.partycipate.Partycipate.dto.SubmitSurvey;
 import com.partycipate.Partycipate.model.Participant;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.service.AnswerService;
@@ -14,10 +16,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/participant")
+@CrossOrigin(origins = "*")
 public class ParticipantController {
     private static final Logger log = LoggerFactory.getLogger(ParticipantController.class);
 
@@ -35,15 +38,6 @@ public class ParticipantController {
 
     @Autowired
     private SurveyElementRepository surveyElementRepository;
-
-
-    //getSurveyById
-    @GetMapping("")
-
-    public String getWebSnippetJS() throws IOException {
-        return "websnippet";
-    }
-
 
     //getSurveyById
     @GetMapping("/{id}")
@@ -68,5 +62,8 @@ public class ParticipantController {
         return participantService.addAnswer(sendAnswer).getId();
     }
 
-
+    @PostMapping("")
+    public ResponseEntity<?> setParticipant(@RequestBody SubmitSurvey submitSurvey, HttpServletRequest request){
+        return new ResponseEntity<>(participantService.setParticipant(submitSurvey,request.getRemoteAddr()), HttpStatus.OK);
+    }
 }
