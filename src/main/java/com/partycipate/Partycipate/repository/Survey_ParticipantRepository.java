@@ -3,10 +3,14 @@ package com.partycipate.Partycipate.repository;
 
 import com.partycipate.Partycipate.dto.RegionUser;
 import com.partycipate.Partycipate.model.Survey;
+
+import org.springframework.data.jpa.repository.Modifying;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 
@@ -24,6 +28,7 @@ public interface Survey_ParticipantRepository extends CrudRepository<Survey, Int
             "INNER JOIN `participant` ON survey_participant.participant_id=participant.id " +
             "GROUP BY participant.region", nativeQuery = true)
     public List<RegionUser> getTotalParticipantCountPerRegion();
+
 }
 
 

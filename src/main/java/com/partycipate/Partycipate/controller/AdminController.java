@@ -62,6 +62,7 @@ public class AdminController {
         return new ResponseEntity<>(userService.deleteUser(user), HttpStatus.OK);
     }
 
+
     @PostMapping("/user")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeUser(@RequestBody AdminChangeUser changeUser){
@@ -76,6 +77,9 @@ public class AdminController {
         User user = userService.getUserByJWT();
         return new ResponseEntity<>(answerService.getAnswerCountAllSurveys(timeline, user), HttpStatus.OK);
     }
-
-
+    @PostMapping("/user")
+    public ResponseEntity<?> changeUser(@RequestBody AdminChangeUser changeUser){
+        User user = userService.getUser(changeUser.getId());
+        return new ResponseEntity<>(userService.changeUser(user, changeUser), HttpStatus.OK);
+    }
 }
