@@ -60,8 +60,8 @@ public class AnswerService {
         return resultMcs;
     }
 
-    /**
-     * getTimeResults for Survey and TimeLine
+
+     /* getTimeResults for Survey and TimeLine
      * <authors>
      *      <author> Jannik Sinz - jannik.sinz@ibm.com </author>
      *      <author> Giovanni Carlucci </author>
@@ -141,7 +141,7 @@ public class AnswerService {
                 timeResultMcSet.add(timeResultMc);
                 Calendar c = Calendar.getInstance();
                 c.setTime(today);
-                c.add(Calendar.DATE, 1);
+                c.add(Calendar.DATE, 7);
                 today = c.getTime();
 
             }
@@ -215,6 +215,7 @@ public class AnswerService {
 //        log.info("Timezone: {}", calendar.getTimeZone());
 //        ToDo check for different TimeZones and SummerTimes
         calendar.set(Calendar.HOUR_OF_DAY, 2);
+        calendar.getTimeZone();
 
         return calendar.getTime();
     }
@@ -278,6 +279,7 @@ public class AnswerService {
                 answers.add(elementAnswerIter.next());
             }
         }
+
         //log.info("TimelineAnswers: Collected ALL relevant answers(unsorted) in {}", answers);
         List<AnswerCount> list = new ArrayList<>();
 //        Count through every Day
@@ -288,6 +290,7 @@ public class AnswerService {
             log.info("Date: {}", today);
             list.add(new AnswerCount(today, countAnswers));
             log.info("Date after: {}", today);
+
 //            count up today
             Calendar c = Calendar.getInstance();
             c.setTime(today);
