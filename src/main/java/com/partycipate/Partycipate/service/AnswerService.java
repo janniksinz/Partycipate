@@ -22,24 +22,22 @@ public class AnswerService {
 
     @Autowired
     private AnswerRepository answerRepository;
-
     @Autowired
     private AnswerPossibilityService answerPossibilityService;
-
     @Autowired
     private McAnswerContentService mcAnswerContentService;
-
     @Autowired
     private SurveyElementService surveyElementService;
-
     @Autowired
     private SurveyRepository surveyRepository;
-
     @Autowired
     private SurveyElementRepository surveyElementRepository;
-
     @Autowired
     private UserService userService;
+
+    public Set<Answer> getByElementId(int element_id){
+        return answerRepository.getAnswersByElementId(element_id);
+    }
 
     /**
     * getBasicResults
@@ -67,6 +65,8 @@ public class AnswerService {
      * <authors>
      *      <author> Jannik Sinz - jannik.sinz@ibm.com </author>
      *      <author> Giovanni Carlucci </author>
+     *      <author> Ines Maurer </author>
+     *      <author> Andreas Pitsch </author>
      * </authors>
      * */
     public ResponseEntity<?> timeResultsForSurvey(int survey_id, TimeLine timeLine){
@@ -106,6 +106,8 @@ public class AnswerService {
      * <authors>
      *      <author> Jannik Sinz - jannik.sinz@ibm.com </author>
      *      <author> Giovanni Carlucci </author>
+     *      <author> Ines Maurer </author>
+     *      <author> Andreas Pitsch </author>
      * </authors>
      * */
     public List<TimeResultMc> timeResultsForElement(int element_id, TimeLine timeLine){
@@ -152,6 +154,12 @@ public class AnswerService {
 
     }
 
+    /**
+     * filter All Answers for date
+     * <authors>
+     *     <author> Ines Maurer </author>
+     * </authors>
+     * */
     public Stream<Answer> filterByDate (Set<Answer> answerSet, Date today){
         return answerSet.stream().filter(a -> trim(a.getDate()).toInstant().equals(trim(today).toInstant()));
     }

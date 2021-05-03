@@ -43,7 +43,7 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<Survey> surveys = new HashSet<>() ;
 

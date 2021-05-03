@@ -1,7 +1,9 @@
 package com.partycipate.Partycipate.service;
 
 import com.partycipate.Partycipate.dto.AdminChangeUser;
+import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.model.User;
+import com.partycipate.Partycipate.repository.SurveyRepository;
 import com.partycipate.Partycipate.repository.UserRepository;
 import com.partycipate.Partycipate.security.jwt.JwtProvider;
 import com.partycipate.Partycipate.security.message.response.JwtResponse;
@@ -15,16 +17,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -37,9 +37,11 @@ public class UserService {
     @Autowired
     private JwtProvider jwtProvider;
     @Autowired
-    private SessionRegistry sessionRegistry;
-    @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private SurveyRepository surveyRepository;
+    @Autowired
+    private SurveyService surveyService;
 
 
     /**
@@ -100,6 +102,12 @@ public class UserService {
     }
 
     public User deleteUser(User user){
+        Set<Survey> surveys = surveyRepository.getSurveysByUser(user.getUser_id());
+        if (!surveys.isEmpty()) {
+            for (Survey s: surveys) {
+                surveyService.deleteSurveybyId(s.getId());
+            }
+        }
         userRepository.deleteById(user.getUser_id());
         return user;
     }
@@ -135,8 +143,8 @@ public class UserService {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(user1.getUsername());
                 log.info("changeUserDetails: SecurityContext {}", SecurityContextHolder.getContext().getAuthentication());
                 return new ResponseEntity<>(new JwtResponse(jwtProvider.generateJwtTokenFromUser(authentication), userDetails.getUsername(), authentication.getAuthorities()), HttpStatus.OK);
-            } else throw new RuntimeException("Fail -> EmailRules or NameRules didn't match");
-        } else throw new RuntimeException("Fail -> User doesn't exist");
+            } else return new ResponseEntity<>(new ResponseMessage("Fail -> EmailRules or NameRules didn't match"), HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>(new ResponseMessage("Fail -> User doesn't exist"), HttpStatus.BAD_REQUEST);
     }
 
     /**

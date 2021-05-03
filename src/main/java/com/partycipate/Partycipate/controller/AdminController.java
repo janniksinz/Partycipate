@@ -54,6 +54,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/user/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteUser(@PathVariable("id") int user_id){
         User user = userService.getUser(user_id);
         return new ResponseEntity<>(userService.deleteUser(user), HttpStatus.OK);
@@ -62,7 +63,7 @@ public class AdminController {
     @PostMapping("/user")
     public ResponseEntity<?> changeUser(@RequestBody AdminChangeUser changeUser){
         User user = userService.getUser(changeUser.getId());
-        return new ResponseEntity<>(userService.changeUser(user, changeUser), HttpStatus.OK);
+        return userService.changeUser(user, changeUser);
     }
 
     //total number of Partycipants

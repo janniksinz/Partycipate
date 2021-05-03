@@ -17,6 +17,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Boolean existsByUsername(String name);
     Boolean existsByEmail(String email);
     User findById(int id);
+
+    @Query(value = "DELETE FROM user_roles WHERE user_id=:user_id", nativeQuery = true)
+    int deleteUserInRoles(@Param("user_id") int userId);
+
     @Query(value = "SELECT password FROM user Where email =:email",nativeQuery = true)
     String getPassword(String email);
 
