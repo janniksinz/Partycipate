@@ -30,11 +30,11 @@ public class Survey {
     private String title;
 
 
-    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SurveyElement> elements = new ArrayList<>() ;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "Survey_Participant",joinColumns = @JoinColumn(name="survey_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name="participant_id", referencedColumnName = "id"))
+    @JoinTable(name = "survey_participant",joinColumns = @JoinColumn(name="survey_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name="participant_id", referencedColumnName = "id"))
     @JsonIgnore
     private Set<Participant> participantSet;
 

@@ -24,7 +24,7 @@ public class Answer {
     )
     private int id;
 
-    @OneToMany(mappedBy = "answer",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "answer",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MCAnswerContent> mcAnswerContentSet;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
