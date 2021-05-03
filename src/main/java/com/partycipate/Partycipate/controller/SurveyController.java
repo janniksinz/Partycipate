@@ -61,7 +61,7 @@ public class SurveyController {
     public ResponseEntity<?> getSurvey(@PathVariable("id") int id){
         log.info("getSurvey: {}", id);
         User user = userService.getUserByJWT();
-        if (userService.isAdmin() || surveyRepository.ownsSurvey(user.getUser_id())) {
+        if (userService.isAdmin() || surveyRepository.ownsSurvey(user.getUser_id(), id)) {
             return new ResponseEntity<>(surveyService.getSurveyBySurveyId(id), HttpStatus.OK);
         } else return new ResponseEntity<>(new ResponseMessage("Fail -> no Auth to access Survey for this User"), HttpStatus.BAD_REQUEST);
     }
@@ -72,7 +72,7 @@ public class SurveyController {
     public ResponseEntity<?> deleteSurveybyId(@PathVariable("id") int id) throws EmptyResultDataAccessException {
         User user = userService.getUserByJWT();
         log.info("deleteSurvey: Deleting Survey {}", id);
-        if (userService.isAdmin() || surveyRepository.ownsSurvey(user.getUser_id())){
+        if (userService.isAdmin() || surveyRepository.ownsSurvey(user.getUser_id(), id)){
             return new ResponseEntity<>(surveyService.deleteSurveybyId(id), HttpStatus.OK);
         } else return new ResponseEntity<>(new ResponseMessage("Fail -> no Auth to access Survey for this User"), HttpStatus.BAD_REQUEST);
     }
