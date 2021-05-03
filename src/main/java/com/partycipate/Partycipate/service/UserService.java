@@ -108,7 +108,11 @@ public class UserService {
                 surveyService.deleteSurveybyId(s.getId());
             }
         }
-        userRepository.deleteById(user.getUser_id());
+        try {
+            userRepository.deleteById(user.getUser_id());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         return user;
     }
 
