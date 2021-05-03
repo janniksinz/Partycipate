@@ -34,8 +34,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// Actuator (Mapping and Health)
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'com.maxmind.geoip2:geoip2:2.15.0'
-	compile 'com.maxmind.geoip2:geoip2:2.15.0'
+
 
 	runtimeOnly 'mysql:mysql-connector-java'
 	//test
@@ -51,7 +50,8 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-security"
 	// jwt
 	compile "io.jsonwebtoken:jjwt:0.9.0"
-	compile 'com.maxmind.geoip2:geoip2:2.15.0'
+	compile 'org.apache.httpcomponents:httpcore:4.4.1'
+	compile 'org.apache.httpcomponents:httpclient:4.5'
 
 	// swagger-ui
 	compile "org.springdoc:springdoc-openapi-ui:1.5.2"

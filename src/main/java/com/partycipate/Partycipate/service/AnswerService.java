@@ -63,7 +63,7 @@ public class AnswerService {
     }
 
 
-     * getTimeResults for Survey and TimeLine
+     /* getTimeResults for Survey and TimeLine
      * <authors>
      *      <author> Jannik Sinz - jannik.sinz@ibm.com </author>
      *      <author> Giovanni Carlucci </author>

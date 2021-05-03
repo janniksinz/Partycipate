@@ -1,33 +1,27 @@
 package com.partycipate.Partycipate.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.maxmind.geoip2.DatabaseReader;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
-import com.maxmind.geoip2.model.CountryResponse;
+
 import com.partycipate.Partycipate.dto.*;
 import com.partycipate.Partycipate.model.*;
 import com.partycipate.Partycipate.repository.*;
 import net.minidev.json.JSONObject;
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
+
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.io.File;
+
 import java.io.IOException;
-import java.net.InetAddress;
-import java.nio.charset.Charset;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -193,7 +187,6 @@ public class ParticipantService {
             Map<String,Object> result = new ObjectMapper().readValue(response.getEntity().getContent(), HashMap.class);
             JSONObject obj = new JSONObject(result);
             String string = obj.toJSONString();
-            obj.get("location");
             SendApi sendApi = new ObjectMapper().readValue(string, SendApi.class);
             Location location =sendApi.getLocation();
             region = location.getCountry();
@@ -204,7 +197,7 @@ public class ParticipantService {
     }
 
 
-    }
+
 
     public static Date trim(Date date) {
         Calendar calendar = Calendar.getInstance();
