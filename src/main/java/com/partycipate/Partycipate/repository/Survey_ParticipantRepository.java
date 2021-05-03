@@ -8,11 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Tuple;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface Survey_ParticipantRepository extends CrudRepository<Survey, Integer> {
@@ -22,5 +18,12 @@ public interface Survey_ParticipantRepository extends CrudRepository<Survey, Int
             "WHERE survey.id=:survey_id " +
             "GROUP BY participant.region", nativeQuery = true)
     public List<RegionUser> getParticipantCountPerRegion(@Param("survey_id") int survey_id);
+
+    @Query(value= "SELECT participant.region id, COUNT(*) as `value` FROM `survey` " +
+            "INNER JOIN `survey_participant` ON survey.id=survey_participant.survey_id " +
+            "INNER JOIN `participant` ON survey_participant.participant_id=participant.id " +
+            "GROUP BY participant.region", nativeQuery = true)
+    public List<RegionUser> getTotalParticipantCountPerRegion();
 }
+
 
