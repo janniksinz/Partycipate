@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -37,9 +38,8 @@ public class AnalyticsController {
     }
 
     @PostMapping("/timeline/{survey_id}")
-    public @ResponseBody
-    ResponseEntity<?> getTimeResults(@PathVariable("survey_id") int survey_id,
-                                  @RequestBody TimeLine timeLine){
+    public @ResponseBody ResponseEntity<?> getTimeResults(@PathVariable("survey_id") int survey_id,
+                                                         @RequestBody TimeLine timeLine){
         return answerService.timeResultsForSurvey(survey_id, timeLine);
 
     }
@@ -49,5 +49,24 @@ public class AnalyticsController {
     public ResponseEntity<?> getCountParticipants(@RequestBody TimeLine timeline){
         User user = userService.getUserByJWT();
         return new ResponseEntity<>(answerService.getAnswerCountAllSurveys(timeline, user), HttpStatus.OK);
+    }
+
+    /**
+     * getCountry
+     * <author> Jarg Heyll - wi19225@lehre.dhbw-stuttgart.de </author>
+     * */
+    @GetMapping("/countries/{survey_id}")
+    public @ResponseBody ResponseEntity<?> getCountry(@PathVariable("survey_id") int survey_id){
+        return new ResponseEntity<>(analyticsService.getRegionCountForSurvey(survey_id), HttpStatus.OK);
+    }
+
+    /**
+     * getCountries
+     * <author> Jannik Sinz - giovannicarlucci9@yahoo.de </author>
+     * */
+    @GetMapping("/countries")
+    //@PreAuthorize("hasRole('ADMIN')")
+    public @ResponseBody ResponseEntity<?> getCountries(){
+        return new ResponseEntity<>(analyticsService.getRegionCountForAllSurveys(), HttpStatus.OK);
     }
 }
