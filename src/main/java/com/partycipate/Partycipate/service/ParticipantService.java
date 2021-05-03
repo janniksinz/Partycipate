@@ -34,20 +34,14 @@ public class ParticipantService {
 
     @Autowired
     private AnswerRepository answerRepository;
-
     @Autowired
     private McAnswerContentRepository mcAnswerContentRepository;
-
     @Autowired
     private AnswerPossibilityRepository answerPossibilityRepository;
-
     @Autowired
     private ParticipantRepository participantRepository;
-
     @Autowired
     private SurveyElementRepository surveyElementRepository;
-
-
     @Autowired
     private Survey_ParticipantRepository survey_participantRepository;
 
@@ -88,8 +82,10 @@ public class ParticipantService {
     return answer;
     }
 
-    public Participant addParticipant(Participant participant){
-        return participantRepository.save(participant);
+    public Participant addParticipant(Participant participant, int survey_id){
+        participantRepository.save(participant);
+        survey_participantRepository.sendAnswer(survey_id, participant.getId());
+        return participant;
     }
 
     public Optional<Participant> getParticipant(int participant_id){
@@ -102,11 +98,13 @@ public class ParticipantService {
         System.out.println(submitSurvey.getParticipant_cookie());
         System.out.println(submitSurvey.getSurvey_id());
         System.out.println(submitSurvey.getLanguage());
+//        paticipant exists
         if (submitSurvey.getParticipant_cookie() != null){
 
             Participant participant = participantRepository.getParticipantByCookie(submitSurvey.getParticipant_cookie());
             sendParticipant.setParticipant_id(participant.getId());
         }
+//        create new participant
         else {
             Participant participant = new Participant();
             //generate cookie
@@ -124,16 +122,10 @@ public class ParticipantService {
 
             participant.setCookie(encodedhash.toString());
             participant.setRegion(getLocation(ipAdress));
-            participant= addParticipant(participant);
+            participant = addParticipant(participant, submitSurvey.getSurvey_id());
             sendParticipant.setParticipant_id(participant.getId());
             sendParticipant.setParticipant_cookie(participant.getCookie());
 
-        }
-        try{
-            survey_participantRepository.sendAnswer(submitSurvey.getSurvey_id(),sendParticipant.getParticipant_id());
-        }
-        catch (Exception e){
-            System.err.println("You cannot participate two times to the same survey");
         }
 
         return sendParticipant;
