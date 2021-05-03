@@ -21,7 +21,7 @@ public interface SurveyRepository extends CrudRepository<Survey, Integer> {
 //    @Transactional
 //    @Modifying
 
-    @Query(value = "SELECT COUNT(id) FROM survey WHERE user_id=: user_id", nativeQuery = true)
-    boolean ownsSurvey(@Param("user_id")int user_id);
+    @Query(value = "SELECT COUNT(id) FROM survey WHERE user_id=: user_id AND survey.id=:survey_id", nativeQuery = true)
+    boolean ownsSurvey(@Param("user_id")int user_id, @Param("survey_id")int survey_id);
 }
 
