@@ -1,8 +1,12 @@
 package com.partycipate.Partycipate.controller;
 
 import com.partycipate.Partycipate.dto.SendAnswer;
+import com.partycipate.Partycipate.dto.SendParticipant;
+import com.partycipate.Partycipate.dto.SubmitSurvey;
 import com.partycipate.Partycipate.model.Participant;
+import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
+import com.partycipate.Partycipate.security.message.response.ResponseMessage;
 import com.partycipate.Partycipate.service.AnswerService;
 import com.partycipate.Partycipate.service.ParticipantService;
 import com.partycipate.Partycipate.service.SurveyElementService;
@@ -12,10 +16,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/participant")
+@CrossOrigin(origins = "*")
 public class ParticipantController {
     private static final Logger log = LoggerFactory.getLogger(ParticipantController.class);
 
@@ -57,5 +65,15 @@ public class ParticipantController {
         return participantService.addAnswer(sendAnswer).getId();
     }
 
+    @PostMapping("")
+    public ResponseEntity<?> setParticipant(@RequestBody SubmitSurvey submitSurvey, HttpServletRequest request){
+        return new ResponseEntity<>(participantService.setParticipant(submitSurvey,request.getRemoteAddr()), HttpStatus.OK);
+    }
 
+    //    getById
+    @GetMapping("/survey/{id}")
+    public ResponseEntity<?> getSurvey(@PathVariable("id") int id){
+        log.info("getSurvey: {}", id);
+        return new ResponseEntity<>(surveyService.getSurveyBySurveyId(id), HttpStatus.OK);
+    }
 }

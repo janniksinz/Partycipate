@@ -23,12 +23,31 @@ public class Participant {
     )
 
     private int id;
-    private String ip_address;
     private String cookie;
-    private String gender;
     private String region;
-    private String age;
-    private String email;
+    private String language;
+
+    public Participant(String cookie, String region, String language) {
+        this.cookie = cookie;
+        this.region = region;
+        this.language = language;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
 
     @ManyToMany(mappedBy = "participantSet")
     private Set<Survey> surveySet;
@@ -37,12 +56,8 @@ public class Participant {
     private Set<Answer> answerSet = new HashSet<>();
 
     private Participant(Builder builder) {
-        this.age=builder.age;
         this.cookie= builder.cookie;
-        this.email= builder.email;
-        this.gender=builder.gender;
         this.id= builder.id;
-        this.ip_address= builder.ip_address;
         this.region= builder.region;
     }
 
@@ -51,13 +66,34 @@ public class Participant {
     public static class Builder {
 
         private int id;
-        private String ip_address;
-        private String cookie;
-        private String gender;
-        private String region;
-        private String age;
-        private String email;
 
+        private String cookie;
+
+        private String region;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getCookie() {
+            return cookie;
+        }
+
+        public void setCookie(String cookie) {
+            this.cookie = cookie;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
 
         public Builder id(int id) {
             this.id = id;
@@ -79,9 +115,7 @@ public class Participant {
         this.answerSet = answerSet;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+
 
     public int getId() {
         return id;
@@ -91,45 +125,13 @@ public class Participant {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public String getAge() {
-        return age;
-    }
-
-    public String getCookie() {
-        return cookie;
-    }
-
-    public String getIp_address() {
-        return ip_address;
-    }
-
-    public String getGender() {
-        return gender;
-    }
 
     public String getRegion() {
         return region;
     }
 
-    public void setAge(String age) {
-        this.age = age;
-    }
 
-    public void setCookie(String cookie) {
-        this.cookie = cookie;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public void setIp_address(String ip_address) {
-        this.ip_address = ip_address;
-    }
 
     public void setRegion(String region) {
         this.region = region;
@@ -143,19 +145,23 @@ public class Participant {
         this.surveySet = surveySet;
     }
 
+    @PreRemove
+    private void removeParticipantsFromSurvey(){
+        for (Survey s: surveySet) {
+            s.getParticipantSet().remove(this);
+        }
+    }
+
     @Override
     public String toString() {
         return "Participant{" +
                 "id=" + id +
-                ", ip_address='" + ip_address + '\'' +
                 ", cookie='" + cookie + '\'' +
-                ", gender='" + gender + '\'' +
                 ", region='" + region + '\'' +
-                ", age='" + age + '\'' +
-                ", email='" + email + '\'' +
                 ", surveySet=" + surveySet +
                 ", answerSet=" + answerSet +
                 '}';
     }
+
 
 }
