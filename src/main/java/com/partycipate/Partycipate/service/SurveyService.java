@@ -2,21 +2,15 @@ package com.partycipate.Partycipate.service;
 
 import com.partycipate.Partycipate.dto.SendAnswerPossibility;
 import com.partycipate.Partycipate.dto.SendElement;
+import com.partycipate.Partycipate.dto.SendRangeAnswerPossibility;
 import com.partycipate.Partycipate.dto.SendSurvey;
-import com.partycipate.Partycipate.model.AnswerPossibility;
-import com.partycipate.Partycipate.model.Survey;
-import com.partycipate.Partycipate.model.SurveyElement;
-import com.partycipate.Partycipate.model.User;
-import com.partycipate.Partycipate.repository.AnswerPossibilityRepository;
-import com.partycipate.Partycipate.repository.SurveyElementRepository;
-import com.partycipate.Partycipate.repository.SurveyRepository;
-import com.partycipate.Partycipate.repository.UserRepository;
+import com.partycipate.Partycipate.model.*;
+import com.partycipate.Partycipate.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
@@ -38,6 +32,8 @@ public class SurveyService {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RangeAnswerPossibilityRepository rangeAnswerPossibilityRepository;
 
     @Transactional
     public Survey addSurvey(SendSurvey surveyS, User user) {
@@ -56,7 +52,7 @@ public class SurveyService {
 
                 surveyElementRepository.save(sE);
 
-                if(sendE.getAnswer_possibilities()!= null || sendE.getAnswer_possibilities().size()!=0) {
+                if(sendE.getAnswer_possibilities() != null) {
                     Set<SendAnswerPossibility> sAp = sendE.getAnswer_possibilities();
                     Iterator<SendAnswerPossibility> sApIterator = sAp.iterator();
 
@@ -68,6 +64,20 @@ public class SurveyService {
                         answerPossibilityRepository.save(answerPossibility);
                     }
                 }
+//                range Possibility
+                if(sendE.getRange_answer_possibilities() != null) {
+                    Set<SendRangeAnswerPossibility> sRAp = sendE.getRange_answer_possibilities();
+                    Iterator<SendRangeAnswerPossibility> sApIterator = sRAp.iterator();
+
+                    while (sApIterator.hasNext()) {
+                        SendRangeAnswerPossibility sendRAp = sApIterator.next();
+                        RangeAnswerPossibility rangeAnswerPossibility = new RangeAnswerPossibility(sendRAp.getAnswer(), sendRAp.getPosition());
+                        rangeAnswerPossibility.setSurveyElement(sE);
+
+                        rangeAnswerPossibilityRepository.save(rangeAnswerPossibility);
+                    }
+                }
+
             }
         }
 

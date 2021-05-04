@@ -29,7 +29,7 @@ public class MCAnswerContent {
 
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "answer_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Answer answer;

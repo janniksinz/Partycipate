@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.util.Set;
 
 @Entity
-public class Answer {
+public class RangeAnswer {
     @Id
     @SequenceGenerator(
             name = "answer_sequence",
@@ -24,8 +24,8 @@ public class Answer {
     )
     private int id;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "answer")
-    private Set<MCAnswerContent> mcAnswerContentSet;
+    @OneToMany(mappedBy = "answer",cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RangeAnswerContent> rangeAnswerContents;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="surveyElement_id")
@@ -41,23 +41,23 @@ public class Answer {
 
     //end of variables--------------------------------
 
-    private Answer(Builder builder){
+    private RangeAnswer(Builder builder){
         this.id=builder.id;
-        this.mcAnswerContentSet= builder.mcAnswerContent;
+        this.rangeAnswerContents= builder.rangeAnswerContents;
         this.participant=builder.participant;
         this.surveyElement=builder.surveyElement;
         this.date = builder.date;
     }
-    public Answer(){}
-    public Answer(int id, Set<MCAnswerContent> mcAnswerContent, SurveyElement surveyElement, Participant participant, Date date){
+    public RangeAnswer(){}
+    public RangeAnswer(int id, Set<RangeAnswerContent> rangeAnswerContents, SurveyElement surveyElement, Participant participant, Date date){
         this.id=id; this.surveyElement=surveyElement; this.participant=participant;
-        this.mcAnswerContentSet=mcAnswerContent; this.date=date;
+        this.rangeAnswerContents=rangeAnswerContents; this.date=date;
 
     }
 
     public static class Builder{
         private int id = 0;
-        private Set<MCAnswerContent> mcAnswerContent = null;
+        private Set<RangeAnswerContent> rangeAnswerContents = null;
         private SurveyElement surveyElement = null;
         private Participant participant = null;
         private java.util.Date date = null;
@@ -72,8 +72,8 @@ public class Answer {
             return this;
         }
 
-        public Builder mcAnswerContent(Set<MCAnswerContent> mcAnswerContent){
-            this.mcAnswerContent=mcAnswerContent;
+        public Builder rangeAnswerContent(Set<RangeAnswerContent> rangeAnswerContents){
+            this.rangeAnswerContents=rangeAnswerContents;
             return this;
         }
         public Builder surveyElement(SurveyElement surveyElement){
@@ -85,7 +85,7 @@ public class Answer {
             return this;
         }
 
-        public Answer build(){return new Answer(this);}
+        public RangeAnswer build(){return new RangeAnswer(this);}
     }
 
     public SurveyElement getSurveyElement() {
@@ -104,12 +104,12 @@ public class Answer {
         this.id = id;
     }
 
-    public Set<MCAnswerContent> getMcAnswerContentSet() {
-        return mcAnswerContentSet;
+    public Set<RangeAnswerContent> getRangeAnswerContents() {
+        return rangeAnswerContents;
     }
 
-    public void setMcAnswerContentSet(Set<MCAnswerContent> mcAnswerContentSet) {
-        this.mcAnswerContentSet = mcAnswerContentSet;
+    public void setRangeAnswerContents(Set<RangeAnswerContent> rangeAnswerContents) {
+        this.rangeAnswerContents = rangeAnswerContents;
     }
 
     public Participant getParticipant() {
@@ -133,7 +133,7 @@ public class Answer {
     public String toString() {
         return "Answer{" +
                 "id=" + id +
-                ", mcAnswerContentSet=" + mcAnswerContentSet +
+                ", mcAnswerContentSet=" + rangeAnswerContents +
                 ", surveyElement=" + surveyElement.getId() +
                 ", participant=" + participant.getId() +
                 ", date=" + date +

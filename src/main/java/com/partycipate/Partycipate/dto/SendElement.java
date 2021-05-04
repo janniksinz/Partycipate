@@ -1,7 +1,6 @@
 package com.partycipate.Partycipate.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.partycipate.Partycipate.model.AnswerPossibility;
 
 import java.util.Set;
 
@@ -12,13 +11,15 @@ public class SendElement {
     private String type;
 
     private Set<SendAnswerPossibility> answer_possibilities;
+    private Set<SendRangeAnswerPossibility> range_answer_possibilities;
 
 
     public SendElement(@JsonProperty("may_skip") boolean may_skip,
                        @JsonProperty("position") int position,
                        @JsonProperty("question") String question,
                        @JsonProperty("type") String type,
-                       @JsonProperty("answer_possibilities") Set<SendAnswerPossibility> answer_possibilities
+                       @JsonProperty("answer_possibilities") Set<SendAnswerPossibility> answer_possibilities,
+                       @JsonProperty("range_answer_possibilities") Set<SendRangeAnswerPossibility> range_answer_possibilities
                        ) {
         this.may_skip = may_skip;
         this.position = position;
@@ -26,6 +27,7 @@ public class SendElement {
         this.type = type;
 
         this.answer_possibilities=answer_possibilities;
+        this.range_answer_possibilities=range_answer_possibilities;
     }
 
     public Set<SendAnswerPossibility> getAnswer_possibilities() {
@@ -34,6 +36,14 @@ public class SendElement {
 
     public void setAnswer_possibilities(Set<SendAnswerPossibility> answer_possibilities) {
         this.answer_possibilities = answer_possibilities;
+    }
+
+    public Set<SendRangeAnswerPossibility> getRange_answer_possibilities() {
+        return range_answer_possibilities;
+    }
+
+    public void setRange_answer_possibilities(Set<SendRangeAnswerPossibility> range_answer_possibilities) {
+        this.range_answer_possibilities = range_answer_possibilities;
     }
 
     public boolean isMay_skip() {
