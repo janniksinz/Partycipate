@@ -24,7 +24,7 @@ public class Answer {
     )
     private int id;
 
-    @OneToMany(mappedBy = "answer",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "answer",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MCAnswerContent> mcAnswerContentSet;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -134,8 +134,9 @@ public class Answer {
         return "Answer{" +
                 "id=" + id +
                 ", mcAnswerContentSet=" + mcAnswerContentSet +
-                ", surveyElement=" + surveyElement +
-                ", participant=" + participant +
+                ", surveyElement=" + surveyElement.getId() +
+                ", participant=" + participant.getId() +
+                ", date=" + date +
                 '}';
     }
 }

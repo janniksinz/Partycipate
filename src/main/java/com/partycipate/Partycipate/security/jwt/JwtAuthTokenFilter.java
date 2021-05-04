@@ -16,6 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * <authors>
+ *     <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+ * </authors>
+ * */
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -31,7 +36,6 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
             String jwt = getJwt(request);
             if (jwt != null && tokenProvider.validateJwtToken(jwt)){
                 String username = tokenProvider.getUserNameFromJwtToken(jwt);
-
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());

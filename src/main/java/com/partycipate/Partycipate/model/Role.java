@@ -28,6 +28,10 @@ public class Role {
     @Column(length = 60)
     private RoleName name;
 
+//    @ManyToMany(mappedBy = "roles")
+//    @JsonIgnore
+//    private Set<User> userSet;
+
     //ToDo Replace with Builder
     public Role(){}
     public Role(RoleName name){
@@ -49,4 +53,11 @@ public class Role {
     public void setName(RoleName name) {
         this.name = name;
     }
+
+//    @PreRemove
+//    private void removeRolesFromUsers(){
+//        for (User u: userSet) {
+//            u.getRoles().remove(this);
+//        }
+//    }
 }

@@ -7,7 +7,7 @@ INSERT INTO participant (id, age, cookie, email, gender, ip_address, region) VAL
 INSERT INTO participant (id, age, cookie, email, gender, ip_address, region) VALUES (3, '42', 'kEk5', 'solaris@gmail.com', 'female', '111.22.333.3', 'APC');
 
 INSERT INTO survey (id,  creation_date, title, user_id) VALUES (1,  '2021-03-11', 'Ice Cream', 1);
-INSERT INTO survey (id, , creation_date, title, user_id) VALUES (2, '2021-03-12', 'Car brand', 2);
+INSERT INTO survey (id,  creation_date, title, user_id) VALUES (2, '2021-03-12', 'Car brand', 2);
 
 INSERT INTO survey_element (id, may_skip, position, question, type, survey_id) VALUES (1, true, 1, 'What is your favourite ice cream?', 'singlechoice', 1);
 INSERT INTO survey_element (id, may_skip, position, question, type, survey_id) VALUES (2, false, 1, 'What is your favourite car brand?', 'singlechoice', 1);
@@ -32,6 +32,6 @@ INSERT INTO mcanswer_content (id, answer_id, answer_possibility_id) VALUES (3, 3
 INSERT INTO mcanswer_content (id, answer_id, answer_possibility_id) VALUES (4, 4, 4);
 INSERT INTO mcanswer_content (id, answer_id, answer_possibility_id) VALUES (5, 5, 2);
 
-
+DROP TABLE `answer`, `answer_possibility`, `answer_possibility_sequence`, `answer_sequence`, `mcanswer_content`, `participant`, `participant_sequence`, `role`, `survey`, `survey_element`, `survey_element_sequence`, `survey_participant`, `survey_sequence`, `user`, `user_roles`, `user_sequence`;
 
 #INSERT INTO auth_token (token, user_id) VALUES ('t0kEn', 1);

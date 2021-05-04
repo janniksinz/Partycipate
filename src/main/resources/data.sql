@@ -4,12 +4,12 @@ INSERT INTO user (id,email, password, username) VALUES (1, 'cipate@gmail.com', '
 INSERT INTO user (id,email, password, username) VALUES (2, 'bruno@gmail.com', 'IzYc940m', 'Sunny2');
 INSERT INTO user (id,email, password, username) VALUES (3, 'luna@gmail.com', 'Ic940zYm', 'Moon3');
 
-INSERT INTO participant (id, age, cookie, email, gender, ip_address, region) VALUES (1, '69', 'kEk5', 'party@gmail.com', 'female', '111.22.333.1', 'NAM');
-INSERT INTO participant (id, age, cookie, email, gender, ip_address, region) VALUES (2, '63', 'kEk5', 'brunhilde@gmail.com', 'none', '111.22.333.2', 'EUW');
-INSERT INTO participant (id, age, cookie, email, gender, ip_address, region) VALUES (3, '42', 'kEk5', 'solaris@gmail.com', 'female', '111.22.333.3', 'APC');
+INSERT INTO participant (id,  cookie,  region) VALUES (1,  'kEk5', 'NAM');
+INSERT INTO participant (id,  cookie,region) VALUES (2,  'kEk5',  'EUW');
+INSERT INTO participant (id,  cookie,  region) VALUES (3, 'kEk5', 'APC');
 
-INSERT INTO survey (id, cookie, creation_date, title, user_id) VALUES (1, 'kEkS', '2021-03-11', 'Ice Cream', 1);
-INSERT INTO survey (id, cookie, creation_date, title, user_id) VALUES (2, 'kEkS', '2021-03-12', 'Car brand', 2);
+INSERT INTO survey (id,  creation_date, title, user_id) VALUES (1,  '2021-03-11', 'Ice Cream', 1);
+INSERT INTO survey (id,  creation_date, title, user_id) VALUES (2,  '2021-03-12', 'Car brand', 2);
 
 INSERT INTO survey_element (id, may_skip, position, question, type, survey_id) VALUES (1, true, 1, 'What is your favourite ice cream?', 'singlechoice', 1);
 INSERT INTO survey_element (id, may_skip, position, question, type, survey_id) VALUES (2, false, 1, 'What is your favourite car brand?', 'singlechoice', 1);

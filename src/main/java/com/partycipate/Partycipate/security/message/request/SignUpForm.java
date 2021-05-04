@@ -1,5 +1,7 @@
 package com.partycipate.Partycipate.security.message.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Set;
 
 public class SignUpForm {
@@ -8,6 +10,18 @@ public class SignUpForm {
     private Set<String> role; //ROLE_ADMIN USER PARTICIPANT
     private String password;
     private String name;
+
+    public SignUpForm(@JsonProperty("username") String username,
+                      @JsonProperty("email") String email,
+                      @JsonProperty("role") Set<String> role,
+                      @JsonProperty("password") String password,
+                      @JsonProperty("name") String name){
+        this.username=username;
+        this.email=email;
+        this.role=role;
+        this.password=password;
+        this.name=name;
+    }
 
     public String getUsername() {
         return username;
