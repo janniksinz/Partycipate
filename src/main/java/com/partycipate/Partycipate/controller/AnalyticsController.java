@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -43,12 +42,6 @@ public class AnalyticsController {
         return answerService.timeResultsForSurvey(survey_id, timeLine);
 
     }
-
-    @PostMapping("/timeline/{survey_id}")
-    public @ResponseBody
-    ResponseEntity<?> getTimeResults(@PathVariable("survey_id") int survey_id,
-                                  @RequestBody TimeLine timeLine){
-        return answerService.timeResultsForSurvey(survey_id, timeLine);
 
     @PostMapping("/participants")
     public ResponseEntity<?> getCountParticipants(@RequestBody TimeLine timeline){

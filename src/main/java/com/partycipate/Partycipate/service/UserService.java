@@ -78,21 +78,6 @@ public class UserService {
     }
 
     /**
-     * isAdmin
-     * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
-     * */
-    public Boolean isAdmin(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Iterator<? extends GrantedAuthority> iter = authentication.getAuthorities().stream().iterator();
-        Boolean admin = false;
-        while (iter.hasNext()){
-            GrantedAuthority auth = iter.next();
-            if(Boolean.TRUE.equals(auth.toString().equals("ROLE_ADMIN"))) admin=true;
-        }
-        return admin;
-    }
-
-    /**
      * getUserByUsername
      * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
      * */
