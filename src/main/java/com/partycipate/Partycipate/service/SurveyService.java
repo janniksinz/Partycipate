@@ -97,4 +97,10 @@ public class SurveyService {
         }
         return id;
     }
+
+    public boolean ownsSurvey(int survey_id){
+        User user = userService.getUserByJWT();
+        int i = surveyRepository.ownsSurvey(user.getUser_id(), survey_id);
+        return (i>=1);
+    }
 }
