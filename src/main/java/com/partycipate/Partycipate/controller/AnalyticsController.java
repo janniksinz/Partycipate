@@ -44,6 +44,11 @@ public class AnalyticsController {
 
     }
 
+    @PostMapping("/timeline/{survey_id}")
+    public @ResponseBody
+    ResponseEntity<?> getTimeResults(@PathVariable("survey_id") int survey_id,
+                                  @RequestBody TimeLine timeLine){
+        return answerService.timeResultsForSurvey(survey_id, timeLine);
 
     @PostMapping("/participants")
     public ResponseEntity<?> getCountParticipants(@RequestBody TimeLine timeline){

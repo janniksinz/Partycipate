@@ -5,6 +5,7 @@ import com.partycipate.Partycipate.dto.SendParticipant;
 import com.partycipate.Partycipate.dto.SubmitSurvey;
 import com.partycipate.Partycipate.model.Participant;
 import com.partycipate.Partycipate.model.User;
+import com.partycipate.Partycipate.model.Participant;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
 import com.partycipate.Partycipate.service.AnswerService;
@@ -18,9 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/participant")
 @CrossOrigin(origins = "*")

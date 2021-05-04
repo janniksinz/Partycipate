@@ -29,7 +29,6 @@ public class Survey {
     private String creation_date;
     private String title;
 
-
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SurveyElement> elements = new ArrayList<>() ;
 

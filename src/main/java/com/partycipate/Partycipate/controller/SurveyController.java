@@ -6,6 +6,7 @@ import com.partycipate.Partycipate.dto.SendSurvey;
 import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.repository.SurveyRepository;
 import com.partycipate.Partycipate.security.message.response.ResponseMessage;
+import com.partycipate.Partycipate.model.Survey;
 import com.partycipate.Partycipate.service.SurveyElementService;
 import com.partycipate.Partycipate.service.SurveyService;
 import com.partycipate.Partycipate.service.UserService;
