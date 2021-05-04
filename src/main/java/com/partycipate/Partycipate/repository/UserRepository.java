@@ -13,18 +13,21 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    //ToDo check if findByUsername or email works or if it needs to be byId?
     Optional<User> findByUsername(String name);
     Boolean existsByUsername(String name);
     Boolean existsByEmail(String email);
     User findById(int id);
+
+    @Query(value = "DELETE FROM user_roles WHERE user_id=:user_id", nativeQuery = true)
+    int deleteUserInRoles(@Param("user_id") int userId);
+
     @Query(value = "SELECT password FROM user Where email =:email",nativeQuery = true)
     String getPassword(String email);
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query(value = "UPDATE user SET password = :password WHERE user.email = :email",nativeQuery = true)
-    User changePassword(@Param("password") String password,@Param("email") String email);
+    int changePassword(@Param("password") String password,@Param("email") String email);
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
