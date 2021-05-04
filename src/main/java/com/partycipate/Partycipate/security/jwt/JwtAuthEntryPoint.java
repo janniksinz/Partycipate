@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * <authors>
+ *     <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+ * </authors>
+ * */
 @Component
 public class JwtAuthEntryPoint  implements AuthenticationEntryPoint {
     //Logger

@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class SurveyElement {
@@ -35,12 +34,12 @@ public class SurveyElement {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Survey survey;
 
-    @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
-    private Set<AnswerPossibility> answerPossibilities= new HashSet<>();
+    @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AnswerPossibility> answer_possibilities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<Answer> answers = new HashSet<>();
+    private List<Answer> answers = new ArrayList<>();
 
     private SurveyElement(Builder builder){
         this.id = builder.id;
@@ -89,19 +88,19 @@ public class SurveyElement {
         }
     }
 
-    public Set<AnswerPossibility> getAnswerPossibilities() {
-        return answerPossibilities;
+    public List<AnswerPossibility> getAnswer_possibilities() {
+        return answer_possibilities;
     }
 
-    public void setAnswerPossibilities(Set<AnswerPossibility> answerPossibilities) {
-        this.answerPossibilities = answerPossibilities;
+    public void setAnswer_possibilities(List<AnswerPossibility> answerPossibilities) {
+        this.answer_possibilities = answerPossibilities;
     }
 
-    public Set<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<Answer> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
 
@@ -165,7 +164,7 @@ public class SurveyElement {
                 ", question='" + question + '\'' +
                 ", may_skip=" + may_skip +
                 ", survey=" + survey +
-                ", answerPossibilities=" + answerPossibilities +
+                ", answerPossibilities=" + answer_possibilities +
                 ", answers=" + answers +
                 '}';
     }
