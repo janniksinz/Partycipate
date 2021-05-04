@@ -57,7 +57,7 @@ public class SurveyController {
 
 //    getById
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('User')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> getSurvey(@PathVariable("id") int id){
         log.info("getSurvey: {}", id);
         User user = userService.getUserByJWT();
