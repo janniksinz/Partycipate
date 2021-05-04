@@ -32,15 +32,16 @@ public class AnswerPossibility {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private SurveyElement surveyElement;
 
+    @OneToMany(mappedBy = "answerPossibility",cascade = CascadeType.ALL, orphanRemoval = true)
+    Set<MCAnswerContent> mcAnswerContent;
+    public AnswerPossibility() {}
+
     private AnswerPossibility(Builder builder) {
         this.id = builder.id;
 
         this.answer = builder.answer;
     }
-    @OneToMany(mappedBy = "answerPossibility",cascade = CascadeType.ALL)
-    Set<MCAnswerContent> mcAnswerContent;
 
-    public AnswerPossibility() {}
     public AnswerPossibility(String answer, int position) {
         this.answer=answer;
         this.position=position;

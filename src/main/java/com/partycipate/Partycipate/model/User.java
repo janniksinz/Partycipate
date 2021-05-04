@@ -1,6 +1,8 @@
 package com.partycipate.Partycipate.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -32,18 +34,20 @@ public class User {
             updatable = false
     )
     private int user_id;
+    private String name;
     private String username;
     private String email;
     String name;
     private String password;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles = new HashSet<>();
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<Survey> surveys = new HashSet<>() ;
 
@@ -54,10 +58,11 @@ public class User {
         //ToDo fix user to implement SignupForm
         this.user_id=builder.id;
         this.username=builder.username;
-        this.email =builder.email;
+        this.email=builder.email;
         this.password=builder.password;
         this.roles=builder.roles;
         this.surveys=builder.surveys;
+        this.name=builder.name;
     }
 //    Builder
     public static class Builder {
@@ -75,12 +80,10 @@ public class User {
             this.id = id;
             return this;
         }
-
         public User.Builder username(String username) {
             this.username = username;
             return this;
         }
-
         public User.Builder email(String email) {
             this.email = email;
             return this;
@@ -89,18 +92,24 @@ public class User {
             this.password = password;
             return this;
         }
-        public void roles(Set<Role> roles) {
+        public User.Builder roles(Set<Role> roles) {
             this.roles = roles;
+            return this;
+        }
+        public User.Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+        public User.Builder surveys(Set<Survey> surveys){
+            this.surveys=surveys;
+            return this;
         }
 
         public User build() {
-            return new User(this);
-        }
-
-        public void setName(String name) {
-        this.name = name;
-        }
+        return new User(this);
     }
+}
+
 //      Getter & Setter
 
     public int getUser_id() {

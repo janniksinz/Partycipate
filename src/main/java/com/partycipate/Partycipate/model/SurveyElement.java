@@ -34,10 +34,10 @@ public class SurveyElement {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Survey survey;
 
-    @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AnswerPossibility> answer_possibilities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "surveyElement", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Answer> answers = new ArrayList<>();
 

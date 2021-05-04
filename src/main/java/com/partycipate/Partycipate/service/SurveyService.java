@@ -10,6 +10,7 @@ import com.partycipate.Partycipate.model.User;
 import com.partycipate.Partycipate.repository.AnswerPossibilityRepository;
 import com.partycipate.Partycipate.repository.SurveyElementRepository;
 import com.partycipate.Partycipate.repository.SurveyRepository;
+import com.partycipate.Partycipate.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,20 +30,14 @@ public class SurveyService {
 
     @Autowired
     private AnswerPossibilityRepository answerPossibilityRepository;
-
     @Autowired
     private SurveyElementRepository surveyElementRepository;
-
     @Autowired
     private SurveyRepository surveyRepository;
-
     @Autowired
     private UserService userService;
-
     @Autowired
-    public SurveyService(SurveyRepository surveyRepository) {
-        this.surveyRepository = surveyRepository;
-    }
+    private UserRepository userRepository;
 
     @Transactional
     public Survey addSurvey(SendSurvey surveyS, User user) {
@@ -79,15 +74,19 @@ public class SurveyService {
         return survey;
     }
 
-    public @ResponseBody Iterable<Survey> getAllSurveys(){
+    public Iterable<Survey> getAllSurveys(){
         return surveyRepository.findAll();
+    }
+
+    public Set<Survey> getAllSurveysByUser(User user){
+        return surveyRepository.getSurveysByUser(user.getUser_id());
     }
 
     //getSurveyBySurveyId
     public Survey getSurveyBySurveyId(int survey_id) throws NullPointerException{ return surveyRepository.findById(survey_id); }
 
-
-
+    /**
+     * DELETE Survey*/
     public int deleteSurveybyId(int id) throws EmptyResultDataAccessException {
         try {
             surveyRepository.deleteById(id);
@@ -99,11 +98,9 @@ public class SurveyService {
         return id;
     }
 
-
-
-
-    public static Survey getRandomSurvey(int id) {
-        //ToDo create content for the dummy survey
-        return new Survey.Builder().id(0).creation_date("2021-02-28T18:25:43.511Z").title("some Survey").build();
+    public boolean ownsSurvey(int survey_id){
+        User user = userService.getUserByJWT();
+        int i = surveyRepository.ownsSurvey(user.getUser_id(), survey_id);
+        return (i>=1);
     }
 }
