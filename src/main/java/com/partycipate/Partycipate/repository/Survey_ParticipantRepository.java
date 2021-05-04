@@ -17,7 +17,14 @@ public interface Survey_ParticipantRepository extends CrudRepository<Survey, Int
             "INNER JOIN `participant` ON survey_participant.participant_id=participant.id " +
             "WHERE survey.id=:survey_id " +
             "GROUP BY participant.region", nativeQuery = true)
-    public List<RegionUser> getParticipantCountPerRegion(@Param("survey_id") int survey_id);
+    public List<RegionUser> getParticipantCountPerRegionBySurvey_id(@Param("survey_id") int survey_id);
+
+    @Query(value= "SELECT participant.region id, COUNT(*) as `value` FROM `survey` " +
+            "INNER JOIN `survey_participant` ON survey.id=survey_participant.survey_id " +
+            "INNER JOIN `participant` ON survey_participant.participant_id=participant.id " +
+            "WHERE survey.user_id=:user_id " +
+            "GROUP BY participant.region", nativeQuery = true)
+    public List<RegionUser> getParticipantCountPerRegionByUser_id(@Param("user_id") int user_id);
 
     @Query(value= "SELECT participant.region id, COUNT(*) as `value` FROM `survey` " +
             "INNER JOIN `survey_participant` ON survey.id=survey_participant.survey_id " +
