@@ -24,7 +24,7 @@ public class AnalyticsService {
     }
 
     /**
-     * getRegionCountForSurvey
+     * getRegionCountForSurveyBySurvey_id
      * <author> Jarg Heyll - wi19225@lehre.dhbw-stuttgart.de </author>
      * */
     public List<RegionUser> getRegionCountForSurveyBySurvey_id(int survey_id){
@@ -33,7 +33,7 @@ public class AnalyticsService {
     }
 
     /**
-     * getCountries
+     * getRegionCountForSurveyByUser_id
      * <author> Ines Maurer - wi19185@lehre.dhbw-stuttgart.de </author>
      * */
     public List<RegionUser> getRegionCountForSurveyByUser_id(int user_id){
