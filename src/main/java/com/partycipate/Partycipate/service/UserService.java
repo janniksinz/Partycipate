@@ -62,10 +62,9 @@ public class UserService {
         }
         return user;
     }
-
     /**
      * isAdmin
-     * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     * <auhtor> Jannik Sinz - jannik.sinz@ibm.com </auhtor>
      * */
     public Boolean isAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

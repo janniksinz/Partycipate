@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -44,7 +43,6 @@ public class AnalyticsController {
 
     }
 
-
     @PostMapping("/participants")
     public ResponseEntity<?> getCountParticipants(@RequestBody TimeLine timeline){
         User user = userService.getUserByJWT();
@@ -56,17 +54,29 @@ public class AnalyticsController {
      * <author> Jarg Heyll - wi19225@lehre.dhbw-stuttgart.de </author>
      * */
     @GetMapping("/countries/{survey_id}")
-    public @ResponseBody ResponseEntity<?> getCountry(@PathVariable("survey_id") int survey_id){
-        return new ResponseEntity<>(analyticsService.getRegionCountForSurvey(survey_id), HttpStatus.OK);
+    // @PreAuthorize("hasRole('USER')")
+    public @ResponseBody ResponseEntity<?> getCountryBySurvey_id(@PathVariable("survey_id") int survey_id){
+        return new ResponseEntity<>(analyticsService.getRegionCountForSurveyBySurvey_id(survey_id), HttpStatus.OK);
     }
 
     /**
      * getCountries
-     * <author> Jannik Sinz - giovannicarlucci9@yahoo.de </author>
+     * <author> Ines Maurer - wi19185@lehre.dhbw-stuttgart.de </author>
+     * */
+    @GetMapping("/countries/user/{user_id}")
+    // @PreAuthorize("hasRole('USER')")
+    public @ResponseBody ResponseEntity<?> getCountryByUser_id(@PathVariable("user_id") int user_id){
+        return new ResponseEntity<>(analyticsService.getRegionCountForSurveyByUser_id(user_id), HttpStatus.OK);
+    }
+
+    /**
+     * getCountries
+     * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
      * */
     @GetMapping("/countries")
-    //@PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     public @ResponseBody ResponseEntity<?> getCountries(){
         return new ResponseEntity<>(analyticsService.getRegionCountForAllSurveys(), HttpStatus.OK);
     }
+
 }

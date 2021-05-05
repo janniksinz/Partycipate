@@ -62,7 +62,6 @@ public class AdminController {
         return new ResponseEntity<>(userService.deleteUser(user), HttpStatus.OK);
     }
 
-
     @PostMapping("/user")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changeUser(@RequestBody AdminChangeUser changeUser){

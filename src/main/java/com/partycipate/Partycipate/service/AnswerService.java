@@ -279,7 +279,6 @@ public class AnswerService {
                 answers.add(elementAnswerIter.next());
             }
         }
-
         //log.info("TimelineAnswers: Collected ALL relevant answers(unsorted) in {}", answers);
         List<AnswerCount> list = new ArrayList<>();
 //        Count through every Day
@@ -290,7 +289,6 @@ public class AnswerService {
             log.info("Date: {}", today);
             list.add(new AnswerCount(today, countAnswers));
             log.info("Date after: {}", today);
-
 //            count up today
             Calendar c = Calendar.getInstance();
             c.setTime(today);
