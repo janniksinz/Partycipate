@@ -11,7 +11,12 @@ import java.util.Set;
 
 @Repository
 public interface McAnswerContentRepository extends CrudRepository<MCAnswerContent, Integer> {
-
+    /**
+     * <authors>
+     *      <author> Jarg Heyll - wi19225@lehre.dhbw-stuttgart.de</author>
+     *      <author> Andreas Pitsch - wi19165@lehre.dhbw-stuttgart.de</author>
+     * </authors>
+     * */
     @Query(value = "Select * from mcanswer_content where answer_id = :answer_id", nativeQuery = true)
     Iterable<MCAnswerContent> findAllByAnswer_Id(@Param("answer_id") int answer_id);
 }

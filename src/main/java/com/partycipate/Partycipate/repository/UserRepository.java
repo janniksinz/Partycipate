@@ -18,17 +18,39 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Boolean existsByEmail(String email);
     User findById(int id);
 
+    /**
+     * <authors>
+     *      <author> Ines Maurer - inesmaurer@outlook.de/author>
+     *      <author> Andreas Pitsch - wi19165@lehre.dhbw-stuttgart.de</author>
+     * </authors>
+     * */
     @Query(value = "DELETE FROM user_roles WHERE user_id=:user_id", nativeQuery = true)
     int deleteUserInRoles(@Param("user_id") int userId);
+
+    /**
+     * <authors>
+     *      <author> Andreas Pitsch - wi19165@lehre.dhbw-stuttgart.de</author>
+     * </authors>
+     * */
 
     @Query(value = "SELECT password FROM user Where email =:email",nativeQuery = true)
     String getPassword(String email);
 
+    /**
+     * <authors>
+     *      <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de</author>
+     * </authors>
+     * */
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query(value = "UPDATE user SET password = :password WHERE user.email = :email",nativeQuery = true)
     int changePassword(@Param("password") String password,@Param("email") String email);
 
+    /**
+     * <authors>
+     *      <author> Ines Maurer - inesmaurer@outlook.de</author>
+     * </authors>
+     * */
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query(value = "UPDATE user SET email = :email, name = :name, username = :email WHERE user.id = :user_id",nativeQuery = true)

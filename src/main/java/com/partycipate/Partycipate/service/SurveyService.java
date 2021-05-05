@@ -42,7 +42,7 @@ public class SurveyService {
     /**
      * addParticipant Reference to survey in DB
      * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
-     * <author> Jannik Sinz  </author>
+     * <author> Jannik Sinz  - jannik.sinz@ibm.com </author>
      * */
     @Transactional
     public Survey addSurvey(SendSurvey surveyS, User user) {
@@ -91,7 +91,10 @@ public class SurveyService {
     public Survey getSurveyBySurveyId(int survey_id) throws NullPointerException{ return surveyRepository.findById(survey_id); }
 
     /**
-     * DELETE Survey*/
+     * DELETE Survey
+     * <author> Jannik Sinz  - jannik.sinz@ibm.com </author>
+     * <author> Andreas Pitsch - wi19165@lehre.dhbw-stuttgart.de</author>
+     * */
     public int deleteSurveybyId(int id) throws EmptyResultDataAccessException {
         try {
             surveyRepository.deleteById(id);

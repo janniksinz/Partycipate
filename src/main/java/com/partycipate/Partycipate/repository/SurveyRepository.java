@@ -12,15 +12,28 @@ import java.util.Set;
 public interface SurveyRepository extends CrudRepository<Survey, Integer> {
     Survey findById(int id);
 
+    /**
+     * <authors>
+     *      <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de</author>
+     * </authors>
+     * */
     @Query(value = "SELECT * FROM survey WHERE :user_id = user_id",nativeQuery = true)
     public Set<Survey> getSurveysByUser(@Param("user_id") int id);
 
+    /**
+     * <authors>
+     *      <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de</author>
+     * </authors>
+     * */
     @Query(value = "SELECT DISTINCT id FROM survey WHERE :user_id = user_id", nativeQuery = true)
     Set<Integer> getDistinctSurveyIds(@Param("user_id") int user_id);
 
-//    @Transactional
-//    @Modifying
 
+    /**
+     * <authors>
+     *      <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de</author>
+     * </authors>
+     * */
     @Query(value = "SELECT COUNT(id) FROM survey WHERE user_id=:user_id and id=:id", nativeQuery = true)
     int ownsSurvey(@Param("user_id")int user_id, @Param("id") int survey_id);
 }

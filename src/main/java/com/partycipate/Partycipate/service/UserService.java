@@ -154,7 +154,8 @@ public class UserService {
     /**
      * changePassword for User
      * <authors>
-     *     <author> Giovanni Carlucci </author>
+     *     <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de</author>
+     *     <author> Ines Maurer - inesmaurer@outlook.de</author>
      * </authors>
      * */
     public ResponseEntity<?> changePassword(User user, String oldPassword, String newPassword){

@@ -48,7 +48,7 @@ public class ParticipantService {
     /**
      * addParticipant Reference to survey in DB
      * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
-     * <author> Jannik Sinz  </author>
+     * <author> Jannik Sinz  - jannik.sinz@ibm.com</author>
      * */
     public Answer addAnswer(SendAnswer sendAnswer){
         //get participantId
@@ -89,9 +89,9 @@ public class ParticipantService {
     /**
      * addParticipant Reference to survey in DB
      * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
-     * <author> Ines Maurer </author>
-     * <author> Andreas Pitsch</author>
-     * <author> Jannik Sinz  </author>
+     * <author> Ines Maurer - inesmaurer@outlook.de</author>
+     * <author> Andreas Pitsch - wi19165@lehre.dhbw-stuttgart.de</author>
+     * <author> Jannik Sinz  - jannik.sinz@ibm.com</author>
      * */
     public Participant addParticipant(Participant participant, int survey_id){
         participant = participantRepository.save(participant);
@@ -107,8 +107,8 @@ public class ParticipantService {
     /**
      * setParticipant in survey
      * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
-     * <author> Ines Maurer </author>
-     * <author> Andreas Pitsch</author>
+     * <author> Ines Maurer - inesmaurer@outlook.de</author>
+     * <author> Andreas Pitsch - wi19165@lehre.dhbw-stuttgart.de</author>
      * */
     public SendParticipant setParticipant(SubmitSurvey submitSurvey, String ipAdress){
         SendParticipant sendParticipant = new SendParticipant();
@@ -151,8 +151,8 @@ public class ParticipantService {
     /**
      * getLocation from Ip
      * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
-     * <author> Ines Maurer </author>
-     * <author> Andreas Pitsch</author>
+     * <author> Ines Maurer - inesmaurer@outlook.de</author>
+     * <author> Andreas Pitsch - wi19165@lehre.dhbw-stuttgart.de</author>
      * */
     public String getLocation(String ip) {
         HttpUriRequest request = RequestBuilder.create("GET")
