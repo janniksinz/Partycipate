@@ -63,10 +63,9 @@ public class UserService {
         }
         return user;
     }
-
     /**
      * isAdmin
-     * <author> Jannik Sinz - jannik.sinz@ibm.com </author>
+     * <auhtor> Jannik Sinz - jannik.sinz@ibm.com </auhtor>
      * */
     public Boolean isAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -109,7 +108,11 @@ public class UserService {
                 surveyService.deleteSurveybyId(s.getId());
             }
         }
-        userRepository.deleteById(user.getUser_id());
+        try {
+            userRepository.deleteById(user.getUser_id());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         return user;
     }
 

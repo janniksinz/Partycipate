@@ -1,10 +1,8 @@
 package com.partycipate.Partycipate.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "Role")
@@ -30,9 +28,9 @@ public class Role {
     @Column(length = 60)
     private RoleName name;
 
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
-    private Set<User> userSet;
+//    @ManyToMany(mappedBy = "roles")
+//    @JsonIgnore
+//    private Set<User> userSet;
 
     //ToDo Replace with Builder
     public Role(){}
@@ -56,10 +54,10 @@ public class Role {
         this.name = name;
     }
 
-    @PreRemove
-    private void removeRolesFromUsers(){
-        for (User u: userSet) {
-            u.getRoles().remove(this);
-        }
-    }
+//    @PreRemove
+//    private void removeRolesFromUsers(){
+//        for (User u: userSet) {
+//            u.getRoles().remove(this);
+//        }
+//    }
 }
