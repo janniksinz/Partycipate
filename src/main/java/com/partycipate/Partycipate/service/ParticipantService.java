@@ -45,7 +45,11 @@ public class ParticipantService {
     @Autowired
     private Survey_ParticipantRepository survey_participantRepository;
 
-
+    /**
+     * addParticipant Reference to survey in DB
+     * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
+     * <author> Jannik Sinz  </author>
+     * */
     public Answer addAnswer(SendAnswer sendAnswer){
         //get participantId
         int Pid = sendAnswer.getParticipant_id();
@@ -82,8 +86,15 @@ public class ParticipantService {
     return answer;
     }
 
+    /**
+     * addParticipant Reference to survey in DB
+     * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
+     * <author> Ines Maurer </author>
+     * <author> Andreas Pitsch</author>
+     * <author> Jannik Sinz  </author>
+     * */
     public Participant addParticipant(Participant participant, int survey_id){
-        participantRepository.save(participant);
+        participant = participantRepository.save(participant);
         survey_participantRepository.sendAnswer(survey_id, participant.getId());
         return participant;
     }
@@ -93,6 +104,12 @@ public class ParticipantService {
 
     }
 
+    /**
+     * setParticipant in survey
+     * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
+     * <author> Ines Maurer </author>
+     * <author> Andreas Pitsch</author>
+     * */
     public SendParticipant setParticipant(SubmitSurvey submitSurvey, String ipAdress){
         SendParticipant sendParticipant = new SendParticipant();
         System.out.println(submitSurvey.getParticipant_cookie());
@@ -103,12 +120,12 @@ public class ParticipantService {
 
             Participant participant = participantRepository.getParticipantByCookie(submitSurvey.getParticipant_cookie());
             sendParticipant.setParticipant_id(participant.getId());
+            survey_participantRepository.sendAnswer(submitSurvey.getSurvey_id(), participant.getId());
         }
 //        create new participant
         else {
             Participant participant = new Participant();
             //generate cookie
-
             MessageDigest digest = null;
             try {
                 digest = MessageDigest.getInstance("SHA-256");
@@ -127,48 +144,16 @@ public class ParticipantService {
             sendParticipant.setParticipant_cookie(participant.getCookie());
 
         }
-
         return sendParticipant;
     }
 
 
-
-
-
-   /*   Deprecated
-    public void getLocation2(String ip){
-        String url= "https://geo.ipify.org/api/v1?apiKey=at_hslR7IDemhvyO1cGZc6iwZvci87PC&ipAddress=" +ip;
-
-
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet(url);
-
-        HttpResponse response = null;
-        try {
-            response = client.execute(httpGet);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
-            try {
-                log.info("rentCar: content = {}", response.getEntity().getContent());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String responseBody = null;
-            try {
-                responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-                log.info("ResponseBody: {}", responseBody);
-                Map<String,Object> result = new ObjectMapper().readValue(response.getEntity().getContent(), HashMap.class);
-                JSONObject obj = new JSONObject(result);
-                Object score = obj.get("location");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-        }
-    }*/
+    /**
+     * getLocation from Ip
+     * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
+     * <author> Ines Maurer </author>
+     * <author> Andreas Pitsch</author>
+     * */
     public String getLocation(String ip) {
         HttpUriRequest request = RequestBuilder.create("GET")
                 .setUri("https://geo.ipify.org/api/v1?apiKey=at_hslR7IDemhvyO1cGZc6iwZvci87PC&ipAddress=" +ip)
@@ -187,8 +172,6 @@ public class ParticipantService {
         }
         return region;
     }
-
-
 
 
     public static Date trim(Date date) {

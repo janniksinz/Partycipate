@@ -39,6 +39,11 @@ public class SurveyService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * addParticipant Reference to survey in DB
+     * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
+     * <author> Jannik Sinz  </author>
+     * */
     @Transactional
     public Survey addSurvey(SendSurvey surveyS, User user) {
         Survey survey = new Survey.Builder().creation_date(surveyS.getCreation_date()).title(surveyS.getTitle()).user(userService.getUser(user.getUser_id())).build();

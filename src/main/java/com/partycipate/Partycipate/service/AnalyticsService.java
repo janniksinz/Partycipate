@@ -35,13 +35,11 @@ public class AnalyticsService {
     /**
      * getRegionCountForAllSurveys
      * <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de </author>
+     * <author> Jarg Heyll - wi19225@lehre.dhbw-stuttgart.de </author>
      * */
     public List<RegionUser> getRegionCountForAllSurveys(){
         List<RegionUser> regionUserList = survey_participantRepository.getTotalParticipantCountPerRegion();
         return regionUserList;
     }
 
-    /*public MultipleChoiceAnswer getMultipleChoiceAnswer(){
-        return new MultipleChoiceAnswer.Builder().values(new int[]{4,4}).build();
-    }*/
 }
