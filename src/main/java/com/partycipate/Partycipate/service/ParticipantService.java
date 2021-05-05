@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.partycipate.Partycipate.dto.*;
 import com.partycipate.Partycipate.model.*;
 import com.partycipate.Partycipate.repository.*;
+import com.partycipate.Partycipate.security.message.response.ResponseMessage;
 import net.minidev.json.JSONObject;
 import org.apache.http.HttpResponse;
 
@@ -16,10 +17,12 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
-
+import javax.mail.Part;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
@@ -110,43 +113,65 @@ public class ParticipantService {
      * <author> Ines Maurer - inesmaurer@outlook.de</author>
      * <author> Andreas Pitsch - wi19165@lehre.dhbw-stuttgart.de</author>
      * */
-    public SendParticipant setParticipant(SubmitSurvey submitSurvey, String ipAdress){
-        SendParticipant sendParticipant = new SendParticipant();
+    public ResponseEntity<?> setParticipant(SubmitSurvey submitSurvey, String ipAdress){
         System.out.println(submitSurvey.getParticipant_cookie());
         System.out.println(submitSurvey.getSurvey_id());
         System.out.println(submitSurvey.getLanguage());
-//        paticipant exists
-        if (submitSurvey.getParticipant_cookie() != null){
-
-            Participant participant = participantRepository.getParticipantByCookie(submitSurvey.getParticipant_cookie());
-            sendParticipant.setParticipant_id(participant.getId());
-            survey_participantRepository.sendAnswer(submitSurvey.getSurvey_id(), participant.getId());
-        }
-//        create new participant
-        else {
-            Participant participant = new Participant();
-            //generate cookie
-            MessageDigest digest = null;
-            try {
-                digest = MessageDigest.getInstance("SHA-256");
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
+        try {
+            SendParticipant sendParticipant = getSendParticipantBySubmitSurvey(submitSurvey, ipAdress);
+            return new ResponseEntity<>(sendParticipant, HttpStatus.OK);
+        } catch (Exception e) {
+            switch (e.getMessage()) {
+                case "Participant may not participate at the same survey twice": return new ResponseEntity<>(new ResponseMessage("Fail -> Participant may not participate at the same survey twice."), HttpStatus.FORBIDDEN);
+                default: return new ResponseEntity<>(new ResponseMessage("Fail -> Setting answer for participant failed."), HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            String originalString = participantRepository.getNextValue().toString();
-            byte[] encodedhash = digest.digest(
-                    originalString.getBytes(StandardCharsets.UTF_8));
-            //get Region
-
-            participant.setCookie(encodedhash.toString());
-            participant.setRegion(getLocation(ipAdress));
-            participant = addParticipant(participant, submitSurvey.getSurvey_id());
-            sendParticipant.setParticipant_id(participant.getId());
-            sendParticipant.setParticipant_cookie(participant.getCookie());
-
         }
-        return sendParticipant;
     }
 
+    private SendParticipant getSendParticipantBySubmitSurvey(SubmitSurvey submitSurvey, String ipAdress) throws Exception {
+        if (submitSurvey.getParticipant_cookie() == null) {
+            Participant participant = createParticipant(submitSurvey, ipAdress);
+            return createSendParticipant(participant);
+        }
+        Participant participant = participantRepository.getParticipantByCookie(submitSurvey.getParticipant_cookie());
+        if (participant == null) {
+            participant = createParticipant(submitSurvey, ipAdress);
+            return createSendParticipant(participant);
+        }
+        try {
+            survey_participantRepository.sendAnswer(submitSurvey.getSurvey_id(), participant.getId());
+            return createSendParticipant(participant);
+        } catch (Exception e) {
+            throw new Exception("Participant may not participate at the same survey twice");
+        }
+    }
+
+    private Participant createParticipant(SubmitSurvey submitSurvey, String ipAdress) {
+        Participant participant = new Participant();
+        //generate cookie
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        String originalString = participantRepository.getNextValue().toString();
+        byte[] encodedhash = digest.digest(
+                originalString.getBytes(StandardCharsets.UTF_8));
+        //get Region
+        participant.setCookie(encodedhash.toString());
+        participant.setRegion(getLocation(ipAdress));
+        participant = addParticipant(participant, submitSurvey.getSurvey_id());
+
+        return participant;
+    }
+
+    private SendParticipant createSendParticipant(Participant participant) {
+        SendParticipant sendParticipant = new SendParticipant();
+        sendParticipant.setParticipant_id(participant.getId());
+        sendParticipant.setParticipant_cookie(participant.getCookie());
+        return sendParticipant;
+    }
 
     /**
      * getLocation from Ip
