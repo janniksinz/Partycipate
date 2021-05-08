@@ -51,5 +51,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Integer> {
     @Query(value = "SELECT * FROM answer WHERE survey_element_id = :element_id AND date BETWEEN :start AND :end", nativeQuery = true)
     Set<Answer> getAnswersByDateAndElement(@Param("start") Date start, @Param("end") Date end, @Param("element_id") int element_id);
 
+    @Query(value = "SELECT `answer`.id from answer inner join survey_element se on answer.survey_element_id = se.id inner join survey s on se.survey_id = s.id where survey_id = :survey_id", nativeQuery = true)
+    public Set<Integer> findAllBySurveyId(@Param("survey_id") int id);
 }
 

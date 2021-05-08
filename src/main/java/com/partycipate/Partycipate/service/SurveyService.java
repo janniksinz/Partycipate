@@ -3,14 +3,8 @@ package com.partycipate.Partycipate.service;
 import com.partycipate.Partycipate.dto.SendAnswerPossibility;
 import com.partycipate.Partycipate.dto.SendElement;
 import com.partycipate.Partycipate.dto.SendSurvey;
-import com.partycipate.Partycipate.model.AnswerPossibility;
-import com.partycipate.Partycipate.model.Survey;
-import com.partycipate.Partycipate.model.SurveyElement;
-import com.partycipate.Partycipate.model.User;
-import com.partycipate.Partycipate.repository.AnswerPossibilityRepository;
-import com.partycipate.Partycipate.repository.SurveyElementRepository;
-import com.partycipate.Partycipate.repository.SurveyRepository;
-import com.partycipate.Partycipate.repository.UserRepository;
+import com.partycipate.Partycipate.model.*;
+import com.partycipate.Partycipate.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +22,10 @@ import java.util.Set;
 public class SurveyService {
     private static final Logger log = LoggerFactory.getLogger(SurveyService.class);
 
+    @Autowired
+    private  AnswerRepository answerRepository;
+    @Autowired
+    private McAnswerContentRepository mcAnswerContentRepository;
     @Autowired
     private AnswerPossibilityRepository answerPossibilityRepository;
     @Autowired
@@ -97,6 +95,16 @@ public class SurveyService {
      * */
     public int deleteSurveybyId(int id) throws EmptyResultDataAccessException {
         try {
+            Set<Integer> set = mcAnswerContentRepository.findAllBySurveyId(id);
+            Iterator<Integer> iterator = set.iterator();
+            while(iterator.hasNext()){
+                mcAnswerContentRepository.deleteById(iterator.next());
+            }
+            set = answerRepository.findAllBySurveyId(id);
+            iterator = set.iterator();
+            while(iterator.hasNext()){
+                answerRepository.deleteById(iterator.next());
+            }
             surveyRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e){
             throw new RuntimeException("Fail -> Survey not found");
