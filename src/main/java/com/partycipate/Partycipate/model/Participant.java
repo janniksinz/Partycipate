@@ -49,9 +49,6 @@ public class Participant {
         this.cookie = cookie;
     }
 
-    @ManyToMany(mappedBy = "participantSet")
-    private Set<Survey> surveySet;
-
     @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL)
     private Set<Answer> answerSet = new HashSet<>();
 
@@ -137,20 +134,6 @@ public class Participant {
         this.region = region;
     }
 
-    public Set<Survey> getSurveySet() {
-        return surveySet;
-    }
-
-    public void setSurveySet(Set<Survey> surveySet) {
-        this.surveySet = surveySet;
-    }
-
-    @PreRemove
-    private void removeParticipantsFromSurvey(){
-        for (Survey s: surveySet) {
-            s.getParticipantSet().remove(this);
-        }
-    }
 
     @Override
     public String toString() {
@@ -158,9 +141,8 @@ public class Participant {
                 "id=" + id +
                 ", cookie='" + cookie + '\'' +
                 ", region='" + region + '\'' +
-                ", surveySet=" + surveySet +
+                ", language='" + language + '\'' +
                 ", answerSet=" + answerSet +
                 '}';
     }
-
 }
