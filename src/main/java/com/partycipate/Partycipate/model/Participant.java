@@ -135,6 +135,13 @@ public class Participant {
     }
 
 
+    @PreRemove
+    private void removeParticipantsFromSurvey(){
+        for (Survey s: surveySet) {
+            s.getParticipantSet().remove(this);
+        }
+    }
+
     @Override
     public String toString() {
         return "Participant{" +

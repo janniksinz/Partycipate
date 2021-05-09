@@ -141,7 +141,7 @@ public class AnswerService {
                 timeResultMcSet.add(timeResultMc);
                 Calendar c = Calendar.getInstance();
                 c.setTime(today);
-                c.add(Calendar.DATE, 1);
+                c.add(Calendar.DATE, 7);
                 today = c.getTime();
 
             }
