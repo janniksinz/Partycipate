@@ -32,8 +32,10 @@ public class Survey {
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SurveyElement> elements = new ArrayList<>() ;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "survey_participant",joinColumns = @JoinColumn(name="survey_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name="participant_id", referencedColumnName = "id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "survey_participant",
+            joinColumns = {@JoinColumn(name="survey_id")},
+            inverseJoinColumns = {@JoinColumn(name="participant_id")})
     @JsonIgnore
     private Set<Participant> participantSet;
 

@@ -46,7 +46,7 @@ public class AdminController {
 
     @PostMapping("/user/pw")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> changePassword(@RequestBody AdminChangePw changePw){
+    public  ResponseEntity<?> changePassword(@RequestBody AdminChangePw changePw){
         if (Boolean.TRUE.equals(userService.isAdmin())) {
             User user = userService.getUser(changePw.getId());
             return new ResponseEntity<>(userService.changePassword(user, user.getPassword(), changePw.getNewPw()), HttpStatus.OK);
@@ -57,7 +57,7 @@ public class AdminController {
 
     @DeleteMapping("/user/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") int user_id){
+    public  ResponseEntity<?> deleteUser(@PathVariable("id") int user_id){
         User user = userService.getUser(user_id);
         return new ResponseEntity<>(userService.deleteUser(user), HttpStatus.OK);
     }

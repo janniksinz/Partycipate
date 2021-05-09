@@ -61,12 +61,12 @@ public class AnswerService {
     }
 
 
-     /* getTimeResults for Survey and TimeLine
+     /** getTimeResults for Survey and TimeLine
      * <authors>
      *      <author> Jannik Sinz - jannik.sinz@ibm.com </author>
-     *      <author> Giovanni Carlucci </author>
-     *      <author> Ines Maurer </author>
-     *      <author> Andreas Pitsch </author>
+     *      <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de</author>
+     *      <author> Ines Maurer - inesmaurer@outlook.de</author>
+     *      <author> Andreas Pitsch - wi19165@lehre.dhbw-stuttgart.de</author>
      * </authors>
      * */
     public ResponseEntity<?> timeResultsForSurvey(int survey_id, TimeLine timeLine){
@@ -105,9 +105,9 @@ public class AnswerService {
      * helperMethod - getTimeResultsForSurvey
      * <authors>
      *      <author> Jannik Sinz - jannik.sinz@ibm.com </author>
-     *      <author> Giovanni Carlucci </author>
-     *      <author> Ines Maurer </author>
-     *      <author> Andreas Pitsch </author>
+     *      <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de</author>
+     *      <author> Ines Maurer - inesmaurer@outlook.de</author>
+     *      <author> Andreas Pitsch - wi19165@lehre.dhbw-stuttgart.de</author>
      * </authors>
      * */
     public List<TimeResultMc> timeResultsForElement(int element_id, TimeLine timeLine){
@@ -157,7 +157,7 @@ public class AnswerService {
     /**
      * filter All Answers for date
      * <authors>
-     *     <author> Ines Maurer </author>
+     *     <author> Ines Maurer - inesmaurer@outlook.de</author>
      * </authors>
      * */
     public Stream<Answer> filterByDate (Set<Answer> answerSet, Date today){
@@ -168,7 +168,7 @@ public class AnswerService {
      * helper method - aggregates Answers for MC
      * <authors>
      *      <author> Jannik Sinz - jannik.sinz@ibm.com </author>
-     *      <author> Giovanni Carlucci </author>
+     *      <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de</author>
      * </authors>
      * */
     public ResultMc aggregateMcResults(Iterator<Answer> answers, int element_id){
@@ -225,7 +225,7 @@ public class AnswerService {
      * getAnswerCount for the relevant scope
      * <authors>
      *     <author> Jannik Sinz - jannik.sinz@ibm.com </author>
-     *     <author> Giovanni Carlucci </author>
+     *     <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de</author>
      * </authors>
      * */
     public List<AnswerCount> getAnswerCountAllSurveys(TimeLine timeLine, User user){
@@ -262,7 +262,7 @@ public class AnswerService {
      * helperMethod getAnswerCount for all elements
      * <authors>
      *     <author> Jannik Sinz jannik.sinz@ibm.com </author>
-     *     <author> Giovanni Carlucci </author>
+     *     <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de</author>
      * </authors>
      */
     public List<AnswerCount> aggregateAnswersForElements(Set<Integer> elements, TimeLine timeLine){

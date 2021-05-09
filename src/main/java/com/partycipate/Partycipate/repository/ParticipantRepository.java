@@ -17,7 +17,11 @@ public interface ParticipantRepository extends CrudRepository<Participant, Integ
 
 
     public Participant getParticipantByCookie(String cookie);
-
+    /**
+     * <authors>
+     *   <author> Giovanni Carlucci - giovannicarlucci9@yahoo.de</author>
+     * </authors>
+     * */
     @Query(value = "SELECT next_val FROM partycipate.participant_sequence", nativeQuery = true)
     Integer getNextValue();
 
