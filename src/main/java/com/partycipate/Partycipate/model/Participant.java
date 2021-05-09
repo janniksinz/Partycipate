@@ -122,13 +122,9 @@ public class Participant {
         this.id = id;
     }
 
-
-
     public String getRegion() {
         return region;
     }
-
-
 
     public void setRegion(String region) {
         this.region = region;
