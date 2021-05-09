@@ -122,25 +122,14 @@ public class Participant {
         this.id = id;
     }
 
-
-
     public String getRegion() {
         return region;
     }
-
-
 
     public void setRegion(String region) {
         this.region = region;
     }
 
-
-    @PreRemove
-    private void removeParticipantsFromSurvey(){
-        for (Survey s: surveySet) {
-            s.getParticipantSet().remove(this);
-        }
-    }
 
     @Override
     public String toString() {
