@@ -68,7 +68,7 @@ public class ParticipantController {
 
     @PostMapping("")
     public ResponseEntity<?> setParticipant(@RequestBody SubmitSurvey submitSurvey, HttpServletRequest request){
-        return new ResponseEntity<>(participantService.setParticipant(submitSurvey,request.getRemoteAddr()), HttpStatus.OK);
+        return participantService.setParticipant(submitSurvey,request.getRemoteAddr());
     }
 
     //    getById
